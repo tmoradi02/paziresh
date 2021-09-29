@@ -1,0 +1,127 @@
+  /* ST 1400-06-14 ADD CSS For SubNavBar 
+  /* The navigation menu */
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  width: 100%;
+}
+
+/* Navigation links */
+.navbar a {
+  float: left;
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* The subnavigation menu */
+.subnav {
+  float: left;
+  overflow: hidden;
+}
+
+/* Subnav button */
+.subnav .subnavbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+/* Add a red background color to navigation links on hover */
+.navbar a:hover, .subnav:hover .subnavbtn {
+  /* background-color: red; */
+  background-color:rgb(4, 165, 165);
+}
+
+/* Style the subnav content - positioned absolute */
+.subnav-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  background-color:rgb(4, 165, 165);
+  width: 100%;
+  z-index: 1;
+}
+
+/* Style the subnav links */
+.subnav-content a {
+  float: left;
+  color: white;
+  text-decoration: none;
+}
+
+/* Add a grey background color on hover */
+.subnav-content a:hover {
+  background-color: #eee;
+  color:black;
+}
+
+/* When you move the mouse over the subnav container, open the subnav content */
+.subnav:hover .subnav-content {
+  display: block;
+}
+  
+
+/* ST DOC 1400-06-27 For Counter Radif In Table Grid */
+.rowt{
+  counter-increment: rowt;
+}
+.rowtt::before{
+  content:counter(rowt);
+}
+/* END DOC 1400-06-27 For Counter Radif In Table Grid */
+
+
+/*  FOR MenuBar- Sub SubMenu ST DOC 1400-06-15 Main Code MenuBar Comment Shode */
+
+  #nav {
+    list-style:none inside;
+    margin:0;
+    padding:0;
+    text-align:center;
+  }
+
+  #nav li {
+    display:block;
+    position:relative;
+    float:left;
+    background: #24af15; /* menu background color */
+  }
+  
+  #nav li a {
+    display:block;
+    padding:0;
+    text-decoration:none;
+    width:200px; /* this is the width of the menu items */
+    line-height:35px; /* this is the hieght of the menu items */
+    color:#ffffff; /* list item font color */
+  }
+
+  #nav li li a {font-size:80%;} /* smaller font size for sub menu items */
+  #nav li:hover {background:#003f20;} /* highlights current hovered list item and the parent list items when hovering over sub menues */
+  
+  #nav ul {
+    position:absolute;
+    padding:0;
+    left:0;
+    display:none; /* hides sublists */
+  }
+
+  #nav li:hover ul ul {display:none;} /* hides sub-sublists */
+  #nav li:hover ul {display:block;} /* shows sublist on hover */
+
+  #nav li li:hover ul {
+    display:block; /* shows sub-sublist on hover */
+    margin-left:200px; /* this should be the same width as the parent list item */
+    margin-top:-35px; /* aligns top of sub menu with top of list item */
+  }
+
+
+
