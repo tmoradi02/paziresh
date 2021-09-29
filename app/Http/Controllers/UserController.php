@@ -221,6 +221,11 @@ class UserController extends Controller
         return view('user.index' , ['users' => $users , 'permission_user' => $permission_user , 'permissions' => $permissions]);
 
     }
+
+    public function Test_Mw()
+    {
+        // This is a Test For Git Hub Project Upload
+    }
 }
 
 
