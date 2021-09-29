@@ -222,10 +222,7 @@ class UserController extends Controller
 
     }
 
-    public function Test_Mw()
-    {
-        // This is a Test For Git Hub Project Upload
-    }
+    
 }
 
 
