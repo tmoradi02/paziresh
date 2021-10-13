@@ -12,6 +12,19 @@ trait ChangeDateOptions{
     {
         $date = explode('-' , $value);
         $date = Verta::getJalali($date[0],$date[1],$date[2]);
+
+        if(Str::length($date[1]) <2)
+        {
+            $date[1] = sprintf("%02d",  $date[1]);
+        }
+
+        if(Str::length($date[2]) <2)
+        {
+            $date[2] = sprintf("%02d", $date[2]); 
+        }
+        
+        // dd($date);
+
         $date = implode('/' , $date);
         
         return $date;
@@ -43,6 +56,19 @@ trait ChangeDateOptions{
     {
         $date = explode('-' , $value);
         $date = Verta::getJalali($date[0],$date[1],$date[2]);
+
+        if(Str::length($date[1]) <2)
+        {
+            $date[1] = sprintf("%02d",  $date[1]);
+        }
+    
+        if(Str::length($date[2]) <2)
+        {
+            $date[2] = sprintf("%02d", $date[2]); 
+        }
+
+        // dd($date);
+
         $date = implode('/' , $date);
         return $date;
     }
