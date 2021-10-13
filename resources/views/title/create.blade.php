@@ -11,6 +11,9 @@
         </div>
     @endif
 
+    <a href="{{route('title.index')}}" class="previous">لیست عنوان باکس</a>
+    <br>
+
     <form action="@if($status =='insert') {{route('title.store')}} @else {{route('title',$title->id)}} @endif" method="post">
         @csrf
         @if($status == 'update') @method('put') @endif

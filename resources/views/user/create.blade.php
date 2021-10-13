@@ -11,6 +11,9 @@
         </div>
     @endif
 
+    <a href="{{route('user.index')}}" class="previous">لیست کاربران</a>
+    <br>
+
     <form action="{{route('user.store')}}" method="post">
         @csrf
         <div class="container">
@@ -71,9 +74,6 @@
                 
         </div>
     </form>
-
-
-
 
 
 @endsection

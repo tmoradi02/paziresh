@@ -11,6 +11,9 @@
         </div>
     @endif
 
+    <a href="{{route('box_type.index')}}" class="previous">لیست محل پخش</a>
+    <br>
+    
     <form action="{{route('box_type.store')}}" method="post">
         @csrf
         <div class="container">

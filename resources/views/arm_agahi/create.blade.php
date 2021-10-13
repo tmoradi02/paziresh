@@ -11,6 +11,9 @@
         </div>
     @endif
 
+    <a href="{{route('arm_agahi.index')}}" class="previous">لیست آرم آگهی</a>
+    <br>
+
     <form action="{{route('arm_agahi.store')}}" method="post">
         @csrf
         <div class="container">

@@ -11,12 +11,16 @@
         </div>
     @endif
 
+    <a href="{{route('channel.index')}}" class="previous">لیست شبکه</a>
+    <br>
+    
     <form action="@if($status == 'Insert'){{route('channel.store')}} @else {{route('channel',$channel->id)}} @endif" method="post">
         @csrf
         @if($status == 'Update') @method('put') @endif
         
         <div class="container">
             <div class="row">
+            
                 <div class="col">
                     <div class="form-group">
                         <input type="text" name="channel_name" maxlength="50" placeholder="عنوان شبکه" class="form-control" @if($status == 'Update') value="{{$channel->channel_name}}" @endif>
@@ -38,6 +42,7 @@
                         <label >رادیویی</label>
                     </div>
                 </div>
+
                 <div class="col">
                     @can('Get_Permission_To_Other_User')
                         <select name="user_id" id="myselect" multiple>
@@ -50,9 +55,10 @@
 
                 <div class="col">
                     <div class="form-group">
-                        <input type="submit" name="submit" value="ثبت" class="btn btn-primary" >
+                        <input type="submit" name="submit" value="ثبت" class="btn btn-primary">
                     </div>
                 </div>
+
             </div>        
         </div>
     </form>

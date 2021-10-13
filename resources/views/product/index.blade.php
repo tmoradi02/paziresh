@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
 
+    <a href="{{route('product.create')}}" class="next">اضافه نمودن محصولات</a>
+    <br>
+    <br>
+    
     <table class="table table-bordered">
         <tr style="height:1px;">
             <th style="width:30px; background-color:lightblue; text-align:center">ردیف</th>

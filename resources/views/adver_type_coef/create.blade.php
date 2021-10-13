@@ -11,6 +11,9 @@
         </div>
     @endif
 
+    <a href="{{route('adver_type_coef.index')}}" class="previous"> لیست ضریب نوع کدآگهی  &raquo;</a>
+    <br>
+    
     <form action="@if ($status == 'insert') {{route('adver_type_coef.store')}} @else {{route('adver_type_coef' , $adver_type_coef->id)}} @endif" method ="post">
         @csrf
         @if($status == 'update') @method('put') @endif

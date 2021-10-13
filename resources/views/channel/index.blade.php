@@ -1,12 +1,17 @@
 @extends('layouts.app')
 @section('content')
 
+    <a href="{{route('channel.create')}}" class="next">اضافه نمودن شبکه</a>
+    <br>
+    <br>
+    
     <table class="table table-bordered">
         <tr Style="height: 1px;">
             <th style="width:30px; background-color:lightblue;  text-align:center;">ردیف</th>     <!--height: 1px; -->
             <th style="width:300px; background-color:lightblue;  text-align:center;">عنوان شبکه</th>     <!--height: 1px; -->
             <th style="width:300px; background-color:lightblue; ">action</th>     <!--height: 1px; -->
         </tr>
+        
         @foreach($channels as $channel)
             <tr class="rowt" style="height: 1px; ">
                 <td class="rowtt" style="height: 1px; text-align:center;"></td>

@@ -1,6 +1,14 @@
 @extends('layouts.app')
 @section('content')
 
+    @if(session()->has('warning'))
+        <div class="alert alert-warning">{{session()->get('warning')}}</div>
+    @endif
+
+    <a href="{{route('arm_agahi.create')}}" class="next">اضافه نمودن آرم آگهی</a>
+    <br>
+    <br>
+
     <table class="table table-bordered">
         <tr style="height:1px;">
             <th style="width:30px; background-color:lightblue; text-align:center;">ردیف</th>
@@ -29,7 +37,7 @@
 
                         <td class="btn-group" >
                             @can('Edit_ArmAgahi')
-                                <a href="{{route('arm_agahi.edit', $arm->id)}}" class="btn btn-warning"><i class="fa fa-pencil-alt"></i></a>
+                                <a href="{{route('arm_agahi.edit', $arm->id)}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
                             @endcan
 
                             @can('Delete_ArmAgahi')
@@ -102,5 +110,105 @@
         <!-- </div> -->
     </form>
 
+<!-- ST Modal 1400-07-20 -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- ST Edit Form -->
+                    <form action="{{route('arm_agahi.update', $arm_agahi->id)}}" method="post">
+                        @csrf
+                        @method('put')
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <select name="channel_id" class="form-control" style="width:300px;">
+                                            @foreach($channels as $channel)
+                                                <option value="{{$channel->id}}" @if($arm_agahi->channel_id == $channel->id) selected @endif>{{$channel->channel_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input type="number" step="any" name="coef" placeholder="ضریب آرم آگهی" value="{{$arm_agahi->coef}}" class="form-control" style="width:150px;">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <!-- <label >از تاریخ</label> -->
+                                        <input data-jdp name="from_date" placeholder="از تاریخ" id="" value="{{$arm_agahi->from_date}}"  class="form-control" style="width:150px;" />
+                                            
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="form-group">
+                                        <!-- <label >تا تاریخ</label> -->
+                                        <input data-jdp name="to_date" placeholder="تا تاریخ" id="" value="{{$arm_agahi->to_date}}" class="form-control" style="width:150px;"/>
+                                        
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+                            <!-- <div class="row"> -->
+                                <div class="col">
+                                    @can('Get_Permission_To_Other_User')
+                                        <select name="user_id" class="form-control" style="width:300px;">
+                                            @foreach($users as $user)
+                                                <option value="{{$user->id}}" @if($arm_agahi->user_id == $user->id) selected @endif>{{$user->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    @endcan
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input type="submit" name="submit" value="ثبت" class="btn btn-primary" >
+                                    </div>
+                                </div>
+                                <!-- <div class="col"></div>
+                                <div class="col"></div> -->
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END Edit Form -->
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- END Modal 1400-07-20 -->
+
+<!-- ST DOC 1400-07-20  Ajax For Popup Modal  -->
+<script>
+    $('.btn-send-ajax').click(function(e)
+    {
+        e.preventDefault();
+        var url=$(this).attr('href');
+        $.ajax(
+            {
+                url:url
+            })
+        .done(function(data)
+        {
+            console.log(data); 
+        });
+    });
+</script>
+<!-- END DOC 1400-07-20  Ajax For Popup Modal  -->
+
 @endsection
+
 

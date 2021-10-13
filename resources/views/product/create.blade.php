@@ -11,6 +11,9 @@
         </div>
     @endif
 
+    <a href="{{route('product.index')}}" class="previous">لیست محصولات</a>
+    <br>
+    
     <form action="@if($status =='insert') {{route('product.store')}} @else {{route('product',$product->id)}} @endif" method="post">
         @csrf
         @if($status == 'update') @method('put') @endif

@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
 
+    <a href="{{route('title.create')}}" class="next">اضافه نمودن عنوان باکس</a>
+    <br>
+    <br>
+    
     <table class="table table-bordered">
         <tr style="height:1px;">
             <th style="width:1px; background-color:lightblue; text-align:center;">ردیف</th>

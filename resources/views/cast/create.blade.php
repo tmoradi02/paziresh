@@ -11,6 +11,9 @@
         </div>
     @endif
 
+    <a href="{{route('cast.index')}}" class="previous">لیست اصناف</a>
+    <br>
+
     <form action="@if($status == 'insert') {{route('cast.store')}} @else {{route('cast', $cast->id)}} @endif" method="post">
         @csrf
         @if($status == 'update') @method('put') @endif

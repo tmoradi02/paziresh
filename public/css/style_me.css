@@ -68,11 +68,11 @@
   display: block;
 }
   
-
 /* ST DOC 1400-06-27 For Counter Radif In Table Grid */
 .rowt{
   counter-increment: rowt;
 }
+
 .rowtt::before{
   content:counter(rowt);
 }
@@ -80,7 +80,6 @@
 
 
 /*  FOR MenuBar- Sub SubMenu ST DOC 1400-06-15 Main Code MenuBar Comment Shode */
-
   #nav {
     list-style:none inside;
     margin:0;
@@ -123,5 +122,48 @@
     margin-top:-35px; /* aligns top of sub menu with top of list item */
   }
 
+/* ST DOC 1400-07-11   استایل دکمه بازگشت   */
 
+a.previous {
+  display: inline-block;
+  padding: 8px 16px;
+  margin-right: 20px;
+  border-radius: 50px 20px;
+  
+  position: absolute;
+  left: 20px;
+  top:160px;
+
+  background-color: #ddd;  /* #f1f1f1; */
+  color:black;
+}
+
+a.previous:hover {
+  background-color:lightgray ;
+  /* color:whitesmoke; */
+  color:gray;
+}
+
+a.next {
+  background-color: #ddd;
+  color: black;
+
+  display: inline-block;
+  padding: 8px 16px;
+  margin-right: 20px;
+  border-radius: 50px 20px;
+}
+
+a.next:hover{
+  color:gray;
+}
+
+a.round {
+  border-radius: 50%;
+}
+
+a.previous a.next:hover, a.previous a.next:visited, a.previous a.next:link, a.previous a.next:active , a.next , a.previous
+{
+    text-decoration: none; 
+}
 

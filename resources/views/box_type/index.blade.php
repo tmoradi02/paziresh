@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
 
+    <a href="{{route('box_type.create')}}" class="next">اضافه نمودن محل پخش</a>
+    <br>
+    <br>
+
     <table class="table table-bordered">
         <tr style="height:1px;">
             <th style="width:1px; background-color:lightblue; text-align:center;">ردیف</th>

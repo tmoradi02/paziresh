@@ -92,6 +92,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Adver_Type_Coef');
     }
 
+    public function box_prog_group()
+    {
+        return $this->hasMany('App\Box_Prog_Group');
+    }
+
     public function hasAnyRole($roles)
     {
         return $this->roles()->whereIn('permissions.permission_name',$roles)->first();
@@ -102,5 +107,6 @@ class User extends Authenticatable
         return $this->roles()->where('permissions.permission_name',$role)->first();
     }
     
+
 }
 

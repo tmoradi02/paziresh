@@ -1,14 +1,18 @@
 @extends('layouts.app')
 @section('content')
 
+    <a href="{{route('adver_type_coef.create')}}" class="next" style="margin-right:20px;">اضافه نمودن ضریب نوع کدآگهی</a>
+    <br>
+    <br>
+
     <table class="table table-bordered">
         <tr style="height:1px;">
             <th style="width:1px;  background-color:lightblue; text-align:center;" >ردیف</th>
-            <th style="width:100px; background-color:lightblue; text-align:center;" >نوع کدآگهی</th>
-            <th style="width:100px; background-color:lightblue; text-align:center;">ضریب نوع کداگهی</th>
-            <th style="width:100px; background-color:lightblue; text-align:center;">از تاریخ</th>
-            <th style="width:100px; background-color:lightblue; text-align:center;">تا تاریخ</th>
-            <th style="width:100px; background-color:lightblue; ">Action</th>
+            <th style="width:50px; background-color:lightblue; text-align:center;" >نوع کدآگهی</th>
+            <th style="width:10px; background-color:lightblue; text-align:center;">ضریب نوع کداگهی</th>
+            <th style="width:10px; background-color:lightblue; text-align:center;">از تاریخ</th>
+            <th style="width:10px; background-color:lightblue; text-align:center;">تا تاریخ</th>
+            <th style="width:50px; background-color:lightblue; ">Action</th>
         </tr>
       
         @foreach($adver_types as $adver_type)
@@ -17,9 +21,9 @@
                     <tr class="rowt" style="height:1px;">
                         <td class="rowtt" style="height:1px; text-align:center;"></td>
                         <td style="height:1px;">{{$adver_type->adver_type}}</td>
-                        <td style="height:1px;">{{$adver_type_coef->coef}}</td>
-                        <td style="height:1px;">{{$adver_type_coef->from_date}}</td>
-                        <td style="height:1px;">{{$adver_type_coef->to_date}}</td>
+                        <td style="height:1px; width:10px;">{{$adver_type_coef->coef}}</td>
+                        <td style="height:1px;width:10px;">{{$adver_type_coef->from_date}}</td>
+                        <td style="height:1px;width:10px;">{{$adver_type_coef->to_date}}</td>
                         <td class="btn-group">
                             @can('Edit_Adver_Type_Coef')
                                 <a href="{{route('adver_type_coef.edit' , $adver_type_coef->id)}}" class="btn btn-warning"><i class="fa fa-pencil-alt"></i></a>

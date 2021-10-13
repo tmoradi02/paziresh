@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('content')
+
+    <a href="{{route('box_prog_group.create')}}" class="next">اضافه نمودن گروه برنامه</a>
+    <br>
+    <br>
+
     <table class="table table-bordered">
         <tr style="height:1px;">
             <th style="width:30px; background-color:lightblue; text-align:center;">ردیف</th>
@@ -30,7 +35,7 @@
     <form action="{{route('box_prog_group_search')}}" method="get">
         <!-- <div class="container"> -->
         <label style="padding:15px; font-weight:bold; color:gray; margin-right:20px;">جستجو</label>
-            <div style="margin-right:10px;">
+        <div style="margin-right:10px;">
             <div class="row" style="border:1px ridge lightblue; width:700px; margin-right:15px; height:75px; padding:15px;">
                 <div class="col">
                     <div class="form-group" style="width:545px;">
@@ -43,8 +48,9 @@
                         <input type="submit" value="جستجو" class="btn btn-primary">
                     </div>
                 </div>
+                
             </div>
-            </div>
+        </div>
         <!-- </div> -->
     </form>
 

@@ -9,6 +9,17 @@ use App\Channel;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use App\classes;
+use App\Adver_Type;
+use App\Adver_Type_Coef;
+use App\Box_Prog_Group;
+use App\Cast;
+use App\Owner;
+use App\Product;
+use App\Title;
+use App\ArmAgahi;
+use App\Box_Type;
+
 
 class UserController extends Controller
 {
@@ -153,6 +164,8 @@ class UserController extends Controller
         if(!Gate::allows('Delete_User')) return abort(403,'عدم دسترسی');
         {
             $user = User::findOrFail($id);
+
+            // Check for UserId In Channel Table
             foreach($user->channels as $channel)
             {
                 $c = Channel::findOrFail($channel->id);
@@ -160,6 +173,100 @@ class UserController extends Controller
                 $c->save();
             }
             $user->channels()->delete();
+
+            // Check for UserId In classes Table
+            foreach($user->class as $classes)
+            {
+                $cl = classes::findOrFail($classes->id);
+                $cl->user_id = 11;
+                $cl->save();
+            }
+            $user->class()->delete();
+
+            // Check for UserId In adver_types Table 
+            foreach($user->adver_type as $adver_types)
+            {
+                $ad_type = Adver_Type::findOrFail($adver_types->id);
+                $ad_type->user_id = 11;
+                $ad_type->save();
+            }
+            $user->adver_type()->delete();
+
+            // Check for UserId In adver_type_coef Table
+            foreach($user->adver_type_coef as $adver_type_coefs)
+            {
+                $ad_type_coef = Adver_Type_Coef::findOrFail($adver_type_coefs->id);
+                $ad_type_coef->user_id = 11;
+                $ad_type_coef->save();
+            }
+            $user->adver_type_coef()->delete();
+
+            // Check for UserId In arm_agahi Table
+            foreach($user->arm_Agahi as $arm_Agahis)
+            {
+                $arm = ArmAgahi::findOrFail($arm_Agahis->id);
+                $arm->user_id = 11 ;
+                $arm->save();
+            }
+            $user->arm_Agahi()->delete();
+
+            // Check for User_id In box_prog_group Table 
+            foreach($user->box_prog_group as $box_prog_groups)
+            {
+                $box_prog = Box_Prog_Group::findOrFail($box_prog_groups->id);
+                $box_prog->user_id = 11;
+                $box_prog->save();
+            }
+            $user->box_prog_group()->delete();
+
+            // Check for UserId In box_type Table
+            foreach($user->box_types as $box_type)
+            {
+                $boxtype = Box_Type::findOrFail($box_type->id);
+                $boxtype->user_id = 11;
+                $boxtype->save();
+            }
+            $user->box_types()->delete();
+
+
+            // Check for UserId In casts Table
+            foreach($user->cast as $casts)
+            {
+                $castt = Cast::findOrFail($casts->id);
+                $castt->user_id = 11;
+                $castt->save();
+            }
+            $user->cast()->delete();
+
+            // check for UserId In owners Table
+            foreach($user->owner as $owners)
+            {
+                $own = Owner::findOrFail($owners->id);
+                $own->user_id = 11;
+                $own->save();
+            }
+            $user->owner()->delete();
+
+            // Check for UserId In products Table
+            foreach($user->product as $products)            
+            {
+                $pro = Product::findOrFail($products->id);
+                $pro->user_id = 11;
+                $pro->save();
+            }
+            $user->product()->delete();
+
+            // Check for UserId In titles Table
+            foreach($user->title as $titles)
+            {
+                $titl = Title::findOrFail($titles->id);
+                $titl->user_id = 11;
+                $titl->save();
+            }
+            $user->title()->delete();
+
+            // تمام این مراحل رو طی میکند بعد نام کاربر را حذف میکند
+
             $user->roles()->sync([]);
             $user->delete();
             return redirect()->back();
@@ -219,10 +326,9 @@ class UserController extends Controller
         }
         $users = $users->get();
         return view('user.index' , ['users' => $users , 'permission_user' => $permission_user , 'permissions' => $permissions]);
-
     }
 
-    
+
 }
 
 

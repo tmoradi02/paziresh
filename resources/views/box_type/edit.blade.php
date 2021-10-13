@@ -17,11 +17,13 @@
 
     <div class="container">
         <div class="row">
+        
             <div class="col">
                 <div class="form-group">
                     <input type="text" name="box_type" placeholder="نوع باکس" class="form-control" value="{{$box_type->box_type}}" maxlength="30">
                 </div>
             </div>
+
             <div class="col">
                 @can('Get_Permission_To_Other_User')
                     <select name="user_id" id="myselect" multiple>
@@ -31,11 +33,13 @@
                     </select>
                 @endcan
             </div>
+
             <div class="col">
                 <div class="form-group">
                     <input type="submit" name="submit" value="ثبت" class="btn btn-primary">
                 </div>
             </div>
+
         </div>
     </div>
 </form>

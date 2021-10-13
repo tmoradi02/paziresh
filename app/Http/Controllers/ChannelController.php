@@ -7,6 +7,7 @@ use App\Channel;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
+use App\ArmAgahi;
 
 class ChannelController extends Controller
 {
@@ -135,8 +136,23 @@ class ChannelController extends Controller
     {
         if(!Gate::allows('Delete_Channel')) return abort (403,'عدم دسترسی');
         {
-            // نباید حذف شود فقط در صورتیکه ضرایب آرم آگهی آن شبکه قبلش حذف شود
-            $channel = Channel::destroy($id);
+            //  ST DOC 1400-07-10 نباید امکان حذف شبکه باشد فقط در صورتیکه ضرایب آرم آگهی و کنداکتور آن شبکه قبلش حذف شود
+
+            // $channel = Channel::destroy($id);
+            // return redirect()->back();
+
+            $channel = Channel::findOrFail($id);
+
+            $arm_id = ArmAgahi::where('channel_id' , '=' , $id)->first();
+            if($arm_id <> null)
+            {
+                return abort(403,'با شبکه مورد نظر ضریب آرم آگهی ثبت شده است، امکان حذف این شبکه نمی باشد');
+            }
+            elseif($arm_id == null)
+            {
+                $channel = Channel::destroy($id);
+                // Or  $channel->delete();
+            }
             return redirect()->back();
         }
     }

@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
 
+    <a href="{{route('owner.create')}}" class="next">اضافه نمودن صاحب آگهی</a>
+    <br>
+    <br>
+    
     <table class="table table-bordered">
         <tr style="height:1px;">
             <th style="width:10px; background-color:lightblue; text-align:center;">ردیف</th>

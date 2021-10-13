@@ -11,6 +11,9 @@
         </div>
     @endif
 
+    <a href="{{route('owner.index')}}" class="previous">لیست صاحب آگهی</a>
+    <br>
+
     <form action="@if($status == 'insert') {{route('owner.store')}}  @else  {{route('owner', $owner->id)}} @endif" method="post">
         @csrf
         @if($status == 'update') @method('put') @endif

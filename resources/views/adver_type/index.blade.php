@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('content')
 
+    <!-- <a href="{{route('adver_type.create')}}" class="btn btn-primary" style="margin-right:20px; text-align: center; width:210px;">اضافه نمودن نوع کدآگهی</a> -->
+    <a href="{{route('adver_type.create')}}" class="next">اضافه نمودن نوع کدآگهی</a>
+    <br>
+    <br>
+
     <table class="table table-bordered">
         <tr style="height:1px;">
             <th style="width:30px; background-color:lightblue; text-align:center;">ردیف</th>
@@ -17,7 +22,7 @@
                     @endcan
 
                     @can('Delete_Adver_Type')
-                        <form action="{{route('adver_type.destroy', $adver_type->id)}} , $adver_type->id" method="post">  
+                        <form action="{{route('adver_type.destroy', $adver_type->id)}}" method="post">  
                             @csrf
                             @method('delete')
                             <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
@@ -28,6 +33,7 @@
         @endforeach
     </table>
 
+    
     <form action="{{route('adver_type_search')}}" method="get">
         <label style="padding-right:40px; font-weight:bold; color:gray;" >جستجو</label>
         <!-- <div class="container"> -->
@@ -52,5 +58,6 @@
             </div>
         <!-- </div> -->
     </form>
+
 
 @endsection

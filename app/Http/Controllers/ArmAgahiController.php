@@ -68,9 +68,75 @@ class ArmAgahiController extends Controller
             // dd($request->to_date);
             $arm_agahi->to_date = $request->to_date; // str_replace("/" , "-" , $request->to_date); // "1400/07/30";  //$request->to_date;
             $arm_agahi->user_id = $request->user_id;
-            $arm_agahi->save();
-            return redirect()->route('arm_agahi.index');
+            // dd($arm_agahi);
+            if($this->checkunqueu($arm_agahi))
+            {
+                $arm_agahi->save();
+                return redirect()->route('arm_agahi.index');
+            }
+            return redirect()->route('arm_agahi.index')->with('warning','تکراری می باشد');
         }
+    }
+
+    public function checkunqueu($handler)
+    {
+        // هر تاریخی وارد شود پیغام تکراری می دهد
+        $from_date = jalaliToGergia($handler->from_date);
+        $to_date = jalaliToGergia($handler->to_date) ;
+        // dd( 'to'. $to_date);
+        
+        $query = ArmAgahi::
+        where('channel_id' , '=' , $handler->channel_id)
+
+        ->whereDate('from_date','<=', jalaliToGergia($handler->from_date))
+        ->OrwhereDate('to_date','>=', jalaliToGergia($handler->from_date))
+
+        ->OrwhereDate('from_date','<=', jalaliToGergia($handler->to_date))
+        ->whereDate('to_date','>=', jalaliToGergia($handler->to_date))
+
+        ->first();
+
+        dd($query);
+
+        if($query) return false;
+        return true;
+
+
+// ST Where With function 
+        // where('channel_id', '=' , $handler->channel_id)
+        // ->where(function ($q) {
+        //     return $q->whereDate('from_date','<=', jalaliToGergia($handler->from_date))
+        //     ->OrwhereDate('to_date','>=', jalaliToGergia($handler->from_date));
+        // });
+
+        // ->where(function ($qu) {
+        //     return $qu->where('to_date','>=', jalaliToGergia($handler->to_date))
+        //     ->Orwhere('from_date','<=', jalaliToGergia($handler->to_date));
+        // })->first();
+ 
+// END Where with function 
+
+        //      مثال واقعی 
+        // $from_date = 1400-05-01    $to_date = 1400-11-30 
+        // (from_date <= '1400-03-01' AND to_date >= '1400-03-01' OR from_date <= '1400-11-30' AND to_date >= '1400-11-30')   
+        // (1400-12-29 <= '1400-05-01' >= 1400-04-01 OR 1400-12-29 <= '1400-11-30' >= 1400-04-01)  
+        //      مثال واقعی 
+
+
+        // ->whereBetween($from_date , ['from_date' , 'to_date' ] )
+        // ->whereBetween($to_date,['from_date' , 'to_date'  ] )
+        
+
+        // OS
+    //     $query =  ArmAgahi::
+    //     where('channel_id', '=', $handler->channel_id)
+    //    ->where('from_date',  '>=' , jalaliToGergia($handler->from_date))
+    //    ->where('to_date',  '<=' , jalaliToGergia($handler->to_date))
+    //    ->first();
+    //    if($query) return false;
+    //    return true;
+       // OS
+
     }
 
     /**
@@ -98,7 +164,8 @@ class ArmAgahiController extends Controller
             $channels = Channel::all();
             $users = User::all();
             // dd($channels);
-            return view('arm_agahi.edit',['arm_agahi'=> $arm_agahi ,'channels'=> $channels , 'users' => $users ]);
+            return response()->json('arm_agahi.edit', ['arm_agahi'=> $arm_agahi ,'channels'=> $channels , 'users' => $users]);
+            // return view('arm_agahi.edit',['arm_agahi'=> $arm_agahi ,'channels'=> $channels , 'users' => $users ]);
         }
     }
 

@@ -10,6 +10,9 @@
             </ul>
         </div>
     @endif
+
+    <a href="{{route('adver_type.index')}}" class="previous">لیست نوع کدآگهی</a> 
+    <br>
     
     <form action="@if($status == 'insert') {{route('adver_type.store')}} @else {{route('adver_type',$adver_type->id)}} @endif" method="post">
         @csrf

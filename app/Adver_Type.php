@@ -17,7 +17,11 @@ class Adver_Type extends Model
     
     public function adver_type_coef()
     {
-        return $this->hasMany('App\Adver_Type_Coef');
+        // ST Doc 1400-07-10 برای این آیدی پاس دادیم که در برنامه دنبال جدول 
+        // 'adver_type_id'   آیدی واسط دو جدول
+        // adver_types_Coef
+        // میگررد و چون پیدا نمیکند ارور میدهد
+        return $this->hasMany('App\Adver_Type_Coef' , 'adver_type_id');
     }
     
 }

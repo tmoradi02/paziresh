@@ -7,6 +7,15 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+<!-- ST DOC 1400-07-14  اضافه نمودن رنگ به ضمینه گرید برای یک در میان کردن رنگ رکوردها  --> 
+<!-- odd For Zoj - even For Fard -->
+    <style>
+        table.table.table-bordered tr:nth-child(odd)   
+        {
+            background-color: lightblue;
+        }
+    </style>
+<!-- END DOC 1400-07-14  اضافه نمودن رنگ به ضمینه گرید برای یک در میان کردن رنگ رکوردها  --> 
 
     <!-- ST DOC 1400-06-21 Add For Select 2  -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -117,22 +126,22 @@
                                     <div class="subnav-content">
 
                                         <a href="{{route('channel.index')}}" >لیست شبکه</a>
-                                        <a href="{{route('channel.create')}}">اضافه نمودن شبکه</a>
+                                        <!-- <a href="{{route('channel.create')}}">اضافه نمودن شبکه</a> -->
                                         
                                         <a href="{{route('classes.index')}}" >لیست طبقه</a>
-                                        <a href="{{route('classes.create')}}" >اضافه نمودن طبقه</a>
+                                        <!-- <a href="{{route('classes.create')}}" >اضافه نمودن طبقه</a> -->
 
                                         <a href="{{route('cast.index')}}" >لیست اصناف</a>
-                                        <a href="{{route('cast.create')}}" >اضافه نمودن اصناف</a>
+                                        <!-- <a href="{{route('cast.create')}}" >اضافه نمودن اصناف</a> -->
 
                                         <a href="{{route('product.index')}}">لیست محصولات</a>
-                                        <a href="{{route('product.create')}}">اضافه نمودن محصولات</a>
+                                        <!-- <a href="{{route('product.create')}}">اضافه نمودن محصولات</a> -->
 
                                         <a href="{{route('arm_agahi.index')}}">لیست آرم آگهی</a>
-                                        <a href="{{route('arm_agahi.create')}}">اضافه نمودن آرم آگهی</a>
+                                        <!-- <a href="{{route('arm_agahi.create')}}">اضافه نمودن آرم آگهی</a> -->
 
                                         <a href="{{route('box_prog_group.index')}}">لیست گروه برنامه</a>
-                                        <a href="{{route('box_prog_group.create')}}">اضافه نمودن گروه برنامه</a>
+                                        <!-- <a href="{{route('box_prog_group.create')}}">اضافه نمودن گروه برنامه</a> -->
 
                                     </div>
                                 </div>
@@ -141,7 +150,7 @@
                                     <button class="subnavbtn">آگهی ها<i class="fa fa-caret-down"></i></button>
                                     <div class="subnav-content">
                                         <a href="{{route('owner.index')}}">لیست صاحب آگهی</a>
-                                        <a href="{{route('owner.create')}}">اضافه نمودن صاحب آگهی</a>
+                                        <!-- <a href="{{route('owner.create')}}">اضافه نمودن صاحب آگهی</a> -->
                                     </div>
                                 </div>
 
@@ -176,21 +185,21 @@
                                     <div class="subnav-content">
                                         @can('Get_Permission_To_Other_User')
                                             <a href="{{route('user.index')}}">لیست کابران</a>
-                                            <a href="{{route('user.create')}}">اضافه نمودن کاربر</a>
+                                            <!-- <a href="{{route('user.create')}}">اضافه نمودن کاربر</a> -->
                                         @endcan
                                         
                                         <a href="{{route('box_type.index')}}">لیست محل پخش</a>
-                                        <a href="{{route('box_type.create')}}">اضافه نمودن محل پخش</a>
+                                        <!-- <a href="{{route('box_type.create')}}">اضافه نمودن محل پخش</a> -->
 
                                         <a href="{{route('title.index')}}">لیست عنوان باکس</a>
-                                        <a href="{{route('title.create')}}">اضافه نمودن عنوان باکس</a>
+                                        <!-- <a href="{{route('title.create')}}">اضافه نمودن عنوان باکس</a> -->
                                         <!-- این جدول برای محاسبه محل پخش آگهی (اولین آگهی و...) اضافه گردید   -->
 
                                         <a href="{{route('adver_type.index')}}">لیست نوع کدآگهی</a>
-                                        <a href="{{route('adver_type.create')}}">اضافه نمودن نوع کدآگهی</a>
+                                        <!-- <a href="{{route('adver_type.create')}}">اضافه نمودن نوع کدآگهی</a> -->
 
                                         <a href="{{route('adver_type_coef.index')}}">لیست ضریب نوع کدآگهی</a>
-                                        <a href="{{route('adver_type_coef.create')}}">اضافه نمودن ضریب نوع کدآگهی</a>
+                                        <!-- <a href="{{route('adver_type_coef.create')}}">اضافه نمودن ضریب نوع کدآگهی</a> -->
                                     </div>
                                 </div>
 

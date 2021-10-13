@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Adver_Type;
 use App\User;
+use App\Adver_Type_Coef;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
@@ -133,20 +134,24 @@ class Adver_TypeController extends Controller
     {
         if(!Gate::allows('Delete_Adver_Type')) return abort(403,'عدم دسترسی');
         {
+            // ST DOC 1400-07-11 حذف نوع کدآگهی به شرط چک نمودن رکوردهای ضریب نوع کدآگهی
             $adver_type = Adver_Type::findOrFail($id);
-            $adver_type->adver_type_coef()->delete();
-            $adver_type->delete();
+
+            // ST DOC  در صورتیکه با صنف مورد نظر محصولی ثبت شده باشد، اجازه حذف نمی دهد
+            $adver_type_coef_id = Adver_Type_Coef::where('adver_type_id' , '=' , $id)->first();
+
+            if($adver_type_coef_id <> null)
+            {
+                return abort(403,'با صنف مورد نظر محصول ثبت شده است، امکان حذف ندارید');
+                // $adver_type->adver_type_coef()->delete();
+            }
+            elseif($adver_type_coef_id == null)
+            {
+                $adver_type->delete();
+            }
             return redirect()->back();
         }
     }
-
-    // if(!Gate::allows('Delete_Cast')) return abort(403,'عدم دسترسی');
-    // {
-    //     $cast = Cast::findOrFail($id);
-    //     $cast->product()->delete();
-    //     $cast->delete();
-    //     return redirect()->back(); 
-    // }
 
     public function search(Request $request)
     {
@@ -159,7 +164,6 @@ class Adver_TypeController extends Controller
         $adver_types = $adver_types->get();
         return view('adver_type.index' , ['adver_types' => $adver_types]);
     }
-
 }
 
 

@@ -131,10 +131,28 @@ class CastController extends Controller
     {
         if(!Gate::allows('Delete_Cast')) return abort(403,'عدم دسترسی');
         {
+            // ST LOCK 1400-07-11  این قسمت بدلیل چک نکردن رکوردهای وابسته لاک گرفت شد
+                // $cast = Cast::findOrFail($id);
+                // $cast->product()->delete();
+                // $cast->delete();
+                // return redirect()->back(); 
+            // END  LOCK 1400-07-11  این قسمت بدلیل چک نکردن رکوردهای وابسته لاک گرفت شد
+
+            // ST DOC 1400-07-11  چک کردن رکوردهای وابسته به این جدول قبل از حذف رکورد
             $cast = Cast::findOrFail($id);
-            $cast->product()->delete();
-            $cast->delete();
-            return redirect()->back(); 
+
+            $product = Product::where('cast_id' , '=' , $id)->first();
+            if($product <> null)
+            {
+                return abort(403 , 'با صنف مورد نظر محصولاتی ثبت شده، امکان حذف این صنف نمی باشد');
+            }
+            elseif($product == null)
+            {
+                //  OR  $cast->delete();
+                $cast = Channel::destroy($id);
+            }
+            return redirect()->back();
+            // END DOC 1400-07-11  چک کردن رکوردهای وابسته به این جدول قبل از حذف رکورد
         }
     }
 
