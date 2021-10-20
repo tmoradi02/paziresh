@@ -5,11 +5,34 @@
     <br>
     <br>
 
+    <form action="{{route('box_prog_group_search')}}" method="get">
+        <label style="padding:15px; font-weight:bold; color:gray;margin-right:20px;">جستجو</label>
+        <div style="margin-right:10px;">
+            <div class="row" style="border:1px ridge lightblue; width:700px; margin-right:15px; padding:15px 0px; height:75px;">
+            
+                <div class="col">
+                    <div class="form-group" style="width:570px;">
+                        <input type="text" name="prog_group" placeholder="جستجو عنوان برنامه" class="form-control" >
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <input type="submit" value="جستجو" class="btn btn-primary">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    
+    <br>
+
     <table class="table table-bordered">
         <tr style="height:1px;">
-            <th style="width:30px; background-color:lightblue; text-align:center;">ردیف</th>
-            <th style="width:400px; background-color:lightblue; text-align:center;">عنوان برنامه</th>
-            <th style="width:300px; background-color:lightblue;"> Action</th>
+            <th style="width:30px; background-color:darkgray; text-align:center;">ردیف</th>
+            <th style="width:400px; background-color:darkgray; text-align:center;">عنوان برنامه</th>
+            <th style="width:300px; background-color:darkgray;"> Action</th>
         </tr>
         @foreach($box_prog_groups as $box_prog_group)
             <tr class="rowt" style="height:1px;">
@@ -31,27 +54,5 @@
             </tr>
         @endforeach
     </table>
-
-    <form action="{{route('box_prog_group_search')}}" method="get">
-        <!-- <div class="container"> -->
-        <label style="padding:15px; font-weight:bold; color:gray; margin-right:20px;">جستجو</label>
-        <div style="margin-right:10px;">
-            <div class="row" style="border:1px ridge lightblue; width:700px; margin-right:15px; height:75px; padding:15px;">
-                <div class="col">
-                    <div class="form-group" style="width:545px;">
-                        <input type="text" name="prog_group" placeholder="جستجو عنوان برنامه" class="form-control">
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        <input type="submit" value="جستجو" class="btn btn-primary">
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        <!-- </div> -->
-    </form>
 
 @endsection

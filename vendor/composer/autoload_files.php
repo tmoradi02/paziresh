@@ -35,4 +35,5 @@ return array(
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'b6b991a57620e2fb6b2f66f03fe9ddc2' => $vendorDir . '/symfony/string/Resources/functions.php',
     '4ad677cf23be1eeec8c74951804d4cb0' => $vendorDir . '/hekmatinasser/verta/src/helpers.php',
+    '577e8babc5e897de9cab73c9a71fdb59' => $baseDir . '/app/Helper/helper.php',
 );

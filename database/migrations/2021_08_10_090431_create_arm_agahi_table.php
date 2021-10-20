@@ -19,7 +19,7 @@ class CreateArmAgahiTable extends Migration
             $table->double('coef',200,1); // double('coef',3,1);
             $table->Date('from_date');
             $table->Date('to_date');
-            $table->bigInteger('user_id');
+            $table->Integer('user_id');
             $table->timestamps();
         });
     }

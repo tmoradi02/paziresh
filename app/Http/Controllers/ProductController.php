@@ -22,7 +22,8 @@ class ProductController extends Controller
         {
             $products = Product::all();
             $casts = Cast::all();
-            return view('product.index' , ['products'=> $products , 'casts' => $casts ]);
+            $users = User::all();
+            return view('product.index' , ['products'=> $products , 'casts' => $casts, 'users' => $users ]);;
         }
     }
 
@@ -136,6 +137,7 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $casts = Cast::all();
+        $users = User::all();
         $products = Product::query();
 
         if($request->has('cast_id') && $request->cast_id)
@@ -148,8 +150,13 @@ class ProductController extends Controller
             $products->where('product' , 'like' , "%$request->product%");
         }
 
+        if($request->has('user_id') & $request->user_id)
+        {
+            $products->where('user_id' , $request->user_id);
+        }
+
         $products = $products->get();
-        return view('product.index' , ['products' => $products , 'casts' => $casts]);
+        return view('product.index' , ['products' => $products , 'casts' => $casts , 'users' => $users]);
     }
 
 }

@@ -149,7 +149,7 @@ class CastController extends Controller
             elseif($product == null)
             {
                 //  OR  $cast->delete();
-                $cast = Channel::destroy($id);
+                $cast = Cast::destroy($id);
             }
             return redirect()->back();
             // END DOC 1400-07-11  چک کردن رکوردهای وابسته به این جدول قبل از حذف رکورد

@@ -71,6 +71,11 @@ Route::get('adver_type_coef/{id}/edit' , 'Adver_Type_CoefController@create')->na
 Route::put('adver_type_coef/{id}' , 'Adver_Type_CoefController@store')->name('adver_type_coef');
 Route::get('adver_type_coef/search/s' , 'Adver_Type_CoefController@search')->name('adver_type_coef_search');
 
+Route::resource('tariff',TariffController::class)->except(['edit' , 'update' , 'search']);
+Route::get('tariff/{id}/edit' , 'TariffController@create')->name('tariff.edit');
+Route::put('tariff/{id}' , 'TariffController@store')->name('tariff');
+Route::get('tariff/search/s' , 'TariffController@search')->name('tariff_search');
+
 // For Clear Cache With Roue-> /clear-cache
 Route::get('/clear-cache', function() {  
     $configCache = Artisan::call('config:cache');

@@ -97,6 +97,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Box_Prog_Group');
     }
 
+    public function tariff()
+    {
+        return $this->hasMany('App\Tariff');
+    }
+
     public function hasAnyRole($roles)
     {
         return $this->roles()->whereIn('permissions.permission_name',$roles)->first();

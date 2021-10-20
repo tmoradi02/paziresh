@@ -11,13 +11,13 @@
 
     <table class="table table-bordered">
         <tr style="height:1px;">
-            <th style="width:30px; background-color:lightblue; text-align:center;">ردیف</th>
-            <th style="width:200px; background-color:lightblue; text-align:center;">عنوان شبکه</th>
-            <th style="width:100px; background-color:lightblue; text-align:center;">ضریب آرم آگهی</th>
-            <th style="width:100px; background-color:lightblue; text-align:center;">از تاریخ</th>
-            <th style="width:100px; background-color:lightblue; text-align:center;">تا تاریخ</th>
-            <th style="width:200px; background-color:lightblue; text-align:center;">View Log File</th>
-            <th style="width:200px; background-color:lightblue;">Action</th>
+            <th style="width:30px; background-color:darkgray; text-align:center;">ردیف</th>
+            <th style="width:200px; background-color:darkgray; text-align:center;">عنوان شبکه</th>
+            <th style="width:100px; background-color:darkgray; text-align:center;">ضریب آرم آگهی</th>
+            <th style="width:100px; background-color:darkgray; text-align:center;">از تاریخ</th>
+            <th style="width:100px; background-color:darkgray; text-align:center;">تا تاریخ</th>
+            <th style="width:200px; background-color:darkgray; text-align:center;">View Log File</th>
+            <th style="width:200px; background-color:darkgray;">Action</th>
         </tr>
         @foreach($channels as $channel)
             @foreach($arm_agahies as $arm)

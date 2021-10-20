@@ -23,7 +23,7 @@ class CreateOwnersTable extends Migration
             $table->string('address_owner')->nullable();
             $table->tinyInteger('kind_group');
             $table->string('description_owner')->nullable();
-            $table->bigInteger ('user_id');
+            $table->Integer ('user_id');
             $table->timestamps();
         });
     }

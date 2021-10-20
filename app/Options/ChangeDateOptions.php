@@ -1,27 +1,34 @@
 <?php 
+
 namespace App\Options;
+
 use Hekmatinasser\Verta\Verta;
 
 use Illuminate\Support\Facades\Schema;
 use App\ArmAgahi;
+use App\Adver_Type_Coef;
 // use Illuminate\Support\Facades\Input;
 
 trait ChangeDateOptions{
 
     public function getFromDateAttribute($value)
     {
+        // dd($value);
+
         $date = explode('-' , $value);
         $date = Verta::getJalali($date[0],$date[1],$date[2]);
 
-        if(Str::length($date[1]) <2)
-        {
-            $date[1] = sprintf("%02d",  $date[1]);
-        }
+        // dd($date);
+        
+        // if(Str::length($date[1]) <2)
+        // {
+        //     $date[1] = sprintf("%02d",  $date[1]);
+        // }
 
-        if(Str::length($date[2]) <2)
-        {
-            $date[2] = sprintf("%02d", $date[2]); 
-        }
+        // if(Str::length($date[2]) <2)
+        // {
+        //     $date[2] = sprintf("%02d", $date[2]); 
+        // }
         
         // dd($date);
 
@@ -57,19 +64,20 @@ trait ChangeDateOptions{
         $date = explode('-' , $value);
         $date = Verta::getJalali($date[0],$date[1],$date[2]);
 
-        if(Str::length($date[1]) <2)
-        {
-            $date[1] = sprintf("%02d",  $date[1]);
-        }
+        // if(Str::length($date[1]) <2)
+        // {
+        //     $date[1] = sprintf("%02d",  $date[1]);
+        // }
     
-        if(Str::length($date[2]) <2)
-        {
-            $date[2] = sprintf("%02d", $date[2]); 
-        }
+        // if(Str::length($date[2]) <2)
+        // {
+        //     $date[2] = sprintf("%02d", $date[2]); 
+        // }
 
         // dd($date);
 
         $date = implode('/' , $date);
+
         return $date;
     }
 
@@ -81,7 +89,6 @@ trait ChangeDateOptions{
         // return $date;
         $this->attributes['to_date'] = $date;
     }
-
 
 }
 

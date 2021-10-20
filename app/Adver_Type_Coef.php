@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Hekmatinasser\Verta\Verta;
 use App\Options\ChangeDateOptions;
 
 class Adver_Type_Coef extends Model

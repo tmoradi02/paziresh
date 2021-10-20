@@ -1,4 +1,7 @@
 <?php 
+
+namespace App\Helper;
+
 use Hekmatinasser\Verta\Verta;
 
 function jalaliToGergia($value , $spliter='/' , $exitSpliter='-')

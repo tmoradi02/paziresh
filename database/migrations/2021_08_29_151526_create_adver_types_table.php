@@ -16,7 +16,7 @@ class CreateAdverTypesTable extends Migration
         Schema::create('adver_types', function (Blueprint $table) {
             $table->id();
             $table->string('adver_type');
-            $table->bigInteger('user_id');
+            $table->Integer('user_id');
             $table->timestamps();
         });
     }

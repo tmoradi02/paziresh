@@ -8,7 +8,6 @@ use App\Channel;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Hekmatinasser\Verta\Verta;
-//use PhpParser\Node\Expr\FuncCall;
 
 class ArmAgahiController extends Controller
 {
@@ -101,7 +100,6 @@ class ArmAgahiController extends Controller
 
         if($query) return false;
         return true;
-
 
 // ST Where With function 
         // where('channel_id', '=' , $handler->channel_id)
@@ -213,7 +211,6 @@ class ArmAgahiController extends Controller
             return redirect()->back();
         }
     }
-    
     
     public function search(Request $request)
     {

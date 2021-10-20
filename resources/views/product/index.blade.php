@@ -4,13 +4,67 @@
     <a href="{{route('product.create')}}" class="next">اضافه نمودن محصولات</a>
     <br>
     <br>
-    
+
+    <form action="{{route('product_search')}}" method="get">
+        <label style="padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
+        <div style="border:1px ridge lightblue; padding-right:10px; margin-right:20px; padding-top:10px; margin-left:600px; height:60px;">
+            <div class="row">
+
+                <!-- <div class="col">   Select Mamoolo
+                    <div class="form-group">
+                        <select name="cast_id" class="form-control js-example-basic-single">
+                        <option value="">انتخاب صنف</option>
+                            @foreach($casts as $cast)
+                                <option value="{{$cast->id}}">{{$cast->cast}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div> -->
+
+                <div class="col">
+                    <div class="form-group">
+                        <select name="cast_id" id="myselect" multiple>
+                            @foreach($casts as $cast)
+                                <option value="{{$cast->id}}">{{$cast->cast}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group" style="width:300px;">
+                        <input type="text" name="product" placeholder="جستجو عنوان محصول" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group" style="width:300px;">
+                        <select name="user_id" id="myselect-2" multiple>
+                            @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <input type="submit" value="جستجو" class="btn btn-primary">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <br>
+
     <table class="table table-bordered">
         <tr style="height:1px;">
-            <th style="width:30px; background-color:lightblue; text-align:center">ردیف</th>
-            <th style="width:400px; background-color:lightblue; text-align:center;">عنوان صنف</th>
-            <th style="width:600px; background-color:lightblue; text-align:cenetr;">عنوان محصول</th>
-            <th style="width:300px; background-color:lightblue; ">Action</th>
+            <th style="width:30px; background-color:darkgray; text-align:center">ردیف</th>
+            <th style="width:400px; background-color:darkgray; text-align:center;">عنوان صنف</th>
+            <th style="width:600px; background-color:darkgray; text-align:cenetr;">عنوان محصول</th>
+            <th style="width:300px; background-color:darkgray; ">Action</th>
         </tr>
         @foreach($casts as $cast)
             @foreach($products as $product)
@@ -37,52 +91,5 @@
             @endforeach
         @endforeach
     </table>
-
-
-    <form action="{{route('product_search')}}" method="get"> 
-        <!-- <div class="container"> -->
-        <label style="font-weight:bold; color:gray; margin-right:20px;">جستجو</label>
-        <div style=" margin-right: 30px; margin-left:900px;">
-            <div class="row" style="border:1px ridge lightblue; padding:20px; height:80px; width:1300px; ">
-
-                <!-- <div class="col">   Select Mamoolo
-                    <div class="form-group">
-                        <select name="cast_id" class="form-control js-example-basic-single">
-                        <option value="">انتخاب صنف</option>
-                            @foreach($casts as $cast)
-                                <option value="{{$cast->id}}">{{$cast->cast}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div> -->
-
-                <div class="col">
-                    <div class="form-group">
-                        <!-- <strong>صنف:</strong> -->
-                        <select id='myselect' multiple  placeholder="جستجو صنف"  name="cast_id" >
-                            @foreach($casts as $cast)
-                                <option placeholder="جستجو صنف" value="{{$cast->id}}">{{$cast->cast}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group" style="width:500px;">
-                        <input type="text" name="product" placeholder="جستجو عنوان محصول" class="form-control">
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        <input type="submit" value="جستجو" class="btn btn-primary"> 
-                    </div>
-                </div>
-
-            </div>
-            </div>
-        <!-- </div> -->
-    </form>
-
 @endsection
 

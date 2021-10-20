@@ -11,6 +11,9 @@
         </div>
     @endif
 
+    <a href="{{route('user.index')}}" class="previous">لیست کاربران</a>
+    <br>
+
     <form action="{{route('user.update',$user->id)}}" method="post">
         @csrf
         @method('put')
@@ -37,6 +40,7 @@
                     <div class="form-group">
                         <input type="email" name="email" maxlength="100" placeholder="ایمیل" class="form-control" value="{{$user->email}}">
                     </div>
+
                     <div class="form-group">
                         <input type="password" name="password" placeholder="کلمه عبور" class="form-control" >
                     </div>
@@ -44,6 +48,7 @@
                     <div class="form-group">
                         <input type="tel" name="tell" maxlength="40" placeholder="تلفن" class="form-control" value="{{$user->tell}}">
                     </div>
+
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -51,26 +56,28 @@
                                 <label>فعال</label>
                             </div>
                         </div>
+
                         <div class="col">
                             <div class="form-group">
                                 <input type="radio" name="status" id="0" value="0" class="flat" @if($user->status == "0") checked   @endif>
                                 <label>غیر فعال</label>
                             </div>
                         </div>  
-                        <div class="col">
-                        </div>  
-                        <div class="col">
-                        </div>       
-                        <div class="col">
-                        </div>  
-                                    
+
+                        <div class="col"></div>
+                        <div class="col"></div>
+                        <div class="col"></div>
+
                     </div>
                     
                     <div class="form-group">
                         <input type="submit" name="submit" value="ثبت" class="btn btn-primary" >
                     </div>
+
+                </div>
             </div>
         </div>
     </form>
 
 @endsection
+

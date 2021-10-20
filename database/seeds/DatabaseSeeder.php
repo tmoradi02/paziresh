@@ -15,6 +15,8 @@ use App\Title;
 use App\Owner;
 use App\Adver_Type;
 use App\Adver_Type_Coef;
+use App\Tariff;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -41,6 +43,9 @@ class DatabaseSeeder extends Seeder
         factory(Owner::class,10)->create();
         factory(Adver_Type::class, 10)->create();
 
+        factory(Tariff::class,10)->create();
+
+        
         
         $access[] = Permission::create(['permission_name' =>'Get_Permission_To_Other_User']);
 
@@ -48,52 +53,52 @@ class DatabaseSeeder extends Seeder
         $access[] = Permission::create(['permission_name' => 'Insert_User']);
         $access[] = Permission::create(['permission_name' => 'Edit_User']);
         $access[] = Permission::create(['permission_name' => 'Delete_User']);
-
+        
         $access[] = Permission::create(['permission_name' => 'Visit_Channel']);
         $access[] = Permission::create(['permission_name' => 'Insert_Channel']);
         $access[] = Permission::create(['permission_name' => 'Edit_Channel']);
         $access[] = Permission::create(['permission_name' => 'Delete_Channel']);
-
+        
         $access[] = Permission::create(['permission_name' => 'Visit_Classes']);
         $access[] = Permission::create(['permission_name' => 'Insert_Classes']);
         $access[] = Permission::create(['permission_name' => 'Edit_Classes']);
         $access[] = Permission::create(['permission_name' => 'Delete_Classes']);
-
+        
         $access[] = Permission::create(['permission_name' => 'Visit_ArmAgahi']);
         $access[] = Permission::create(['permission_name' => 'Insert_ArmAgahi']);
         $access[] = Permission::create(['permission_name' => 'Edit_ArmAgahi']);
         $access[] = Permission::create(['permission_name' => 'Delete_ArmAgahi']);
-
+        
         $access[] = Permission::create(['permission_name' => 'Visit_Box_Type']);
         $access[] = Permission::create(['permission_name' => 'Insert_Box_Type']);
         $access[] = Permission::create(['permission_name' => 'Edit_Box_Type']);
         $access[] = Permission::create(['permission_name' => 'Delete_Box_Type']);
-
+        
         $access[] = Permission::create(['permission_name' => 'Visit_Box_Prog_Group']);
         $access[] = Permission::create(['permission_name' => 'Insert_Box_Prog_Group']);
         $access[] = Permission::create(['permission_name' => 'Edit_Box_Prog_Group']);
         $access[] = Permission::create(['permission_name' => 'Delete_Box_Prog_Group']);
-
+        
         $access[] = Permission::create(['permission_name' => 'Visit_Cast']);
         $access[] = Permission::create(['permission_name' => 'Insert_Cast']);
         $access[] = Permission::create(['permission_name' => 'Edit_Cast']);
         $access[] = Permission::create(['permission_name' => 'Delete_Cast']);
-
+        
         $access[] = Permission::create(['permission_name' => 'Visit_Product']);
         $access[] = Permission::create(['permission_name' => 'Insert_Product']);
         $access[] = Permission::create(['permission_name' => 'Edit_Product']);
         $access[] = Permission::create(['permission_name' => 'Delete_Product']);
-
+        
         $access[] = Permission::create(['permission_name' => 'Visit_Title']);
         $access[] = Permission::create(['permission_name' => 'Insert_Title']);
         $access[] = Permission::create(['permission_name' => 'Edit_Title']);
         $access[] = Permission::create(['permission_name' => 'Delete_Title']);
-
+        
         $access[] = Permission::create(['permission_name' => 'Visit_Owner']);
         $access[] = Permission::create(['permission_name' => 'Insert_Owner']);
         $access[] = Permission::create(['permission_name' => 'Edit_Owner']);
         $access[] = Permission::create(['permission_name' => 'Delete_Owner']);
-
+        
         $access[] = Permission::create(['permission_name' => 'Visit_Adver_Type']);
         $access[] = Permission::create(['permission_name' => 'Insert_Adver_Type']);
         $access[] = Permission::create(['permission_name' => 'Edit_Adver_Type']);
@@ -104,7 +109,11 @@ class DatabaseSeeder extends Seeder
         $access[] = Permission::create(['permission_name' => 'Edit_Adver_Type_Coef']);
         $access[] = Permission::create(['permission_name' => 'Delete_Adver_Type_Coef']);
 
-
+        $access[] = Permission::create(['permission_name' => 'Visit_Tariff']);
+        $access[] = Permission::create(['permission_name' => 'Insert_Tariff']);
+        $access[] = Permission::create(['permission_name' => 'Edit_Tariff']);
+        $access[] = Permission::create(['permission_name' => 'Delete_Tariff']);
+        
         // Create User For Login Auto Full Access
         $user = User::create([
             'name' => 'Admin',
@@ -114,23 +123,25 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => 'TokenTesti' ,
-        ]);
-
-        $tempAccess = [];
-
-        foreach($access as $a)
-        {
-            $tempAccess[]= $a->id;
+            ]);
+            
+            $tempAccess = [];
+            
+            foreach($access as $a)
+            {
+                $tempAccess[]= $a->id;
+            }
+            $user->roles()->sync($tempAccess);
+            
+            // ST DOC 1400-06-21For Migrate In Date Error 
+            factory(ArmAgahi::class,10)->create();
+            factory(Adver_Type_Coef::class,10)->create();
+            
+            // factory(Tariff::class,10)->create();
+            
         }
-        $user->roles()->sync($tempAccess);
-
-        // ST DOC 1400-06-21For Migrate In Date Error 
-        factory(ArmAgahi::class,10)->create();
-        factory(Adver_Type_Coef::class,10)->create();
-
     }
-}
-
-
-
-
+    
+    
+    
+    

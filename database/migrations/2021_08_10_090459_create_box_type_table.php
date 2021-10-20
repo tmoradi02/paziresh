@@ -16,7 +16,7 @@ class CreateBoxTypeTable extends Migration
         Schema::create('box_type', function (Blueprint $table) {
             $table->id();
             $table->string('box_type',30);
-            $table->bigInteger('user_id');
+            $table->Integer('user_id');
             $table->timestamps();
         });
     }

@@ -17,4 +17,11 @@ class Channel extends Model
     {
         return $this->belongsToMany('App\ArmAgahi');
     }
+
+    public function tariff()
+    {
+        return $this->belongsToMany('App\Tariff');
+    }
+
+    
 }

@@ -87,7 +87,7 @@ class Adver_Type_CoefController extends Controller
         $adver_type_coef->save();
         return redirect()->route('adver_type_coef.index');
     }
-
+        
     /**
      * Display the specified resource.
      *

@@ -61,5 +61,4 @@ class Cors implements HttpKernelInterface
 
         return $this->cors->addActualRequestHeaders($response, $request);
     }
-    
 }

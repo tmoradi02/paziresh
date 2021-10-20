@@ -21,7 +21,8 @@ class OwnerController extends Controller
         if(!Gate::allows('Visit_Owner')) return abort(403,'عدم دسترسی');
         {
             $owners = Owner::all();
-            return view('owner.index' , ['owners'=> $owners]);
+            $users = User::all();
+            return view('owner.index' , ['owners'=> $owners , 'users'=> $users]);
         }
     }
 
@@ -147,6 +148,7 @@ class OwnerController extends Controller
 
     public function search(Request $request)
     {
+        $users = User::all();
         $owners = Owner::query();
 
         if($request->has('owner') && $request->owner)
@@ -181,9 +183,14 @@ class OwnerController extends Controller
         {
             $owners->where('description_owner' , 'like' , "%$request->description_owner%");
         }
-        $owners = $owners->get();
-        return view('owner.index' , ['owners' => $owners]);
 
+        if($request->has('user_id') && $request->user_id)
+        {
+            $owners->where('user_id' , $request->user_id);
+        }
+
+        $owners = $owners->get();
+        return view('owner.index' , ['owners' => $owners , 'users'=> $users]);
     }
     
 }

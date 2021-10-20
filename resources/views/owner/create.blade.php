@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="form-group" style="padding-right:30px; flex-direction: row-reverse; >
+                    <div class="form-group" style="padding-right:30px; flex-direction: row-reverse;" >
                         <input type="radio" name="kind_group" id ="2" value="2"  @if($status == 'update') @if($owner->kind_group == 2) checked  @endif @endif>
                         <label>گروه دوم</label>
                     </div>
@@ -80,19 +80,28 @@
                 </div>
 
                 <div class="col">
-                    <select name="user_id" class="form-control" style="width:415px;">
-                        @foreach($users as $user)
-                            <option value="{{$user->id}}" @if($status == 'update')  @if($user->id == $owner->user_id) selected @endif @endif>{{$user->name}}</option>
-                        @endforeach
-                    </select>
+                    @can('Get_Permission_To_Other_User')
+                        <select name="user_id" id="myselect" multiple style="width:315px;">
+                            @foreach($users as $user) 
+                                <option value="{{$user->id}}" @if($status == 'update') @if($user->id == $owner->user_id) selected @endif @endif>{{$user->name}}</option>
+                            @endforeach
+                        </select>
+                    @endcan
                 </div>
+
                 <div class="col">
                     <div class="form-group">
                         <input type="submit" value = "ثبت" class = "btn btn-primary" style="border-radius 5px;">
                     </div>
                 </div>
+
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+
             </div>  
         </div>
     </form>
 @endsection
+
 

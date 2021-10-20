@@ -17,6 +17,8 @@ use App\Title;
 use App\Owner;
 use App\Adver_Type;
 use App\Adver_Type_Coef;
+use App\Tariff;
+
 
 use carbon\carbon;
 
@@ -135,7 +137,7 @@ $factory->define(Adver_Type::class , function(Faker $faker)
     ];
 });
 
-$factory->define(Adver_Type_Coef::class,function(Faker $faker)
+$factory->define(Adver_Type_Coef::class,function()
 {
     return [
         'Adver_Type_id' => rand(1,10),
@@ -146,7 +148,7 @@ $factory->define(Adver_Type_Coef::class,function(Faker $faker)
     ];
 });
 
-$factory->define(ArmAgahi::class, function(Faker $faker)
+$factory->define(ArmAgahi::class, function()
 {
     return [
         'channel_id' => rand(1,10),
@@ -156,3 +158,20 @@ $factory->define(ArmAgahi::class, function(Faker $faker)
         'user_id' => rand(1,10),
     ];
 });
+
+$factory->define(Tariff::class, function(Faker $faker)
+{
+    return [
+        'channel_id' => rand(1,14),
+        'classes_id' => rand(1,15),
+        'from_date' => carbon::now()->addDays(rand(5,10)),
+        'to_date' => carbon::now()->addDays(rand(20,30)),
+        'box_type_id' => rand(1,20),
+        // 'price' => $faker->randomFloat(4, 0, 100000),
+        'price' => $faker->randomNumber(5),
+        'user_id' => rand(1,12),
+    ];
+});
+
+
+

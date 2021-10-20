@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit5204c6617efc55bd76de441ab033cfd9
+class ComposerStaticInitf9c18a422d89431fd18aa6e3d8b01b8f
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -36,6 +36,7 @@ class ComposerStaticInit5204c6617efc55bd76de441ab033cfd9
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         '4ad677cf23be1eeec8c74951804d4cb0' => __DIR__ . '/..' . '/hekmatinasser/verta/src/helpers.php',
+        '577e8babc5e897de9cab73c9a71fdb59' => __DIR__ . '/../..' . '/app/Helper/helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -508,6 +509,7 @@ class ComposerStaticInit5204c6617efc55bd76de441ab033cfd9
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Adver_TypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Adver_TypeController.php',
+        'App\\Http\\Controllers\\Adver_Type_CoefController' => __DIR__ . '/../..' . '/app/Http/Controllers/Adver_Type_CoefController.php',
         'App\\Http\\Controllers\\ArmAgahiController' => __DIR__ . '/../..' . '/app/Http/Controllers/ArmAgahiController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -546,6 +548,7 @@ class ComposerStaticInit5204c6617efc55bd76de441ab033cfd9
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Tariff' => __DIR__ . '/../..' . '/app/Tariff.php',
         'App\\Title' => __DIR__ . '/../..' . '/app/Title.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
@@ -5093,10 +5096,10 @@ class ComposerStaticInit5204c6617efc55bd76de441ab033cfd9
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit5204c6617efc55bd76de441ab033cfd9::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit5204c6617efc55bd76de441ab033cfd9::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit5204c6617efc55bd76de441ab033cfd9::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit5204c6617efc55bd76de441ab033cfd9::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf9c18a422d89431fd18aa6e3d8b01b8f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf9c18a422d89431fd18aa6e3d8b01b8f::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitf9c18a422d89431fd18aa6e3d8b01b8f::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitf9c18a422d89431fd18aa6e3d8b01b8f::$classMap;
 
         }, null, ClassLoader::class);
     }

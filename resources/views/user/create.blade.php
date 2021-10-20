@@ -18,6 +18,7 @@
         @csrf
         <div class="container">
             <div class="row">
+
                 <div class="col">
                     <div class="form-group">
                         <input type="text" name="name" maxlength="30" placeholder="نام کاربر" class="form-control" >
@@ -55,20 +56,17 @@
                                 <label>غیر فعال</label>
                             </div>
                         </div>  
-                        <div class="col">
 
-                        </div>  
-                        <div class="col">
+                        <div class="col"></div>
+                        <div class="col"></div>
+                        <div class="col"></div>
 
-                        </div>       
-                        <div class="col">
-
-                        </div>  
                     </div>
 
                     <div class="form-group">
                         <button class="btn btn-primary">ثبت</button>
                     </div>
+
                 </div>
             </div>
                 

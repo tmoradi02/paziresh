@@ -15,11 +15,11 @@ class CreateAdverTypeCoefTable extends Migration
     {
         Schema::create('adver_type_coef', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('adver_type_id');
+            $table->Integer('adver_type_id');
             $table->double('coef');
             $table->Date('from_date');
             $table->Date('to_date');
-            $table->bigInteger('user_id');
+            $table->Integer('user_id');
             $table->timestamps();
         });
     }

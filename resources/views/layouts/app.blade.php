@@ -12,7 +12,7 @@
     <style>
         table.table.table-bordered tr:nth-child(odd)   
         {
-            background-color: lightblue;
+            background-color: lightgray;
         }
     </style>
 <!-- END DOC 1400-07-14  اضافه نمودن رنگ به ضمینه گرید برای یک در میان کردن رنگ رکوردها  --> 

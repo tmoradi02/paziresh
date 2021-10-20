@@ -5,11 +5,34 @@
     <br>
     <br>
     
+    <form action="{{route('classes_search')}}" method="get">
+        <label style="margin-right:30px; font-weight:bold; color:gray;">جستجو</label>
+        <div style="margin-right:30px;">
+            <div class="row" style="border:1px ridge lightblue;width:430px;padding:15px 0px; height:70px;">
+
+                <div class="col" >
+                    <div class="form-group" style="width:300px;">
+                        <input type="text" name="class_name" placeholder="جستجو عنوان طبقه" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group" style="">
+                        <input type="submit" value="جستجو" class="btn btn-primary">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <br>
+
     <table class="table table-bordered" style="margin-right:20px; margin-left: 30px;">
         <tr style="height:1px;">
-            <th style="width:30px; background-color:lightblue; text-align:center;">ردیف</th>
-            <th style="width:300px; background-color:lightblue; text-align:center;">عنوان طبقه</th>
-            <th style="width:300px; background-color:lightblue; ">action</th>
+            <th style="width:30px; background-color:darkgray; text-align:center;">ردیف</th>
+            <th style="width:300px; background-color:darkgray; text-align:center;">عنوان طبقه</th>
+            <th style="width:300px; background-color:darkgray; ">action</th>
         </tr>
         @foreach($classes as $classe)
             <tr class="rowt" style="height: 1px;">
@@ -31,26 +54,6 @@
             </tr>
         @endforeach
     </table>
-
-    <form action="{{route('classes_search')}}" method="get">
-        <!-- <div class="container"> -->
-            <label style="font-weight: bold; color:gray; margin-right:30px; ">جستجو</label>
-            <div style="margin-right:30px; margin-left:900px;">
-                <div class="row" style="border:1px ridge lightblue; width: 600px; height:70px;">
-                    <div class="col">
-                        <div class="form-group" style="padding:10px; width:400px;">
-                            <input type="text" name="class_name" placeholder="جستجو عنوان طبقه" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group" style="padding:20px;">
-                            <input type="submit" value="جستجو" class="btn btn-primary">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <!-- </div> -->
-    </form>
 
 @endsection
 

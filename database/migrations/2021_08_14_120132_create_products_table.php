@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->bigInteger('cast_id');
             $table->string('product',100);
-            $table->bigInteger('user_id');
+            $table->Integer('user_id');
             $table->timestamps();
         });
     }

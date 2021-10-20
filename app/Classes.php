@@ -12,4 +12,11 @@ class Classes extends Model
     {
         return $this->belongsToMany('App\User');
     }
+
+    public function Tariff()
+    {
+        return $this->belongsToMany('App\Tariff');
+    }
+
+    
 }

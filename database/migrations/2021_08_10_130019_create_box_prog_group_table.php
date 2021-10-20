@@ -16,7 +16,7 @@ class CreateBoxProgGroupTable extends Migration
         Schema::create('box_prog_group', function (Blueprint $table) {
             $table->id();
             $table->string('prog_group',50);
-            $table->bigInteger('user_id');
+            $table->Integer('user_id');
             $table->timestamps();
         });
     }

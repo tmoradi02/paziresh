@@ -5,11 +5,33 @@
     <br>
     <br>
     
+    <form action="{{route('cast_search')}}" method="get">
+        <label style="margin-right:30px; font-weight:bold; color:gray;">جستجو</label>
+        <div style="margin-right:30px;">
+            <div class="row" style="border:1px ridge lightblue; width:600px; padding:15px 0px; height:70px;" >
+                <div class="col">
+                    <div class="form-group" style="width:470px;">
+                        <input type="text" name="cast" placeholder="جستجو عنوان صنف" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <input type="submit" value="جستجو" class="btn btn-primary">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <br>
+    
     <table class="table table-bordered">
         <tr style="height:1px;">
-            <th style="width:30px; background-color:lightblue; text-align:center;">ردیف</th>
-            <th style="width:500px; background-color:lightblue; text-align:center;">عنوان صنف</th>
-            <th style="width:300px; background-color:lightblue; ">Action</th>
+            <th style="width:30px; background-color:darkgray; text-align:center;">ردیف</th>
+            <th style="width:500px; background-color:darkgray; text-align:center;">عنوان صنف</th>
+            <th style="width:300px; background-color:darkgray; ">Action</th>
         </tr>
         @foreach($casts as $cast)
             <tr class="rowt" style="height:1px;">
@@ -31,26 +53,6 @@
             </tr>
         @endforeach
     </table>
-
-    <form action="{{route('cast_search')}}" method="get">
-        <!-- <div class="container"> -->
-            <label style="margin-right:30px; font-weight:bold; color:gray;">جستجو</label>
-            <div style="margin-left:900px; margin-right:30px;">
-                <div class="row" style="border:1px ridge lightblue; widht:600px; height:70px; padding:15px;">
-                    <div class="col">
-                        <div class="form-group" style="width:420px;">
-                            <input type="text" name="cast" placeholder="جستجو نام صنف" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <input type="submit" value="جستجو" class="btn btn-primary">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <!-- </div> -->
-    </form>
 
 @endsection
 

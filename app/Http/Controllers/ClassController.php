@@ -50,7 +50,7 @@ class ClassController extends Controller
     {
         // dd('store');
         $request->validate([
-            'class_name' => 'required|min:2|unique:classes',
+            'class_name' => 'required|min:1|unique:classes',
         ]);
 
         if(!Gate::allows('Insert_Classes')) return abort (403,'عدم دسترسی');
@@ -103,7 +103,7 @@ class ClassController extends Controller
         $request->validate([
             'class_name' => [
                 'required' ,
-                'min:2' ,
+                'min:1' ,
                 Rule::unique('classes')->ignore($class_Validate->id)
             ],
             ]);

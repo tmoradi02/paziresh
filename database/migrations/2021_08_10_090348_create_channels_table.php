@@ -16,9 +16,9 @@ class CreateChannelsTable extends Migration
         Schema::create('channels', function (Blueprint $table) {
             $table->id();
             $table->string('channel_name',50)->unique();
-            $table->integer('degree');
-            $table->integer('kind');
-            $table->bigInteger('user_id');
+            $table->Integer('degree');
+            $table->Integer('kind');
+            $table->Integer('user_id');
             $table->timestamps();
         });
     }
@@ -33,3 +33,5 @@ class CreateChannelsTable extends Migration
         Schema::dropIfExists('channels');
     }
 }
+
+
