@@ -83,8 +83,21 @@ Route::get('/clear-cache', function() {
     // return what you want
 });
 
+// ST DOC 1400-08-09 ajax response
+Route::get('/get-users-json' , function(){
+    $users =\App\User::all();
+    return response()->json($users);
+});
 
+Route::get('/get-channels-json' , function (){
+    return response()->json(\App\Channel::all());
+});
 
+Route::get('/get-casts-json' , function(){
+    $casts = \App\Cast::all();
+    return response()->json($casts);
+});
+// END DOC 1400-08-09 ajax response
 
 Auth::routes();
 

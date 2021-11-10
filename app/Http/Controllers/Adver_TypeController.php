@@ -32,6 +32,7 @@ class Adver_TypeController extends Controller
      */
     public function create($id = null)
     {
+        
         $users = User::all();
         if($id == null & Gate::allows('Insert_Adver_Type'))
         {
@@ -47,7 +48,10 @@ class Adver_TypeController extends Controller
         {
             return abort(403 , 'عدم دسترسی');
         }
-        return view('adver_type.create' , ['adver_type' => $adver_type , 'users' => $users , 'status' => $status]);
+
+        return response()->json($adver_type);
+
+        // return view('adver_type.create' , ['adver_type' => $adver_type , 'users' => $users , 'status' => $status]);
     }
 
     /**
@@ -87,7 +91,12 @@ class Adver_TypeController extends Controller
         $adver_type->adver_type = trim($request->adver_type) ;
         $adver_type->user_id = $request->user_id;
         $adver_type->save();
-        return redirect()->route('adver_type.index');
+
+        // dd($adver_type->all());
+
+        return redirect()->back()->with('message' , 'ثبت با موفقیت انجام شد');
+
+        // return redirect()->route('adver_type.index');
     }
 
     /**

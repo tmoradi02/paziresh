@@ -50,7 +50,9 @@ class ProductController extends Controller
         else{
             return abort(403,'عدم دسترسی');
         }
-        return view('product.create',['product'=>$product , 'users' => $users , 'status' => $status,'casts'=> $casts]);
+        return response()->json($product);
+
+        // return view('product.create',['product'=>$product , 'users' => $users , 'status' => $status,'casts'=> $casts]);
     }
 
     /**
@@ -64,7 +66,7 @@ class ProductController extends Controller
         $request->validate([
             'product' => 'required|min:3' ,
         ]);
-
+            
         if($id == null && Gate::allows('Insert_Product'))
         {
             $product = new Product();
@@ -77,12 +79,16 @@ class ProductController extends Controller
         {
             return abort(403,'عدم دسترسی');
         }
-        
-        $product->product = trim($request->product);
-        $product->cast_id = $request->cast_id;
-        $product->user_id = $request->user_id;
-        $product->save();
-        return redirect()->route('product.index');
+
+        $product->product = trim($request->product); 
+        $product->cast_id = $request->cast_id; 
+        $product->user_id = $request->user_id; 
+        $product->save(); 
+        // dd($request->all()); 
+        // dd($product->all()); 
+
+        return redirect()->back()->with('message' , 'OK'); 
+        // return redirect()->route('product.index');
     }
 
     /**

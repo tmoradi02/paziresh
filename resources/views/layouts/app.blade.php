@@ -54,6 +54,47 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- END DOC 1400-06-27 Add For Icon For Design  -->
     
+    <!-- ST DOC 1400-08-08 Script For data of User Table in all Project -->
+    <script> 
+    // get Users 
+        $(document).ready(function(){
+            $.ajax({ 
+                    url: '/get-users-json'
+                }).done(function(data){
+                // console.log(data);
+                var opts = [];
+                for(var user of data)
+                {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = user.name;
+                    opt.value = user.id;
+
+                    opts.push(opt);
+                }
+                $('.show-user').append(opts);
+            })
+
+            // get-casts  
+            $.ajax({
+                url: '/get-casts-json'
+            }).done(function(data){
+                var opts =[];
+                for(var cast of data)
+                {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = cast.cast;
+                    opt.value = cast.id;
+
+                    opts.push(opt);
+                }
+                $('.show-cast').append(opts);
+            });
+
+        });
+
+    </script>
+    <!-- END DOC 1400-08-08 Script For data of User Table in all Project -->
+
 </head>
 <body>
     <div id="app" dir="rtl" ;> <!-- ST DOC 1400-06-01 dir="rtl" خودم اضافه کردم -->
@@ -167,7 +208,7 @@
                                 <div class="subnav">
                                     <button class="subnavbtn">تعرفه<i class="fa fa-caret-down"></i></button>
                                     <div class="subnav-content">
-                                        <a href="#link1">تعرفه</a>
+                                        <a href="{{route('tariff.index')}}">لیست تعرفه</a>
                                         <a href="#link2">کپی تعرفه</a>
                                     </div>
                                 </div>
@@ -188,7 +229,7 @@
                                             <!-- <a href="{{route('user.create')}}">اضافه نمودن کاربر</a> -->
                                         @endcan
                                         
-                                        <a href="{{route('box_type.index')}}">لیست محل پخش</a>
+                                        <a href="{{route('box_type.index')}}">لیست محل پخش - نوع باکس</a>
                                         <!-- <a href="{{route('box_type.create')}}">اضافه نمودن محل پخش</a> -->
 
                                         <a href="{{route('title.index')}}">لیست عنوان باکس</a>
@@ -463,6 +504,20 @@
         allowClear: true, 
         tags:true 
     });
+
+    $('#myselect-3').select2({
+        width:'100%',
+        placeholder:"please Select an Option",
+        allowClear:true,
+        tags:true
+    });
+
+    $('#myselect-4').select2({
+        width:'100%',
+        placeholder:"please Select an Option",
+        allowClear:true,
+        tags:true
+    });
     //  END DOC 1400-06-21 Add Select 2
     
     //  ST 1400-06-05 For Persian Date   
@@ -479,6 +534,13 @@
     //   END 1400-06-05 For Persian Date  
 
     </script>
+
+    <style>
+        .jdp-container
+        {
+            z-index: 999999999999999999999999999999 !important;
+        }
+    </style>
     
 </body>
 </html>

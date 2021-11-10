@@ -33,6 +33,8 @@ class OwnerController extends Controller
      */
     public function create($id = null)
     {
+        // dd('create');
+
         $users = User::all();
         
         if($id == null && Gate::allows('Insert_Owner'))
@@ -62,6 +64,8 @@ class OwnerController extends Controller
      */
     public function store(Request $request , $id = null)
     {
+        dd($request->all());
+
         if($id == null && Gate::allows('Insert_Owner'))
         {
             $request->validate([

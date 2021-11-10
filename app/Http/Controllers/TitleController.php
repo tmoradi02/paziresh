@@ -45,7 +45,9 @@ class TitleController extends Controller
         {
             return abort(403,'عدم دسترسی');
         }
-        return view('title.create' , ['title' => $title , 'users' => $users , 'status' => $status]);
+        return response()->json($title);
+
+        // return view('title.create' , ['title' => $title , 'users' => $users , 'status' => $status]);
     }
 
     /**
@@ -57,7 +59,7 @@ class TitleController extends Controller
     public function store(Request $request , $id = null)
     {
         $request->validate([
-            'title' => 'required|min:3',
+            'title' => 'required|min:3|max:30',
         ]);
 
         if($id == null && Gate::allows('Insert_Title'))
@@ -75,7 +77,11 @@ class TitleController extends Controller
         $title->title = trim($request->title);
         $title->user_id = $request->user_id;
         $title->save();
-        return redirect()->route('title.index');
+        
+        // dd($request->all());
+        
+        return redirect()->back()->with('message' , 'ثبت با موفقیت انجام شد');
+        // return redirect()->route('title.index');
     }
 
     /**

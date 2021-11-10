@@ -82,11 +82,14 @@ class ClassController extends Controller
      */
     public function edit($id)
     {
+        
         if(!Gate::allows('Edit_Classes')) return abort(403,'عدم دسترسی');
         {
             $classe = Classes::findOrFail($id);
             $users = User::all();
-            return view('classes.edit',['classe'=> $classe , 'users'=> $users ]);
+            
+            return response()->json($classe);
+            // return view('classes.edit',['classe'=> $classe , 'users'=> $users ]);
         }
     }
 
@@ -114,7 +117,9 @@ class ClassController extends Controller
             $classe->class_name = $request->class_name;
             $classe->user_id = $request->user_id;
             $classe->save();
-            return redirect()->route('classes.index');
+            // dd($classe->all());
+            return redirect()->back()->with('message' , 'OK');
+            // return redirect()->route('classes.index');
         }
     }
 

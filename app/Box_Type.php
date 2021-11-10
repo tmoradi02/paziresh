@@ -14,4 +14,9 @@ class Box_Type extends Model
     {
         return $this->belongsToMany('App\User');
     }
+
+    public function tariff()
+    {
+        return $this->hasMany('App\Tariff');
+    }
 }

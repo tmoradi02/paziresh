@@ -40,7 +40,7 @@
                 <td class="height:1px;">{{$classe->class_name}}</td>
                 <td class="btn-group" style="height: 1px;">
                     @can('Edit_Classes')
-                        <a href="{{route('classes.edit', $classe->id )}}" class="btn btn-warning"><i class="fa fa-pencil-alt"></i></a>
+                        <a href="{{route('classes.edit', $classe->id )}}" class="btn btn-warning bnt-send-json" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
                     @endcan
 
                     @can('Delete_Classes')
@@ -55,6 +55,63 @@
         @endforeach
     </table>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ویرایش طبقه</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- ST Add Form For Edit -->
+                    <form action="" class="Edit-classes" method="post">
+                        @csrf
+                        @method('put')
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="class_name" id="class-name" placeholder="عنوان طبقه" class="form-control">
+                                </div>
+                                <div class="col form-group">
+                                    <select name="user_id" id="user-id" class="form-control show-user">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="submit" value="ثبت" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END Add Form For Edit -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('.bnt-send-json').click(function(){
+                var urlEdit = $(this).attr('href');
+                // alert(urlEdit);
+                $.ajax({
+                    url:urlEdit
+                    }).done(function(data){
+                    //    console.log(data) ;
+                        $('#class-name').val(data.class_name);
+                        $('#user-id').val(data.user_id);
+
+                        var urlEdit = '/classes/' + data.id;
+                        $('.Edit-classes').attr('action' , urlEdit);
+                });
+            });
+        });
+    </script>
 @endsection
 
 

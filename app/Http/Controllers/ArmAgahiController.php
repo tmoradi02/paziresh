@@ -53,6 +53,7 @@ class ArmAgahiController extends Controller
         // باید ابتدا چک شود مثلا در شبکه اول داخل یک بازه زمانی چند تا رکورد ثبت نگردد
 
         $request->validate([
+            'channel_id' => 'required',
             'coef' => 'required|min:1|max:3|gt:0|between:1,200' , // |numeric
             'from_date' => 'required',  // |date
             'to_date' => 'required'  // |date 
@@ -60,23 +61,23 @@ class ArmAgahiController extends Controller
 
         if(!Gate::allows('Insert_ArmAgahi')) return abort(403,'عدم دسترسی');
         {
-            $arm_agahi = new ArmAgahi();
-            $arm_agahi->channel_id = $request->channel_id;
-            if(trim($request->coef) <> 0 ) $arm_agahi->coef = trim($request->coef);
-            // dd(str_replace("/" , "-" , $request->from_date));
+            $arm_agahi = new ArmAgahi(); 
+            $arm_agahi->channel_id = $request->channel_id; 
+            if(trim($request->coef) <> 0 ) $arm_agahi->coef = trim($request->coef); 
+            // dd(str_replace("/" , "-" , $request->from_date)); 
             $arm_agahi->from_date =  $request->from_date; // str_replace("/" , "-" , $request->from_date); // "1400/07/01";  //$request->from_date;
-            // dd($request->to_date);
+            // dd($request->to_date); 
             $arm_agahi->to_date = $request->to_date; // str_replace("/" , "-" , $request->to_date); // "1400/07/30";  //$request->to_date;
-            $arm_agahi->user_id = $request->user_id;
-            // dd($arm_agahi);
-            if($this->checkunqueu($arm_agahi))
-            {
-                $arm_agahi->save();
-                return redirect()->route('arm_agahi.index');
-            }
-            return redirect()->route('arm_agahi.index')->with('warning','تکراری می باشد');
-        }
-    }
+            $arm_agahi->user_id = $request->user_id; 
+            // dd($arm_agahi); 
+            if($this->checkunqueu($arm_agahi)) // زمان ویرایش هم باید چک شود
+            { 
+                $arm_agahi->save(); 
+                return redirect()->route('arm_agahi.index'); 
+            } 
+            return redirect()->route('arm_agahi.index')->with('warning','تکراری می باشد'); 
+        } 
+    } 
 
     public function checkunqueu($handler)
     {

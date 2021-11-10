@@ -49,7 +49,8 @@ class CastController extends Controller
         else{
             return abort(403,'عدم دسترسی');
         }
-        return view('cast.create' , ['cast' => $cast , 'users' => $users , 'status' => $status]);
+        return response()->json($cast);
+        // return view('cast.create' , ['cast' => $cast , 'users' => $users , 'status' => $status]);
     }
 
     /**
@@ -60,6 +61,7 @@ class CastController extends Controller
      */
     public function store(Request $request , $id = null)
     {
+        // dd($request->all());
         if($id == null && Gate::allows('Insert_Cast'))
         {
             $request->validate([
@@ -84,7 +86,9 @@ class CastController extends Controller
         $cast->cast = trim($request->cast);
         $cast->user_id = $request->user_id;
         $cast->save();
-        return redirect()->route('cast.index');
+
+        return redirect()->back()->with('message' , 'OK');
+        // return redirect()->route('cast.index');
     }
 
     /**

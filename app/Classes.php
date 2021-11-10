@@ -13,9 +13,9 @@ class Classes extends Model
         return $this->belongsToMany('App\User');
     }
 
-    public function Tariff()
+    public function tariff()
     {
-        return $this->belongsToMany('App\Tariff');
+        return $this->hasMany('App\Tariff');
     }
 
     

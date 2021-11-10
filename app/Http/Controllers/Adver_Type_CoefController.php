@@ -37,13 +37,12 @@ class Adver_Type_CoefController extends Controller
     {
         $users = User::all();
         $adver_types = Adver_Type::all();
-        if($id == null & Gate::allows('Insert_Adver_Type_Coef'))
+        if($id == null && Gate::allows('Insert_Adver_Type_Coef'))
         {
             $adver_type_coef = (object)[];
             $status = 'insert';
-            // dd('insert');
         }
-        elseif($id != null & Gate::allows('Edit_Adver_Type_Coef'))
+        elseif($id != null && Gate::allows('Edit_Adver_Type_Coef'))
         {
             $adver_type_coef = Adver_Type_Coef::findOrFail($id);
             $status = 'update';
@@ -64,9 +63,15 @@ class Adver_Type_CoefController extends Controller
      */
     public function store(Request $request , $id = null)
     {
+        $request->validate([
+            'adver_type_id' => 'required' ,
+            'coef' => 'required|min:1|max:3|gt:0|between:1,200' , // |numeric
+            'from_date' => 'required' ,  // |date
+            'to_date' => 'required'  // |date 
+        ]);
+
         if($id == null && Gate::allows('Insert_Adver_Type_Coef'))
         {
-            // dd('insert');
             $adver_type_coef = new Adver_Type_Coef();
         }
         elseif($id != null && Gate::allows('Edit_Adver_Type_Coef'))
@@ -132,6 +137,8 @@ class Adver_Type_CoefController extends Controller
     {
         if(!Gate::allows('Delete_Adver_Type_Coef'))return abort(403,'عدم دسترسی');
         {
+            // امکان حذف نداشته باشد به هیچ عنوان فقط ادمین بتواند
+            // ادمین هم درصورتیکه با ضریب، کدآگهی یا جدول وابسته به آن ثبت نشده باشد، میتواند ثبت کند
             $adver_type_coef = Adver_Type_Coef::destroy($id);
             return redirect()->back();
         }

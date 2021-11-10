@@ -21,7 +21,8 @@ class ChannelController extends Controller
         if(!Gate::allows('Visit_Channel')) return abort(403,'عدم دسترسی');
         {
             $channels = Channel::all();
-            return view('channel.index',['channels'=> $channels]);
+            $users = User::all();
+            return view('channel.index',['channels'=> $channels , 'users' => $users]);
         }
     }
 
@@ -46,7 +47,10 @@ class ChannelController extends Controller
         else{
             return abort (403,'عدم دسترسی');
         }
-        return view ('channel.create',['channel'=> $channel ,'users' => $users , 'status' => $status]);
+        // return view ('channel.create',['channel'=> $channel ,'users' => $users , 'status' => $status]);
+        return response()->json($channel);
+
+        // return response()->json(['channel' => $channel , 'users' => $users , 'status' => $status]);
     }
 
     /**
@@ -57,6 +61,8 @@ class ChannelController extends Controller
      */
     public function store(Request $request , $id = null)
     {
+        dd($request->all());
+
         if($id !== null && Gate::allows('Edit_Channel')) //return abort (403,'عدم دسترسی');
         {
             $channel = Channel::findOrFail($id); 
@@ -89,7 +95,9 @@ class ChannelController extends Controller
         $channel->kind = $request->kind;
         $channel->user_id = $request->user_id ;
         $channel->save();
-        return redirect()->route('channel.index');
+        
+        return redirect()->back()->with('message' , 'شبکه مورد نظر با موفقیت ثبت شد');
+        // return redirect()->route('channel.index')->with('message' , 'شبکه مورد نظر با موفقیت ثبت شد');
     }
 
     /**

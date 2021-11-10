@@ -22,6 +22,6 @@ class Channel extends Model
     {
         return $this->belongsToMany('App\Tariff');
     }
-
     
+
 }

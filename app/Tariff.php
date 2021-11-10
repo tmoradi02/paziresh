@@ -24,9 +24,14 @@ class Tariff extends Model
         return $this->hasMany('App\Channel');
     }
 
-    public function classes()
+    public function class()
     {
         return $this->hasMany('App\Classes');
+    }
+
+    public function box_type()
+    {
+        return $this->hasMany('App\Box_Type');
     }
 
 }

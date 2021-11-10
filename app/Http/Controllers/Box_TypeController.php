@@ -86,7 +86,9 @@ class Box_TypeController extends Controller
             $box_type = Box_Type::findOrFail($id);
             $users = User::all();
             // dd($box_type);
-            return view('box_type.edit', ['box_type' => $box_type ,'users' => $users]);
+            return response()->json($box_type);
+
+            // return view('box_type.edit', ['box_type' => $box_type ,'users' => $users]);
         }
     }
 
@@ -114,7 +116,10 @@ class Box_TypeController extends Controller
             $box_type->box_type = trim($request->box_type);
             $box_type->user_id = $request->user_id;
             $box_type->save();
-            return redirect()->route('box_type.index');
+
+            // dd($request->all());
+            return redirect()->back()->with('message' , 'ثبت با موفقست انجام شد');
+            // return redirect()->route('box_type.index');
         }
     }
 

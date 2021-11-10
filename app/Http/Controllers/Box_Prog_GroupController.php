@@ -57,6 +57,7 @@ class Box_Prog_GroupController extends Controller
             $box_prog_group->prog_group = trim($request->prog_group);
             $box_prog_group->user_id = $request->user_id;
             $box_prog_group->save();
+
             return redirect()->route('box_prog_group.index');
         }
     }
@@ -85,7 +86,10 @@ class Box_Prog_GroupController extends Controller
             $box_prog_group = Box_Prog_Group::findOrFail($id);
             $users = User::all();
             // dd($users->all());
-            return view('box_prog_group.edit',['box_prog_group'=> $box_prog_group , 'users'=> $users]);
+
+            return response()->json($box_prog_group);
+
+            // return view('box_prog_group.edit',['box_prog_group'=> $box_prog_group , 'users'=> $users]);
         }
     }
 
@@ -114,7 +118,12 @@ class Box_Prog_GroupController extends Controller
             $box_prog_group->prog_group = trim($request->prog_group);
             $box_prog_group->user_id = $request->user_id;
             $box_prog_group->save();
-            return redirect()->route('box_prog_group.index');
+
+            // dd($request->all());
+            
+            return redirect()->back()->with('message' , 'OK');
+
+            // return redirect()->route('box_prog_group.index');
         }
     }
 
