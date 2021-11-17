@@ -96,7 +96,11 @@ class OwnerController extends Controller
         $owner->address_owner = $request->address_owner;
         $owner->kind_group = $request->kind_group;
         $owner->description_owner = $request->description_owner;
+
+        dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
         $owner->user_id = $request->user_id;
+
+        
         $owner->save();
         return redirect()->route('owner.index');
     }

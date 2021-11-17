@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{csrf_token() }}">
 
 <!-- ST DOC 1400-07-14  اضافه نمودن رنگ به ضمینه گرید برای یک در میان کردن رنگ رکوردها  --> 
 <!-- odd For Zoj - even For Fard -->
@@ -90,8 +90,42 @@
                 $('.show-cast').append(opts);
             });
 
+        // });
+            $.ajax({
+                url:'/get-channels-json'
+            }).done(function(data){
+                var opts = [];
+                for(var ch of data)
+                {
+                    var opt = document.createElement('option');
+
+                    opt.innerHTML = ch.channel_name;
+                    opt.value = ch.id;
+
+                    opts.push(opt);
+                }
+                $('.show-channel').append(opts);
+            })
+
+
         });
 
+        $(document).ready(function(){
+            $.ajax({
+                url:'/get-adverType-json'
+            }).done(function(data){
+                var opts = [];
+                for(var adverType of data)
+                {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = adverType.adver_type;
+                    opt.value = adverType.id;
+
+                    opts.push(opt);
+                }
+                $('.show-adverType').append(opts);
+            });
+        });
     </script>
     <!-- END DOC 1400-08-08 Script For data of User Table in all Project -->
 
@@ -536,12 +570,12 @@
     </script>
 
     <style>
-        .jdp-container
+        .jdpjdp-container 
         {
-            z-index: 999999999999999999999999999999 !important;
+            z-index: 999999999999999999999999999999999999999 !important;
         }
-    </style>
-    
+    </style>   
+
 </body>
 </html>
 

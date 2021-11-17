@@ -33,12 +33,15 @@ class ChannelController extends Controller
      */
     public function create($id = null)
     {
+        // if ($id != null ) 
+        // dd('method create');
+        
         $users = User::all();
         if($id == null && Gate::allows('Insert_Channel')) // return abort(403,'عدم دسترسی'); // Create
         {
             $channel = (object)[];
             $status = 'Insert';
-        }           
+        } 
         elseif($id !== null && Gate::allows('Edit_Channel')) // return abort (403,'عدم دسترسی'); // Edit
         {
             $channel = Channel::findOrFail($id);
@@ -61,7 +64,8 @@ class ChannelController extends Controller
      */
     public function store(Request $request , $id = null)
     {
-        dd($request->all());
+        // dd('method store');
+        // dd($request->all());
 
         if($id !== null && Gate::allows('Edit_Channel')) //return abort (403,'عدم دسترسی');
         {
@@ -82,18 +86,23 @@ class ChannelController extends Controller
         {
             $request->validate([
                 'channel_name' => 'required|unique:channels|min:3' ,
-                'degree' => 'required|unique:channels|min:1|max:3',  // 
+                'degree' => 'required|unique:channels|min:1|max:3',   // 
             ]);
             $channel = new Channel();
         }
         else{
             return abort (403,'عدم دسترسی');
         }
+        // dd($request->all());
 
         $channel->channel_name = $request->channel_name;
         $channel->degree = $request->degree;
         $channel->kind = $request->kind;
+
+        //$user_id = User::findOrFail($id);
+        dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
         $channel->user_id = $request->user_id ;
+
         $channel->save();
         
         return redirect()->back()->with('message' , 'شبکه مورد نظر با موفقیت ثبت شد');

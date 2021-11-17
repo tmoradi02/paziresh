@@ -55,7 +55,11 @@ class Box_Prog_GroupController extends Controller
         {
             $box_prog_group = new Box_Prog_Group();
             $box_prog_group->prog_group = trim($request->prog_group);
+
+            dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
             $box_prog_group->user_id = $request->user_id;
+
+            
             $box_prog_group->save();
 
             return redirect()->route('box_prog_group.index');

@@ -82,7 +82,11 @@ class ProductController extends Controller
 
         $product->product = trim($request->product); 
         $product->cast_id = $request->cast_id; 
+
+        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
         $product->user_id = $request->user_id; 
+
+
         $product->save(); 
         // dd($request->all()); 
         // dd($product->all()); 

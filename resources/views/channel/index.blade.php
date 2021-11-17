@@ -1,9 +1,7 @@
 @extends('layouts.app')
 @section('content')
-
-    <!-- <a href="{{route('channel.create')}}" class="next">اضافه نمودن شبکه</a> -->
     
-    <a href="{{route('channel.store')}}" class="next btn-send-json-create" data-toggle="modal" data-target="#CreateModal">اضافه نمودن شبکه</a>
+    <a href="{{route('channel.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن شبکه</a>
 
     <br>
     <br>
@@ -14,7 +12,9 @@
             <th style="width:100px; background-color:darkgray; text-align:center;">عنوان شبکه</th>     <!--height: 1px; -->
             <th style="width:50px; background-color:darkgray; text-align:center;">مشخصه شبکه</th>
             <th style="width:50px; background-color:darkgray; text-align:center;">نوع شبکه</th>
-            <th style="width:50px; background-color:darkgray; text-align:center;">کاربر</th>
+            @can('Get_Permission_To_Other_User')
+                <th style="width:50px; background-color:darkgray; text-align:center;">کاربر</th>
+            @endcan
             <th style="width:300px; background-color:darkgray; ">action</th>     <!--height: 1px; -->
         </tr>
         
@@ -28,11 +28,15 @@
                 @elseif($channel->kind == 2)
                     <td>رادیویی</td>
                 @endif
-                @foreach($users as $user)
-                    @if($user->id == $channel->user_id)
-                        <td>{{$user->name}}</td>
-                    @endif
-                @endforeach
+                
+                @can('Get_Permission_To_Other_User')                
+                    @foreach($users as $user)
+                        @if($user->id == $channel->user_id)
+                            <td>{{$user->name}}</td>
+                        @endif
+                    @endforeach
+                @endcan
+                
                 <td class="btn-group" style="height: 1px;">
                     @can('Edit_Channel')
                         <a href="{{route('channel.edit', $channel->id)}}" class="btn btn-warning btn-send-json" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
@@ -52,19 +56,19 @@
         @endforeach
     </table>
 
-<!-- Modal Add Form -->
-    <div class="modal fade" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- ST DOC 1400-08-22 New Record Form -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="createModalLabel">اضافه نمودن شبکه</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- ST DOC Add Form For Add -->
-                    <form action="" class="create-channel" method="post">
+                    <!-- Add Form -->
+                    <form action="{{route('channel.store')}}" method="post">
                         @csrf
                         <div class="container">
                             <div class="row">
@@ -75,12 +79,11 @@
                                     <input type="number" name="degree" placeholder="مشخصه شبکه" class="form-control">
                                 </div>
                             </div>
-                            
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
                                         <input type="radio" name="kind" id="1" value="1" checked>
-                                        <label>تلویزیونی</label>
+                                        <label>تلویزیون</label>
                                     </div>
                                     <div class="form-group">
                                         <input type="radio" name="kind" id="2" value="2">
@@ -88,29 +91,38 @@
                                     </div>
                                 </div>
 
-                                <div class="col">
-                                    <div class="form-group">
-                                        <select name="user_id" id="" class="form-control show-user" style="width:300px;">
+                                <div class="col form-group">
+                                    @can('Get_Permission_To_Other_User')
+                                        <select name="user_id" class="form-control show-user" >
                                         </select>
-                                    </div>
+                                    @endcan
                                 </div>
+
                             </div>
-                            <div class="col">
-                                <input type="submit" value="ثبت" class="btn btn-primary">  
+                            <div class="row">   
+                                <div class="col form-group" >
+                                    <input type="submit" value="ثبت" class="btn btn-primary">
+                                </div>
+                                <div class="col form-group">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
                             </div>
                         </div>
                     </form>
-                    <!-- END Add Form-For Add -->
+                    <!-- Add Form -->
                 </div>
-                <div class="modal-footer">
-                    <input type="submit" value="ثبت" class="btn btn-primary">  
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
-                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                </div>
-
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
             </div>
         </div>
     </div>
+    <!-- END DOC 1400-08-22 New Record Form -->
 
     <!-- Modal Edit Form -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -207,21 +219,6 @@
                     $('.edit-channel').attr('action' , urlUpdate); 
                 });
             });
-
-            // For Create 
-            $('.btn-send-json-create').click(function(){
-                var urlCreate = $(this).attr('href');
-                    // alert(urlCreate);
-                $.ajax({
-                    url:urlCreate
-                }).done(function(data){
-
-                    var urlStore = '/channel.store';
-                    $('.create-channel').attr('action' , urlStore);
-                });
-            });
-
-
         });
 
     </script>

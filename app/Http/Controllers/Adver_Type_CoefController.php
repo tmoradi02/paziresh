@@ -35,6 +35,7 @@ class Adver_Type_CoefController extends Controller
      */
     public function create($id = null)
     {
+        // dd('new');
         $users = User::all();
         $adver_types = Adver_Type::all();
         if($id == null && Gate::allows('Insert_Adver_Type_Coef'))
@@ -52,7 +53,9 @@ class Adver_Type_CoefController extends Controller
         {
             return abort(403,'عدم دسترسی');
         }
-        return view('adver_type_coef.create' , ['adver_type_coef' => $adver_type_coef , 'status' => $status , 'users' => $users , 'adver_types' => $adver_types]);
+        return response()->json($adver_type_coef);
+
+        // return view('adver_type_coef.create' , ['adver_type_coef' => $adver_type_coef , 'status' => $status , 'users' => $users , 'adver_types' => $adver_types]);
     }
 
     /**
@@ -63,6 +66,8 @@ class Adver_Type_CoefController extends Controller
      */
     public function store(Request $request , $id = null)
     {
+        // dd('edit');
+
         $request->validate([
             'adver_type_id' => 'required' ,
             'coef' => 'required|min:1|max:3|gt:0|between:1,200' , // |numeric
@@ -88,11 +93,15 @@ class Adver_Type_CoefController extends Controller
         $adver_type_coef->coef = $request->coef;
         $adver_type_coef->from_date = $request->from_date;
         $adver_type_coef->to_date = $request->to_date;
+
+        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
         $adver_type_coef->user_id = $request->user_id;
+
         $adver_type_coef->save();
-        return redirect()->route('adver_type_coef.index');
+        // return redirect()->route('adver_type_coef.index');
+        return redirect()->back()->with('message' , 'Save Successful');
     }
-        
+    
     /**
      * Display the specified resource.
      *

@@ -21,7 +21,8 @@ class CastController extends Controller
         if(!Gate::allows('Visit_Cast')) return abort(403,'عدم دسترسی');
         {
             $casts = Cast::all();
-            return view('cast.index',['casts' => $casts]);
+            $users = User::all();
+            return view('cast.index',['casts' => $casts , 'users' => $users]);
         }
     }
 
@@ -49,7 +50,7 @@ class CastController extends Controller
         else{
             return abort(403,'عدم دسترسی');
         }
-        return response()->json($cast);
+        return response()->json( $cast);
         // return view('cast.create' , ['cast' => $cast , 'users' => $users , 'status' => $status]);
     }
 
@@ -84,7 +85,11 @@ class CastController extends Controller
             return abort(403,'شما دسترسی ندارید!');
         }
         $cast->cast = trim($request->cast);
+
+
+        dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
         $cast->user_id = $request->user_id;
+        
         $cast->save();
 
         return redirect()->back()->with('message' , 'OK');

@@ -21,7 +21,8 @@ class Adver_TypeController extends Controller
         if(!Gate::allows('Visit_Adver_Type')) return abort(403,'عدم دسترسی');
         {
             $adver_types = Adver_Type::all();
-            return view('adver_type.index' , ['adver_types' => $adver_types]);
+            $users = User::all();
+            return view('adver_type.index' , ['adver_types' => $adver_types , 'users' => $users]);
         }
     }
 
@@ -89,7 +90,11 @@ class Adver_TypeController extends Controller
         }
 
         $adver_type->adver_type = trim($request->adver_type) ;
+
+        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
         $adver_type->user_id = $request->user_id;
+
+        
         $adver_type->save();
 
         // dd($adver_type->all());

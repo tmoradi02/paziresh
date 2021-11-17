@@ -123,6 +123,8 @@ class TariffController extends Controller
         $tariff->from_date = $request->from_date;
         $tariff->to_date = $request->to_date;
         $tariff->price = $request->price;
+
+        dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
         $tariff->user_id = $request->user_id;
 
         // dd($request->all());

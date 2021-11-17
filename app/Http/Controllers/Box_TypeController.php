@@ -114,7 +114,11 @@ class Box_TypeController extends Controller
         {
             $box_type = Box_Type::findOrFail($id);
             $box_type->box_type = trim($request->box_type);
+
+            dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
             $box_type->user_id = $request->user_id;
+
+            
             $box_type->save();
 
             // dd($request->all());

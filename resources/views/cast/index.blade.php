@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <a href="{{route('cast.create')}}" class="next">اضافه نمودن اصناف</a>
+    <a href="{{route('cast.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن اصناف</a>
     <br>
     <br>
     
@@ -30,13 +30,23 @@
     <table class="table table-bordered">
         <tr style="height:1px;">
             <th style="width:30px; background-color:darkgray; text-align:center;">ردیف</th>
-            <th style="width:500px; background-color:darkgray; text-align:center;">عنوان صنف</th>
-            <th style="width:300px; background-color:darkgray; ">Action</th>
+            <th style="width:300px; background-color:darkgray; text-align:center;">عنوان صنف</th>
+            @can('Get_Permission_To_Other_User')
+                <th style="width:200px; background-color:darkgray; text-align:center;">کاربر</th>
+            @endcan
+            <th style="width:200px; background-color:darkgray; ">Action</th>
         </tr>
         @foreach($casts as $cast)
             <tr class="rowt" style="height:1px;">
                 <td class="rowtt" style="height:1px; text-align:center;"></td>
                 <td style="height:1px;">{{$cast->cast}}</td>
+                @can('Get_Permission_To_Other_User')
+                    @foreach($users as $user)
+                        @if($user->id == $cast->user_id)
+                            <td>{{$user->name}}</td>
+                        @endif
+                    @endforeach
+                @endcan
                 <td class="btn-group" style="height:1px;">
                     @can('Edit_Cast')
                     <a href="{{route('cast.edit' , $cast->id)}}" class="btn btn-warning btn-send-json" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
@@ -54,7 +64,61 @@
         @endforeach
     </table>
 
-    <!-- Modal -->
+    <!-- ST DOC Modal From For Edit-->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">اضافه نمودن صنف</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add Form For Create -->
+                    <form action="{{route('cast.store')}}" method="post">
+                        @csrf
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="cast" placeholder="عنوان صنف" class="form-control">
+                                </div>
+                            </div>
+                            @can('Get_Permission_To_Other_User')
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <select name="user_id" class="form-control show-user">
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+                            @endcan
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="submit" value="ثبت" class="btn btn-primary">
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Add From For Edit -->
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!-- END DOC Modal From For Edit-->
+
+    <!-- ST DOC Modal From For Edit-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -75,13 +139,15 @@
                                     <input type="text" name="cast" id="cast" class="form-control" placeholder="عنوان صنف">
                                 </div>
                             </div>
+                            
                             <div class="row">
-                                <div class="col form-group">
-                                    <select name="user_id" id="user-id" class="form-control show-user">
-                                        <option value="">Test1</option>
-                                        <option value="">Test2</option>
-                                    </select>
-                                </div>
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col form-group">
+                                        <select name="user_id" id="user-id" class="form-control show-user" style="width:365px;">
+
+                                        </select>
+                                    </div>
+                                @endcan
                                 <div class="col form-group">
                                     <input type="submit" value="ثبت" class="btn btn-primary">
                                 </div>
@@ -93,6 +159,7 @@
             </div>
         </div>
     </div>
+    <!-- END DOC Modal From For Edit-->
 
     <script>
         $(document).ready(function(){

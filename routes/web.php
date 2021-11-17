@@ -90,15 +90,24 @@ Route::get('/get-users-json' , function(){
 });
 
 Route::get('/get-channels-json' , function (){
-    return response()->json(\App\Channel::all());
+    $channels = \App\Channel::all();
+    return response()->json($channels);
+    // return response()->json(\App\Channel::all());
 });
 
 Route::get('/get-casts-json' , function(){
     $casts = \App\Cast::all();
     return response()->json($casts);
 });
+
+Route::get('/get-adverType-json' , function(){
+    $adverTypes = \App\Adver_Type::all();
+    return response()->json($adverTypes);
+});
+
 // END DOC 1400-08-09 ajax response
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+

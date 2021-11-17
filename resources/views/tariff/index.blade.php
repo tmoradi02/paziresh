@@ -86,7 +86,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col form-group">
-                                    
+                                    <input type="text" name="" id="">
                                 </div>
                             </div>
                         </div>

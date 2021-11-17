@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <a href="{{route('product.create')}}" class="next">اضافه نمودن محصولات</a>
+    <a href="{{route('product.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن محصولات</a>
     <br>
     <br>
 
@@ -37,15 +37,17 @@
                     </div>
                 </div>
 
-                <div class="col">
-                    <div class="form-group" style="width:300px;">
-                        <select name="user_id" id="myselect-2" multiple>
-                            @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->name}}</option>
-                            @endforeach
-                        </select>
+                @can('Get_Permission_To_Other_User')
+                    <div class="col">
+                        <div class="form-group" style="width:300px;">
+                            <select name="user_id" id="myselect-2" multiple>
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                </div>
+                @endcan
 
                 <div class="col">
                     <div class="form-group">
@@ -63,7 +65,12 @@
         <tr style="height:1px;">
             <th style="width:30px; background-color:darkgray; text-align:center">ردیف</th>
             <th style="width:400px; background-color:darkgray; text-align:center;">عنوان صنف</th>
-            <th style="width:600px; background-color:darkgray; text-align:cenetr;">عنوان محصول</th>
+            <th style="width:500px; background-color:darkgray; text-align:cenetr;">عنوان محصول</th>
+
+            @can('Get_Permission_To_Other_User') 
+                <th style="width:300px; background-color: darkgray; text-align: center;">کاربر</th>
+            @endcan
+
             <th style="width:300px; background-color:darkgray; ">Action</th>
         </tr>
         @foreach($casts as $cast)
@@ -73,6 +80,15 @@
                         <td class="rowtt" style="height:1px; text-align:center;"></td>
                         <td style="height:1px;">{{$cast->cast}}</td>
                         <td style="height:1px;">{{$product->product}}</td>
+
+                        @can('Get_Permission_To_Other_User')
+                            @foreach($users as $user)
+                                @if($user->id == $product->user_id)
+                                    <td>{{$user->name}}</td>
+                                @endif
+                            @endforeach
+                        @endcan
+
                         <td class="btn-group" style="height:1px;">
                             @can('Edit_Product')
                                 <a href="{{route('product.edit' , $product->id)}}" class="btn btn-warning btn-send-json" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
@@ -92,7 +108,67 @@
         @endforeach
     </table>
 
-    <!-- Modal -->
+    <!-- ST DOC Modal For From Add -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">اضافه نمودن محصولات</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form New Record -->
+                    <form action="{{route('product.store')}}" method="post">
+                        @csrf
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <select name="cast_id" class="form-control show-cast">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="product" placeholder="عنوان محصول" class="form-control">
+                                </div>
+                            </div>
+                            @can('Get_Permission_To_Other_User')
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <select name="user_id" class="form-control show-user">
+                                        </select>
+                                    </div>
+                                </div>
+                            @endcan
+                            
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="submit" value="ثبت" class="btn btn-primary">
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Form New Record --> 
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!-- END DOC Modal For Form Add -->
+
+    <!-- ST DOC Modal For From Edit -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -120,13 +196,15 @@
                                         <input type="text" name="product" id="product" class="form-control" placeholder="عنوان محصول" >
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <select name="user_id" id="user-id" class="form-control show-user">
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="row">
+                                        <div class="col form-group">
+                                            <select name="user_id" id="user-id" class="form-control show-user">
 
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
                                 <div class="row">
                                     <div class="col form-group">
                                         <input type="submit" value="ثبت" class="btn btn-primary">

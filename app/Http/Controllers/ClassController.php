@@ -20,8 +20,8 @@ class ClassController extends Controller
         if(!Gate::allows('Visit_Classes')) return abort(403,'عدم دسترسی');
         {
             $classes = Classes::all();
-            // $users = Users::all();
-            return view('classes.index',['classes'=> $classes]);
+            $users = User::all();
+            return view('classes.index',['classes'=> $classes , 'users' => $users]);
         }
     }
 
@@ -57,8 +57,12 @@ class ClassController extends Controller
         {
             $classe = new Classes();
             $classe->class_name = trim($request->class_name);
+
+            // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
             $classe->user_id = $request->user_id;
+
             $classe->save();
+            
             return redirect()->route('classes.index');
         }
     }

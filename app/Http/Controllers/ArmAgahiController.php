@@ -51,6 +51,7 @@ class ArmAgahiController extends Controller
     public function store(Request $request)
     {
         // باید ابتدا چک شود مثلا در شبکه اول داخل یک بازه زمانی چند تا رکورد ثبت نگردد
+        // dd($request->all());
 
         $request->validate([
             'channel_id' => 'required',
@@ -68,24 +69,39 @@ class ArmAgahiController extends Controller
             $arm_agahi->from_date =  $request->from_date; // str_replace("/" , "-" , $request->from_date); // "1400/07/01";  //$request->from_date;
             // dd($request->to_date); 
             $arm_agahi->to_date = $request->to_date; // str_replace("/" , "-" , $request->to_date); // "1400/07/30";  //$request->to_date;
+
+            $request->arm_agahi = $request->coef();
+            
+            dd($arm_agahi->all());
+
+            // dd($arm_agahi->from_date);
+            // dd($arm_agahi->all());
+            // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
             $arm_agahi->user_id = $request->user_id; 
-            // dd($arm_agahi); 
-            if($this->checkunqueu($arm_agahi)) // زمان ویرایش هم باید چک شود
-            { 
-                $arm_agahi->save(); 
-                return redirect()->route('arm_agahi.index'); 
-            } 
-            return redirect()->route('arm_agahi.index')->with('warning','تکراری می باشد'); 
+
+            // // dd($arm_agahi); 
+            // if($this->checkunqueu($arm_agahi)) // زمان ویرایش هم باید چک شود
+            // { 
+            //     $arm_agahi->save(); 
+            //     return redirect()->route('arm_agahi.index'); 
+            // } 
+
+            $arm_agahi->save(); 
+            return redirect()->back()->with('message' , 'ثبت با موفقیت انجام شد');
+            // return redirect()->route('arm_agahi.index')->with('warning','تکراری می باشد'); 
         } 
     } 
 
     public function checkunqueu($handler)
     {
+        // dd($handler);
         // هر تاریخی وارد شود پیغام تکراری می دهد
         $from_date = jalaliToGergia($handler->from_date);
         $to_date = jalaliToGergia($handler->to_date) ;
         // dd( 'to'. $to_date);
-        
+
+        // dd($handler->to_date);
+
         $query = ArmAgahi::
         where('channel_id' , '=' , $handler->channel_id)
 
