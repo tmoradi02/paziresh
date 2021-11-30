@@ -221,7 +221,7 @@
             $('.btn-send-ajax').click(function(){
                 var urlEdit = $(this).attr('href');
 
-                alert(urlEdit);
+                // alert(urlEdit);
                 $.ajax({
                     url:urlEdit
                 }).done(function(data){
@@ -239,6 +239,6 @@
         });
 
     </script>
-@endsection
+@endsection 
 
 

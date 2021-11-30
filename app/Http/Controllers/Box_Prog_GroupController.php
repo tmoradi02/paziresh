@@ -20,8 +20,8 @@ class Box_Prog_GroupController extends Controller
         if(!Gate::allows('Visit_Box_Prog_Group')) return abort(403,'عدم دسترسی');
         {
             $box_prog_groups = Box_Prog_Group::all();
-            // dd($box_prog_groups);
-            return view('box_prog_group.index',['box_prog_groups'=> $box_prog_groups]);
+            $users = User::all();
+            return view('box_prog_group.index',['box_prog_groups'=> $box_prog_groups , 'users' => $users]);
         }
     }
 
@@ -35,7 +35,6 @@ class Box_Prog_GroupController extends Controller
         if(!Gate::allows('Insert_Box_Prog_Group')) return abort(403,'عدم دسترسی');
         {
             $users = User::all();
-            // dd($users->all());
             return view('box_prog_group.create',['users'=> $users]);
         }
     }
@@ -56,10 +55,9 @@ class Box_Prog_GroupController extends Controller
             $box_prog_group = new Box_Prog_Group();
             $box_prog_group->prog_group = trim($request->prog_group);
 
-            dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
+            // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
             $box_prog_group->user_id = $request->user_id;
 
-            
             $box_prog_group->save();
 
             return redirect()->route('box_prog_group.index');
@@ -89,7 +87,6 @@ class Box_Prog_GroupController extends Controller
         {
             $box_prog_group = Box_Prog_Group::findOrFail($id);
             $users = User::all();
-            // dd($users->all());
 
             return response()->json($box_prog_group);
 
@@ -123,10 +120,7 @@ class Box_Prog_GroupController extends Controller
             $box_prog_group->user_id = $request->user_id;
             $box_prog_group->save();
 
-            // dd($request->all());
-            
-            return redirect()->back()->with('message' , 'OK');
-
+            return redirect()->back()->with('message' , 'Save Success');
             // return redirect()->route('box_prog_group.index');
         }
     }
@@ -148,7 +142,8 @@ class Box_Prog_GroupController extends Controller
 
     public function search(Request $request)
     {
-        $box_prog_groups = Box_Prog_Group::query();
+        $box_prog_groups = Box_Prog_Group::query(); 
+        $users = User::all(); 
 
         if($request->has('prog_group') && $request->prog_group)
         {
@@ -156,8 +151,8 @@ class Box_Prog_GroupController extends Controller
         }
         
         $box_prog_groups = $box_prog_groups->get();
-        // dd($box_prog_groups);
-        return view('box_prog_group.index' , ['box_prog_groups' => $box_prog_groups]);
+        
+        return view('box_prog_group.index' , ['box_prog_groups' => $box_prog_groups , 'users' => $users]);
     }
 
 }

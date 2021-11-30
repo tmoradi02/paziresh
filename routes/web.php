@@ -95,6 +95,16 @@ Route::get('/get-channels-json' , function (){
     // return response()->json(\App\Channel::all());
 });
 
+Route::get('/get-classes-json' , function(){
+    $classes = \App\Classes::all();
+    return response()->json($classes);
+});
+
+Route::get('/get-boxType-json' , function(){
+    $boxTypes = \App\Box_Type::all();
+    return response()->json($boxTypes);
+});
+
 Route::get('/get-casts-json' , function(){
     $casts = \App\Cast::all();
     return response()->json($casts);

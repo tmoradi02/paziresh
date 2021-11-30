@@ -33,27 +33,24 @@ class OwnerController extends Controller
      */
     public function create($id = null)
     {
-        // dd('create');
-
         $users = User::all();
         
         if($id == null && Gate::allows('Insert_Owner'))
         {
             $owner = (object)[];
             $status = 'insert';
-            // dd($status);
         }
         elseif($id != null && Gate::allows('Edit_Owner'))
         {
             $owner = Owner::findOrFail($id);
             $status = 'update';
-            // dd($status);
         }
         else
         {
             return abort(403 , 'عدم دسترسی');
         }
-        return view('owner.create', ['owner' => $owner , 'users' => $users , 'status' => $status]);
+        return response()->json($owner); 
+        // return view('owner.create', ['owner' => $owner , 'users' => $users , 'status' => $status]);
     }
 
     /**
@@ -64,8 +61,6 @@ class OwnerController extends Controller
      */
     public function store(Request $request , $id = null)
     {
-        dd($request->all());
-
         if($id == null && Gate::allows('Insert_Owner'))
         {
             $request->validate([
@@ -97,10 +92,9 @@ class OwnerController extends Controller
         $owner->kind_group = $request->kind_group;
         $owner->description_owner = $request->description_owner;
 
-        dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
+        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
         $owner->user_id = $request->user_id;
 
-        
         $owner->save();
         return redirect()->route('owner.index');
     }

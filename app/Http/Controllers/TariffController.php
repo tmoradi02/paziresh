@@ -75,14 +75,19 @@ class TariffController extends Controller
         // حتما انجام شود 
         // در حال حاضر کنترل نمی شود
 
+        // dd($request->all());
+
         $request->validate([
+            
             'channel_id' => 'required' , 
-            'classes_id' => 'required' ,
+            'classes_id' => 'required' , 
             'box_type_id' => 'required' , 
             'from_date' => 'required' , 
             'to_date' => 'required' , 
             'price' => 'required|min:6' 
         ]);
+
+        
 
         if($id == null && Gate::allows('Insert_Tariff'))
         {
@@ -97,6 +102,7 @@ class TariffController extends Controller
             return abort(403 , 'عدم دسترسی');
         }
         
+        // dd($request->all());
 
         // if(!Gate::allows('Insert_ArmAgahi')) return abort(403,'عدم دسترسی');
         // {
@@ -124,7 +130,7 @@ class TariffController extends Controller
         $tariff->to_date = $request->to_date;
         $tariff->price = $request->price;
 
-        dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
+        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
         $tariff->user_id = $request->user_id;
 
         // dd($request->all());

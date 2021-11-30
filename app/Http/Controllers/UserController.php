@@ -49,7 +49,11 @@ class UserController extends Controller
         if(!Gate::allows('Insert_User')) return abort(403, 'عدم دسترسی');
         {
             $permissions = Permission::all();
-            return view('user.create',['permissions'=> $permissions]);
+            $users = User::all();
+
+            return response()->json(['users' => $users , 'permissions' => $permissions]);
+        
+            // return view('user.create',['permissions'=> $permissions]);
         }
     }
 
@@ -61,24 +65,32 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+        
         $request->validate([
             'name' => 'required|min:3|string' ,
             'email' => 'required|min:14|unique:users|email|string' ,  
             'password' => 'required|min:8|string' ,
             'tell'=> 'required|min:11|numeric|unique:users' ,
         ]);
-
+        
+        // dd($request->all());
+        
         if(!Gate::allows('Insert_User')) return abort(403,'عدم دسترسی');
         {
             // dd($request->all());
             $user = new User();
             $user->name = trim($request->name);
             $user->email = trim($request->email);
-            $user->status = trim($request->status) ; 
+            $user->status = trim($request->status); 
             $user->tell = trim($request->tell);
             if($request->password !== null) $user->password = Hash::Make($request->password);
+
+            // dd($request->all());
+
             $user->save();
             // dd($user);
+
             $user->roles()->sync($request->prm);
             return redirect()->route('user.index');
         }
@@ -101,15 +113,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        if(!Gate::allows('Edit_User')) return abort(403,'عدم دسترسی');
-        {
-            $user = User::findOrFail($id);
-            $permissions = Permission::all();
-            return view('user.edit',['user'=>$user , 'permissions'=> $permissions]);
-        }
-    }
+    public function edit($id) 
+    { 
+        if(!Gate::allows('Edit_User')) return abort(403,'عدم دسترسی'); 
+        { 
+            $user = User::findOrFail($id); 
+            $permissions = Permission::all(); 
+            // return view('user.edit',['user'=>$user , 'permissions'=> $permissions]); 
+            return response()->json(['user' => $user , 'permissions' => $permissions]); 
+        } 
+    } 
 
     /**
      * Update the specified resource in storage.

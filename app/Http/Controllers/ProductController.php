@@ -64,6 +64,7 @@ class ProductController extends Controller
     public function store(Request $request , $id = null)
     {
         $request->validate([
+            'cast_id' => 'required' ,
             'product' => 'required|min:3' ,
         ]);
             
@@ -85,7 +86,6 @@ class ProductController extends Controller
 
         // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
         $product->user_id = $request->user_id; 
-
 
         $product->save(); 
         // dd($request->all()); 

@@ -15,6 +15,7 @@ class CreateClassesTable extends Migration
     {
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('channel_Id');  // ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه در جدول طبقه
             $table->string('class_name');
             $table->Integer('user_id');
             $table->timestamps();

@@ -33,7 +33,6 @@ class Adver_TypeController extends Controller
      */
     public function create($id = null)
     {
-        
         $users = User::all();
         if($id == null & Gate::allows('Insert_Adver_Type'))
         {

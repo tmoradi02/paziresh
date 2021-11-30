@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers; 
 
-use Illuminate\Http\Request;
-use App\Classes;
-use App\User;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
+use Illuminate\Http\Request; 
+use App\Classes; 
+use App\User; 
+use App\Channel;  // ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات
+use Illuminate\Support\Facades\Gate; 
+use Illuminate\Validation\Rule; 
 
-class ClassController extends Controller
+class ClassController extends Controller 
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +21,11 @@ class ClassController extends Controller
         if(!Gate::allows('Visit_Classes')) return abort(403,'عدم دسترسی');
         {
             $classes = Classes::all();
-            $users = User::all();
-            return view('classes.index',['classes'=> $classes , 'users' => $users]);
+            $channels = Channel::all();  // ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات  
+            $users = User::all(); 
+
+            return view('classes.index',['classes'=> $classes , 'channels' => $channels , 'users' => $users]); // ST DOC 1400-09-08 اضافه نمودن ریلیشن شبکه به جدول طبقات
+            // return view ('classes.index' , ['classes' => $classes , 'users' => $users]); ST LOCK 1400-09-08 بدلیل اضافه شدن ریلیشن شبکه به جدول طبقات
         }
     }
 
@@ -35,8 +39,11 @@ class ClassController extends Controller
         // dd('cre');
         if(!Gate::allows('Insert_Classes')) return abort(403,'عدم دسترسی');
         {
+            $channels = Channel::all(); // ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات
             $users = User::all();
-            return view('classes.create' ,['users'=> $users]);
+
+            return view('classes.create' ,['channels' => $channels , 'users'=> $users]); // ST DOC 1400-09-08 اضافه نمودن ریلیشن شبکه به جدول طبقات
+            // return view('classes.create' , ['users' => $users]); ST LOCK 1400-09-08 بدلیل اضافه نمودن ریلیشن شبکه به این جدول
         }
     }
 
@@ -47,25 +54,31 @@ class ClassController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        // dd('store');
-        $request->validate([
-            'class_name' => 'required|min:1|unique:classes',
-        ]);
+    { 
+        // dd($request->all());
 
-        if(!Gate::allows('Insert_Classes')) return abort (403,'عدم دسترسی');
+        $request->validate([ 
+            'channel_id' => 'required' , 
+            'class_name' => 'required|min:1|unique:classes', 
+        ]); 
+        
+        // dd($request->all());
+
+        if(!Gate::allows('Insert_Classes')) return abort (403,'عدم دسترسی'); 
         {
-            $classe = new Classes();
-            $classe->class_name = trim($request->class_name);
+            $classe = new Classes(); 
+            $classe->channel_id = $request->channel_id; // ST DOC 1400-09-08 اضافه نمودن ریلیشن شبکه به جدول طبقات 
+
+            $classe->class_name = trim($request->class_name); 
 
             // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
-            $classe->user_id = $request->user_id;
+            $classe->user_id = $request->user_id; 
 
-            $classe->save();
+            $classe->save(); 
             
-            return redirect()->route('classes.index');
-        }
-    }
+            return redirect()->route('classes.index'); 
+        } 
+    } 
 
     /**
      * Display the specified resource.
@@ -144,13 +157,25 @@ class ClassController extends Controller
 
     public function search (Request $request)
     {
+        $channels = Channel::all();  // ST DOC 1400-09-08 اضافه نمودن ریلیشن شبکه به جدول طبقات
+        $users = User::all(); 
         $classes = Classes::query();
+
+        // ST DOC 1400-09-08 اضافه نمودن ریلیشن شبکه به جدول طبقات
+        if($request->has('channel_id') && $request->channel_id)
+        {
+            $classes->where('channel_id' , $request->channel_id);
+        }
+        // END DOC 1400-09-08 اضافه نمودن ریلیشن شبکه به جدول طبقات
+
         if($request->has('class_name') && $request->class_name)        
         {
             $classes->where('class_name' , 'like' , "%$request->class_name%");
         }
+
         $classes = $classes->get();
-        return view('classes.index' , ['classes' => $classes]);
+        return view('classes.index' , ['classes' => $classes , 'channels' => $channels , 'users' => $users]); // ST DOC 1400-09-08 اضافه نمودن ریلیشن شبکه به جدول طبقات
+        // return view('clsses.index' , ['classes' => $classes  , 'users' => $users]); ST LOCK 1400-09-08 
     }
 
 }

@@ -20,8 +20,9 @@ class Box_TypeController extends Controller
         if(!Gate::allows('Visit_Box_Type')) return abort(403,'عدم دسترسی');
         {
             $box_types = Box_Type::all();
+            $users = User::all();
             // dd($box_types);
-            return view('box_type.index',['box_types'=> $box_types]);
+            return view('box_type.index',['box_types'=> $box_types , 'users' => $users]);
         }
     }
 
@@ -115,10 +116,9 @@ class Box_TypeController extends Controller
             $box_type = Box_Type::findOrFail($id);
             $box_type->box_type = trim($request->box_type);
 
-            dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
+            // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
             $box_type->user_id = $request->user_id;
 
-            
             $box_type->save();
 
             // dd($request->all());

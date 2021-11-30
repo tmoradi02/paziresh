@@ -106,8 +106,44 @@
                 }
                 $('.show-channel').append(opts);
             })
+        });
 
+        $(document).ready(function(){
+            $.ajax({
+                url:'/get-classes-json'
+            }).done(function(data){
+                var opts = [];
 
+                for (var cl of data)
+                {
+                    var opt = document.createElement('option');
+
+                    opt.innerHTML = cl.class_name;
+                    opt.value = cl.id;
+
+                    opts.push(opt);
+                }
+                $('.show-class').append(opts);
+            });
+        });
+
+        $(document).ready(function(){
+            $.ajax({
+                url: '/get-boxType-json'
+            }).done(function(data){
+                var opts = [];
+
+                for(var boxType of data)
+                {
+                    var opt = document.createElement('option');
+
+                    opt.innerHTML = boxType.box_type;
+                    opt.value = boxType.id;
+
+                    opts.push(opt);
+                }
+                $('.show-BoxType').append(opts);
+            });
         });
 
         $(document).ready(function(){
@@ -126,6 +162,7 @@
                 $('.show-adverType').append(opts);
             });
         });
+
     </script>
     <!-- END DOC 1400-08-08 Script For data of User Table in all Project -->
 

@@ -40,6 +40,7 @@
             <tr class="rowt" style="height:1px;">
                 <td class="rowtt" style="height:1px; text-align:center;"></td>
                 <td style="height:1px;">{{$cast->cast}}</td>
+
                 @can('Get_Permission_To_Other_User')
                     @foreach($users as $user)
                         @if($user->id == $cast->user_id)
@@ -47,6 +48,7 @@
                         @endif
                     @endforeach
                 @endcan
+                
                 <td class="btn-group" style="height:1px;">
                     @can('Edit_Cast')
                     <a href="{{route('cast.edit' , $cast->id)}}" class="btn btn-warning btn-send-json" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
@@ -143,14 +145,26 @@
                             <div class="row">
                                 @can('Get_Permission_To_Other_User')
                                     <div class="col form-group">
-                                        <select name="user_id" id="user-id" class="form-control show-user" style="width:365px;">
+                                        <select name="user_id" id="user-id" class="form-control show-user">
 
                                         </select>
                                     </div>
                                 @endcan
+                            </div>
+                            
+                            <div class="row">
                                 <div class="col form-group">
                                     <input type="submit" value="ثبت" class="btn btn-primary">
                                 </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
                             </div>
                         </div>
                     </form>
@@ -175,7 +189,6 @@
                         var urlUpdate = '/cast/' + data.id;
                         $('.edit-cast').attr('action' , urlUpdate);
                 });
-
                 // alert(urlEdit);
             });
         });

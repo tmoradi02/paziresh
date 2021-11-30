@@ -210,9 +210,9 @@
                     $('#user-id').val(data.user_id); 
                     
                     if (data.kind == 1) {    
-                        $('#kind-tv').attr('checked' , true)
+                        $('#kind-tv').prop('checked' , true)
                     } else if(data.kind == 2){
-                        $('#kind-radio').attr('checked', true)
+                        $('#kind-radio').prop('checked', true)
                     }
                     
                     var urlUpdate = '/channel/' + data.id ; 

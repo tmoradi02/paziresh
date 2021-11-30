@@ -5,6 +5,7 @@
     <br>
     <br>
 
+    <!-- ST DOC 1400-07-20 Form For Search -->
     <form action="{{route('product_search')}}" method="get">
         <label style="padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
         <div style="border:1px ridge lightblue; padding-right:10px; margin-right:20px; padding-top:10px; margin-left:600px; height:60px;">
@@ -58,6 +59,7 @@
             </div>
         </div>
     </form>
+    <!-- END DOC 1400-07-20 Form For Search -->
 
     <br>
 

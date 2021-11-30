@@ -23,5 +23,9 @@ class Channel extends Model
         return $this->belongsToMany('App\Tariff');
     }
     
+    public function class()  // ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقه ها 
+    {
+        return $this->belongsToMany('App\Classes');
+    }
 
 }

@@ -18,5 +18,9 @@ class Classes extends Model
         return $this->hasMany('App\Tariff');
     }
 
-    
+    public function channels()  // ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقه
+    {
+        return $this->hasMany('App\Channel');
+    }
+
 }

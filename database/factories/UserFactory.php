@@ -66,6 +66,7 @@ $factory->define(Channel::class, function(Faker $faker)
 $factory->define(Classes::class , function(Faker $faker)
 {
     return [
+        'channel_id' => rand(1 , 10) , // ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه در جدول طبقه ها
         'class_name' => $faker->name ,
         'user_id' => rand(1,10),
     ];

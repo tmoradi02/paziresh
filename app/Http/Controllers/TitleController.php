@@ -76,10 +76,9 @@ class TitleController extends Controller
         }
         $title->title = trim($request->title);
 
-        dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
+        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
         $title->user_id = $request->user_id;
 
-        
         $title->save();
         
         // dd($request->all());

@@ -51,7 +51,6 @@ class ArmAgahiController extends Controller
     public function store(Request $request)
     {
         // باید ابتدا چک شود مثلا در شبکه اول داخل یک بازه زمانی چند تا رکورد ثبت نگردد
-        // dd($request->all());
 
         $request->validate([
             'channel_id' => 'required',
@@ -65,21 +64,14 @@ class ArmAgahiController extends Controller
             $arm_agahi = new ArmAgahi(); 
             $arm_agahi->channel_id = $request->channel_id; 
             if(trim($request->coef) <> 0 ) $arm_agahi->coef = trim($request->coef); 
-            // dd(str_replace("/" , "-" , $request->from_date)); 
+            $request->arm_agahi = $request->coef;
+
             $arm_agahi->from_date =  $request->from_date; // str_replace("/" , "-" , $request->from_date); // "1400/07/01";  //$request->from_date;
-            // dd($request->to_date); 
             $arm_agahi->to_date = $request->to_date; // str_replace("/" , "-" , $request->to_date); // "1400/07/30";  //$request->to_date;
 
-            $request->arm_agahi = $request->coef();
-            
-            dd($arm_agahi->all());
-
-            // dd($arm_agahi->from_date);
-            // dd($arm_agahi->all());
             // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
             $arm_agahi->user_id = $request->user_id; 
 
-            // // dd($arm_agahi); 
             // if($this->checkunqueu($arm_agahi)) // زمان ویرایش هم باید چک شود
             // { 
             //     $arm_agahi->save(); 
@@ -94,13 +86,9 @@ class ArmAgahiController extends Controller
 
     public function checkunqueu($handler)
     {
-        // dd($handler);
         // هر تاریخی وارد شود پیغام تکراری می دهد
         $from_date = jalaliToGergia($handler->from_date);
         $to_date = jalaliToGergia($handler->to_date) ;
-        // dd( 'to'. $to_date);
-
-        // dd($handler->to_date);
 
         $query = ArmAgahi::
         where('channel_id' , '=' , $handler->channel_id)
@@ -180,7 +168,8 @@ class ArmAgahiController extends Controller
             $channels = Channel::all();
             $users = User::all();
             // dd($channels);
-            return response()->json('arm_agahi.edit', ['arm_agahi'=> $arm_agahi ,'channels'=> $channels , 'users' => $users]);
+            return response()->json($arm_agahi);
+            // return response()->json('arm_agahi.edit', ['arm_agahi'=> $arm_agahi ,'channels'=> $channels , 'users' => $users]);
             // return view('arm_agahi.edit',['arm_agahi'=> $arm_agahi ,'channels'=> $channels , 'users' => $users ]);
         }
     }
@@ -205,11 +194,13 @@ class ArmAgahiController extends Controller
         {
             $arm_agahi = ArmAgahi::findOrFail($id);
             $arm_agahi->channel_id = $request->channel_id;
-            $arm_agahi->coef = trim($request->coef);
+            $arm_agahi->coef = $request->coef;
             $arm_agahi->from_date = $request->from_date;
             $arm_agahi->to_date = $request->to_date;
             $arm_agahi->user_id = $request->user_id;
             $arm_agahi->save();
+            
+            // dd($request->all());
             return redirect()->route('arm_agahi.index');
         }
     }

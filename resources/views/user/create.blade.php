@@ -23,16 +23,16 @@
                     <div class="form-group">
                         <input type="text" name="name" maxlength="30" placeholder="نام کاربر" class="form-control" >
                     </div>
-                    <div class="height" style="height:200px ; overflow-y:scroll; padding:30px">
+                    <div class="height" style="height:200px ; overflow-y:scroll; padding:30px; ">
                         @foreach($permissions as $permission)
-                            <div class="row">
+                            <div class="row"> 
                                 <input type="checkbox" name="prm[]" value = "{{$permission->id}}">
                                 <label>{{$permission->permission_name}}</label>
                             </div>
                         @endforeach
                     </div>
                 </div>
-  
+
                 <div class="col">
                     <div class="form-group">
                         <input type="email" name="email" maxlength="100" placeholder="ایمیل" class="form-control">
