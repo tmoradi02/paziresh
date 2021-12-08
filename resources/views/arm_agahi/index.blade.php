@@ -5,6 +5,17 @@
         <div class="alert alert-warning">{{session()->get('warning')}}</div>
     @endif
 
+    <!-- ST DOC 1400-09-17 پیغام دادن به کاربر -->
+    @if($errors->any())
+        <div class="alert-box">
+            @foreach($errors->all() as $message)
+                <div class="alert">{{$message}}</div>
+            @endforeach
+        </div>
+    @endif
+    <!-- END DOC 1400-09-17 پیغام دادن به کاربر -->
+
+    
     <a href="{{route('arm_agahi.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن آرم آگهی</a>
     <br>                                                 
     <br>

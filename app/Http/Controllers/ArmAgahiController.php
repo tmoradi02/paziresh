@@ -235,6 +235,7 @@ class ArmAgahiController extends Controller
         {
             $arm_agahies->where('coef' , 'like' , "%$request->coef%");
         }
+
         if($request->has('from_date') && $request->from_date)
         {
             $from_date = explode ('/' , $request->from_date);
@@ -252,10 +253,12 @@ class ArmAgahiController extends Controller
 
             $arm_agahies->where('to_date' , '<=' , $to_date);
         }
+
         if($request->has('user_id') && $request->user_id)
         {
             $arm_agahies->where('user_id' , $request->user_id);
         }
+        
         $arm_agahies = $arm_agahies->get();
         return view('arm_agahi.index' , ['arm_agahies' => $arm_agahies , 'channels' => $channels , 'users' => $users]);
     }

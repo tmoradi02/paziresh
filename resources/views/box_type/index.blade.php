@@ -1,6 +1,16 @@
 @extends('layouts.app')
 @section('content')
 
+    <!-- ST DOC 1400-09-17 پیغام دادن به کاربر  -->
+    @if($errors->any())
+        <div class="alert-box">
+            @foreach($errors->all() as $message)
+                <div class="alert">{{$message}}</div>
+            @endforeach
+        </div>
+    @endif
+    <!-- ST DOC 1400-09-17 پیغام دادن به کاربر -->
+
     <a href="{{route('box_type.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن محل پخش</a>
     <br>
     <br>

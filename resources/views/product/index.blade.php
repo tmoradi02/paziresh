@@ -1,6 +1,17 @@
 @extends('layouts.app')
 @section('content')
 
+    <!-- ST DOC 1400-09-17 پیغام دادن به کاربر -->
+    @if($errors->any())
+        <div class="alert-box">
+            @foreach($errors->all() as $message)
+                <div class="alert">{{$message}}</div>
+            @endforeach
+        </div>
+    @endif
+    <!-- ENd DOC 1400-09-17 پیغام دادن به کاربر -->
+
+    
     <a href="{{route('product.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن محصولات</a>
     <br>
     <br>
@@ -11,7 +22,7 @@
         <div style="border:1px ridge lightblue; padding-right:10px; margin-right:20px; padding-top:10px; margin-left:600px; height:60px;">
             <div class="row">
 
-                <!-- <div class="col">   Select Mamoolo
+                <!-- <div class="col">   Select Mamooli
                     <div class="form-group">
                         <select name="cast_id" class="form-control js-example-basic-single">
                         <option value="">انتخاب صنف</option>

@@ -14,6 +14,14 @@
         {
             background-color: lightgray;
         }
+
+        /* ST DOC 1400-09-17 اولویت دادن به قرارگرفتن تاریخ روی صفحات */
+        jdp-container 
+        {
+            z-index: 1100!important;
+        }
+        /* END DOC 1400-09-17 اولویت دادن به قرارگرفتن تاریخ روی صفحات */
+
     </style>
 <!-- END DOC 1400-07-14  اضافه نمودن رنگ به ضمینه گرید برای یک در میان کردن رنگ رکوردها  --> 
 
@@ -108,6 +116,7 @@
             })
         });
 
+
         $(document).ready(function(){
             $.ajax({
                 url:'/get-classes-json'
@@ -127,6 +136,7 @@
             });
         });
 
+
         $(document).ready(function(){
             $.ajax({
                 url: '/get-boxType-json'
@@ -142,8 +152,27 @@
 
                     opts.push(opt);
                 }
-                $('.show-BoxType').append(opts);
+                $('.show-BoxTypees').append(opts);
             });
+        });
+
+        $(document).ready(function(){
+            $.ajax({
+                url: '/get-boxType-json'
+            }).done(function(data){
+                var opts=[];
+
+                for (var boxType of data)
+                {
+                    var opt = document.createElement('option');
+
+                    opt.innerHTML = boxType.box_type;
+                    opt.value = boxType.id;
+
+                    opts.push(opt);
+                }
+                $('.show-boxType').append(opts);
+            })
         });
 
         $(document).ready(function(){
@@ -562,6 +591,14 @@
     //     $('#products').select2();
     // });
 
+        // ST DOC 1400-09-17 تکست های وارد شده قبلی را پاک میکند
+        $(document).ready(function(){
+            $('input').attr('autocomplete' , 'off');
+        });
+        // END DOC 1400-09-17 تکست های وارد شده قبلی را پاک میکند
+
+        
+
     //  ST DOC 1400-06-21 Add Select 2
         $('#myselect').select2({
         width: '100%',
@@ -606,12 +643,14 @@
 
     </script>
 
-    <style>
-        .jdpjdp-container 
+
+    <!-- <style>  بالا وجود دارد 
+        jdp-container 
         {
             z-index: 999999999999999999999999999999999999999 !important;
         }
-    </style>   
+
+    </style>    -->
 
 </body>
 </html>

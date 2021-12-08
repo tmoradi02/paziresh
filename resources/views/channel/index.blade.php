@@ -1,5 +1,16 @@
 @extends('layouts.app')
 @section('content')
+
+    <!-- ST DOC 1400-09-17 پیغام دادن به کاربر  -->
+    @if($errors->any())
+        <div class="alert-box">
+            @foreach($errors->all() as $message)
+                <div class="alert">{{$message}}</div>
+            @endforeach
+        </div>
+    @endif
+    <!-- END DOC 1400-09-17 پیغام دادن به کاربر -->
+
     
     <a href="{{route('channel.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن شبکه</a>
 
@@ -17,6 +28,7 @@
             @endcan
             <th style="width:300px; background-color:darkgray; ">action</th>     <!--height: 1px; -->
         </tr>
+        
         
         @foreach($channels as $channel)
             <tr class="rowt" style="height: 1px; ">

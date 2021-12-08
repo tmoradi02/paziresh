@@ -1,6 +1,16 @@
 @extends('layouts.app')
 @section('content')
 
+    <!-- ST DOC 1400-09-17 پیغام دادن به کاربر -->
+    @if($errors->any())
+        <div class="alert-box">
+            @foreach($errors->all() as $message)
+                <div class="alert">{{$message}}</div>
+            @endforeach
+        </div>
+    @endif
+    <!-- END DOC 1400-09-17 پیغام دادن به کاربر -->
+
     <!-- <a href="{{route('adver_type.create')}}" class="btn btn-primary" style="margin-right:20px; text-align: center; width:210px;">اضافه نمودن نوع کدآگهی</a> -->
     <a href="{{route('adver_type.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن نوع کدآگهی</a>
     <br>

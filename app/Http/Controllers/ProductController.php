@@ -66,6 +66,7 @@ class ProductController extends Controller
         $request->validate([
             'cast_id' => 'required' ,
             'product' => 'required|min:3' ,
+            Rule::unique('products')->ignore($product->id),
         ]);
             
         if($id == null && Gate::allows('Insert_Product'))
@@ -160,7 +161,7 @@ class ProductController extends Controller
             $products->where('product' , 'like' , "%$request->product%");
         }
 
-        if($request->has('user_id') & $request->user_id)
+        if($request->has('user_id') && $request->user_id)
         {
             $products->where('user_id' , $request->user_id);
         }

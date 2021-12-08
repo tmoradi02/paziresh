@@ -77,6 +77,8 @@ class TariffController extends Controller
 
         // dd($request->all());
 
+        // dd(auth()->user()->id);
+
         $request->validate([
             
             'channel_id' => 'required' , 
@@ -86,8 +88,6 @@ class TariffController extends Controller
             'to_date' => 'required' , 
             'price' => 'required|min:6' 
         ]);
-
-        
 
         if($id == null && Gate::allows('Insert_Tariff'))
         {
@@ -131,7 +131,8 @@ class TariffController extends Controller
         $tariff->price = $request->price;
 
         // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
-        $tariff->user_id = $request->user_id;
+        $tariff->user_id = auth()->user()->id; //$request->user_id;
+        
 
         // dd($request->all());
 
@@ -207,5 +208,63 @@ class TariffController extends Controller
             return redirect()->back();
         }
     }
+
+    public function search(Request $request)
+    {
+        $channels = Channel::all();
+        $classes = Classes::all();
+        $box_types = Box_Type::all();
+        $users = User::all();
+        $tariffs = Tariff::query();
+
+        if($request->has('channel_id') && $request->channel_id)
+        {
+            $tariffs->where('channel_id' , $request->channel_id);
+        }
+
+        if($request->has('classes_id') && $request->classes_id)
+        {
+            $tariffs->where('classes_id' , $request->classes_id);
+        }
+
+        if($request->has('box_type_id') && $request->box_type_id)
+        {
+            $tariffs->where('box_type_id' , $request->box_type_id);
+        }
+
+        if($request->has('from_date') && $request->from_date)
+        {
+            $from_date = explode('/' , $request->from_date);
+            $from_date = Verta::getGregorian($from_date[0] , $from_date[1] , $from_date[2]);
+            $from_date = implode('-' , $from_date);
+
+            $tariffs->where('from_date' , '>=' , $from_date);
+        }
+
+        if($request->has('to_date') && $request->to_date)
+        {
+            $to_date = explode('/' , $request->to_date);
+            $to_date = Verta::getGregorian($to_date[0] , $to_date[1] , $to_date[2]);
+            $to_date = implode('-' , $to_date);
+
+            $tariffs->where('to_date' , '<=' , $to_date);
+        }
+
+        if($request->has('price') && $request->price)
+        {
+            $tariffs->where('price' , $request->price);
+        }
+
+        if($request->has('user_id') && $request->user_id)
+        {
+            $tariffs->where('user_id' , $request->user_id);
+        }
+
+        $tariffs = $tariffs->get();
+        return view('tariff.index' , ['tariffs' => $tariffs , 'channels' => $channels , 'classes' => $classes , 'box_types' => $box_types , 'users' => $users]); 
+    }
+
+    
+
 }
 

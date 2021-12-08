@@ -1,6 +1,16 @@
 @extends('layouts.app')
 @section('content')
 
+    <!-- ST DOC 1400-09-17 پیغام دادن به کاربر -->
+    @if($errors->any())
+        <div class="alert-box">
+            @foreach($errors->all() as $message)
+                <div class="alert">{{$message}}</div>
+            @endforeach
+        </div>
+    @endif
+    <!-- END DOC 1400-09-17 پیغام دادن به کاربر -->
+
     <a href="{{route('classes.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن طبقه</a>
     <br>
     <br>

@@ -133,7 +133,7 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
-    ],
+
 
     'name'=> 
     [
@@ -277,7 +277,7 @@ return [
         'min' => 'حداقل 3 کاراکتر وارد نمایید' ,
     ],
 
-        
+], 
 
 
     /*
