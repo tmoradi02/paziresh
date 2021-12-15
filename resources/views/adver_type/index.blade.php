@@ -3,7 +3,7 @@
 
     <!-- ST DOC 1400-09-17 پیغام دادن به کاربر -->
     @if($errors->any())
-        <div class="alert-box">
+        <div class="alert alert-danger">
             @foreach($errors->all() as $message)
                 <div class="alert">{{$message}}</div>
             @endforeach
@@ -11,8 +11,11 @@
     @endif
     <!-- END DOC 1400-09-17 پیغام دادن به کاربر -->
 
+
     <!-- <a href="{{route('adver_type.create')}}" class="btn btn-primary" style="margin-right:20px; text-align: center; width:210px;">اضافه نمودن نوع کدآگهی</a> -->
-    <a href="{{route('adver_type.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن نوع کدآگهی</a>
+    @can('Insert_Adver_Type')
+        <a href="{{route('adver_type.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن نوع کدآگهی</a>
+    @endcan
     <br>
     <br>
 
@@ -42,16 +45,19 @@
     </form>
     
     <br>
- 
+
     <table class="table table-bordered">
         <tr style="height:1px;">
             <th style="width:30px; background-color:darkgray; text-align:center;">ردیف</th>
-            <th style="width:300px; background-color:darkgray; text-align:center;">نوع کدآگهی</th>
+            <th style="width:100px; background-color:darkgray; text-align:center;">نوع کدآگهی</th>
+
             @can('Get_Permission_To_Other_User')
-                <th style="width:200px; background-color:darkgray; text-align:center;">کاربر</th>
+                <th style="width:100px; background-color:darkgray; text-align:center;">کاربر</th>
             @endcan
+
             <th style="width:300px; background-color:darkgray; ">Action</th>
         </tr>
+
         @foreach($adver_types as $adver_type)
             <tr class="rowt" style="height:1px;">
                 <td class="rowtt" style="height:1px; text-align:center;"></td>
@@ -102,6 +108,7 @@
                                     <input type="text" name="adver_type" class="form-control" placeholder="عنوان نوع کدآگهی">
                                 </div>
                             </div>
+
                             @can('Get_Permission_To_Other_User')
                                 <div class="row">
                                     <div class="col form-group">
@@ -110,6 +117,7 @@
                                     </div>
                                 </div>
                             @endcan
+
                             <div class="row">
                                 <div class="col form-group">
                                     <input type="submit" value="ثبت" class="btn btn-primary">
@@ -148,38 +156,39 @@
                 </div>
                 <div class="modal-body">
                     <!-- ST DOC Add Form For Edit -->
-                        <form action="" class="edit-adver-type" method="post">
-                            @csrf
-                            @method('put')
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <input type="text" name="adver_type" id="adver-type" class="form-control" placeholder="عنوان نوع کداگهی">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    @can('Get_Permission_To_Other_User')
-                                        <div class="col form-group">
-                                            <select name="user_id" id="user-id" class="form-control show-user">
-
-                                            </select>
-                                        </div>
-                                    @endcan
-                                        <div class="row">
-                                        <div class="col form-group">
-                                            <input type="submit" value="ثبت" class="btn btn-primary">
-                                        </div>
-                                        <div class="col form-group">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
-                                        <div class="col"></div>
-                                        <div class="col"></div>
-                                        <div class="col"></div>
-                                        <div class="col"></div>
-                                    </div>
+                    <form action="" class="edit-adver-type" method="post">
+                        @csrf
+                        @method('put')
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="adver_type" id="adver-type" class="form-control" placeholder="عنوان نوع کداگهی">
                                 </div>
                             </div>
-                        </form>
+                            <div class="row">
+
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col form-group">
+                                        <select name="user_id" id="user-id" class="form-control show-user">
+                                        </select>
+                                    </div>
+                                @endcan
+
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <input type="submit" value="ثبت" class="btn btn-primary">
+                                    </div>
+                                    <div class="col form-group">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <!-- END DOC Add Form For Edit -->
                 </div>
                 <!-- <div class="modal-footer">

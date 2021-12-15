@@ -94,9 +94,11 @@ class Adver_Type_CoefController extends Controller
         $adver_type_coef->from_date = $request->from_date;
         $adver_type_coef->to_date = $request->to_date;
 
-        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
-        $adver_type_coef->user_id = $request->user_id;
+        // ST DOC 1400-09-21 با هر کاربری که لاگین کنیم، با آیدی همان کاربر ثبت می کند
+        $adver_type_coef->user_id = auth()->user()->id; //$request->user_id;
+        // $adver_type_coef->user_id = $request->user()->id; با هر دو دستور اکی میشود
 
+        
         $adver_type_coef->save();
         // return redirect()->route('adver_type_coef.index');
         return redirect()->back()->with('message' , 'Save Successful');

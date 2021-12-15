@@ -63,19 +63,27 @@ class ProductController extends Controller
      */
     public function store(Request $request , $id = null)
     {
-        $request->validate([
-            'cast_id' => 'required' ,
-            'product' => 'required|min:3' ,
-            Rule::unique('products')->ignore($product->id),
-        ]);
-            
-        if($id == null && Gate::allows('Insert_Product'))
+        if($id == null && Gate::allows('Insert_Product')) // In Mode Insert  
         {
+            $request->validate([
+                'cast_id'=> 'required' ,
+                'product' => 'required|min:3|unique:products',
+            ]);
+
             $product = new Product();
         }
-        elseif($id != null && Gate::allows('Edit_Product'))
+        elseif($id != null && Gate::allows('Edit_Product')) // In Mode Edit 
         {   
             $product = Product::findOrFail($id);
+
+            $request->validate([
+                'cast_id' => 'required' ,
+                'product' => [ 
+                    'required' , 
+                    'min:3' , 
+                     Rule::unique('products')->ignore($product->id) ,
+                ], 
+            ]);
         }
         else
         {
@@ -85,8 +93,15 @@ class ProductController extends Controller
         $product->product = trim($request->product); 
         $product->cast_id = $request->cast_id; 
 
-        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
-        $product->user_id = $request->user_id; 
+        // ST DOC 1400-09-21 با هر کاربر که لاگین میکنیم با آیدی همان کاربر ثبت میشود
+        $product->user_id = $request->user()->id; //$request->user_id; 
+        // $product->user_id = auth()->user()->id; با هر دو دستور اکی میشود 
+
+        if($this->checkunqueu($product)) // زمان ویرایش هم باید چک شود
+        { 
+            $product->save(); 
+            return redirect()->route('product.index'); 
+        } 
 
         $product->save(); 
         // dd($request->all()); 
@@ -94,6 +109,21 @@ class ProductController extends Controller
 
         return redirect()->back()->with('message' , 'OK'); 
         // return redirect()->route('product.index');
+    }
+
+    public function checkunqueu($handler) // ST DOC 1400-09-20 Check for Duplicate Product In Ever Cast 
+    {
+        $query = Product::
+        where('cast_id' , '=' , $handler->cast_id)
+
+        ->where('product' , $handler->product)
+
+        ->first();
+
+        // dd($query);
+
+        if($query) return false;
+        return true;
     }
 
     /**
@@ -147,27 +177,27 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $casts = Cast::all();
-        $users = User::all();
-        $products = Product::query();
+        $casts = Cast::all(); 
+        $users = User::all(); 
+        $products = Product::query(); 
 
         if($request->has('cast_id') && $request->cast_id)
         {
-            $products->where('cast_id' , $request->cast_id);
+            $products->where('cast_id' , $request->cast_id); 
         }
 
-        if($request->has('product') && $request->product)
+        if($request->has('product') && $request->product) 
         {
-            $products->where('product' , 'like' , "%$request->product%");
+            $products->where('product' , 'like' , "%$request->product%"); 
         }
 
-        if($request->has('user_id') && $request->user_id)
+        if($request->has('user_id') && $request->user_id) 
         {
-            $products->where('user_id' , $request->user_id);
+            $products->where('user_id' , $request->user_id); 
         }
 
-        $products = $products->get();
-        return view('product.index' , ['products' => $products , 'casts' => $casts , 'users' => $users]);
+        $products = $products->get(); 
+        return view('product.index' , ['products' => $products , 'casts' => $casts , 'users' => $users]); 
     }
 
 }

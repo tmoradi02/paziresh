@@ -3,7 +3,7 @@
 
     <!-- ST DOC 1400-09-17 پیغام دادن به کاربر -->
     @if($errors->any())
-        <div class="alert-box">
+        <div class="alert alert-danger">
             @foreach($errors->all() as $message)
                 <div class="alert">{{$message}}</div>
             @endforeach
@@ -11,14 +11,22 @@
     @endif
     <!-- END DOC 1400-09-17 پیغام دادن به کاربر -->
 
-    <a href="{{route('adver_type_coef.create')}}" class="next" style="margin-right:20px;" data-toggle="modal" data-target="#createModal" >اضافه نمودن ضریب نوع کدآگهی</a>
+    @can('Insert_Adver_Type_Coef')
+        <a href="{{route('adver_type_coef.create')}}" class="next" style="margin-right:20px;" data-toggle="modal" data-target="#createModal" >اضافه نمودن ضریب نوع کدآگهی</a>
+    @endcan
+
     <br>                                                                                
     <br>
 
     <form action="{{route('adver_type_coef_search')}}" mthod="get">
         <label style="padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
+        
+        @can('Get_Permission_To_Other_User')
+            <div class="row" style="border:1px ridge lightblue; padding-right:1px; padding-top:15px; margin-right:20px; width:1350px;">
+        @else
+            <div class="row" style="border:1px ridge lightblue; padding-right:1px; padding-top:15px; margin-right:20px; width:1000px;">
+        @endcan
 
-        <div class="row" style="border:1px ridge lightblue; padding-right:1px; padding-top:15px; margin-right:20px; width:1350px;">
             <div class="col">
                 <div class="form-group">
                     <select name="adver_type_id" id="myselect" multiple style="width:300px;">
@@ -47,15 +55,17 @@
                 </div>            
             </div>
 
-            <div class="col">
-                <div class="form-group">
-                    <select name="user_id" id="myselect-2" multiple style="width:320px;">
-                        @foreach($users as $user)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
-                        @endforeach
-                    </select>
+            @can('Get_Permission_To_Other_User')
+                <div class="col">
+                    <div class="form-group">
+                        <select name="user_id" id="myselect-2" multiple style="width:320px;">
+                            @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-            </div>
+            @endcan
 
             <div class="col">
                 <div class="form-group">
@@ -74,6 +84,11 @@
             <th style="width:10px; background-color:darkgray; text-align:center;">ضریب نوع کداگهی</th>
             <th style="width:10px; background-color:darkgray; text-align:center;">از تاریخ</th>
             <th style="width:10px; background-color:darkgray; text-align:center;">تا تاریخ</th>
+
+            @can('Get_Permission_To_Other_User')
+                <th style="width:10px; background-color:darkgray; text-align:center;">کاربر</th>
+            @endcan
+
             <th style="width:50px; background-color:darkgray; ">Action</th>
         </tr>
 
@@ -84,8 +99,17 @@
                         <td class="rowtt" style="height:1px; text-align:center;"></td>
                         <td style="height:1px;">{{$adver_type->adver_type}}</td>
                         <td style="height:1px; width:10px;">{{$adver_type_coef->coef}}</td>
-                        <td style="height:1px;width:10px;">{{$adver_type_coef->from_date}}</td>
-                        <td style="height:1px;width:10px;">{{$adver_type_coef->to_date}}</td>
+                        <td style="height:1px; width:10px;">{{$adver_type_coef->from_date}}</td>
+                        <td style="height:1px; width:10px;">{{$adver_type_coef->to_date}}</td>
+
+                        @can('Get_Permission_To_Other_User')
+                            @foreach($users as $user)
+                                @if($user->id == $adver_type_coef->user_id)
+                                    <td style="height:1px; width:10px;">{{$user->name}}</td>
+                                @endif
+                            @endforeach
+                        @endcan
+
                         <td class="btn-group">
                             @can('Edit_Adver_Type_Coef')
                                 <a href="{{route('adver_type_coef.edit' , $adver_type_coef->id)}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
@@ -204,7 +228,6 @@
                                 @can('Get_Permission_To_Other_User')
                                     <div class="col form-group">
                                         <select name="user_id" id="user-id" class="form-control show-user" style="width:210px;">
-                                        
                                         </select>
                                     </div>
                                 @endcan

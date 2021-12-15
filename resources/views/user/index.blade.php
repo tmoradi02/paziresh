@@ -1,6 +1,16 @@
 @extends('layouts.app')
 @section('content')
 
+    <!-- ST DOC 1400-09-20 پیغام خطا به کاربر -->
+    @if($errors->any())
+        <div class="alert alert-danger">
+            @foreach($errors->all() as $message)
+                <div class="alert">{{$message}}</div>
+            @endforeach
+        </div>
+    @endif
+    <!-- END DOc 1400-09-20 پیغام خطا به کاربر -->
+
     <a href="{{route('user.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن کاربر</a>
     <br>
     <br>
@@ -35,6 +45,7 @@
                         <label>فعال</label>
                     </div>
                 </div>
+                
                 <div class="col">
                     <div class="form-group" style="padding-top:10px;">
                         <input type="radio" name="status" id="0" value="0">

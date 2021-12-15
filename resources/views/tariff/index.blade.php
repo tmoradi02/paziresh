@@ -1,37 +1,40 @@
 @extends('layouts.app')
 @section('content')
 
+    <!-- ST DOC 1400-09-20 پیغام خطا به کاربر  -->
     @if($errors->any())
-        <div class="alert-box">
+        <div class="alert alert-danger">
             @foreach($errors->all() as $message)
                 <div class="alert">{{$message}}</div>
             @endforeach
         </div>
     @endif
+    <!-- END DOC 1400-09-20 پیغام خطا به کاربر  -->
 
-    <a href="{{route('tariff.create')}}" data-toggle="modal" data-target="#createModal" class="next">اضافه نمودن تعرفه</a>
-    
+    @can('Insert_Tariff')
+        <a href="{{route('tariff.create')}}" data-toggle="modal" data-target="#createModal" class="next">اضافه نمودن تعرفه</a>
+    @endcan
+
     <br>
     <br>
 
-
-
+    <!-- ST DOC 1400-09-22 جستجوی تعرفه -->
     <form action="{{route('tariff_search')}}" method="get">
-        <label style="padding-right:20px; font-weight:bold; color:gray;">TARIFF</label>
-        <div style="border:1px ridge lightblue; padding-right:10px; margin-right:20px; padding-top:10px; margin-left:20px; height:60px;">
+        <label style="padding-right:20px; font-weight:bold; color:gray; padding-right:25px;">جستجو</label>
+        <div style="border:1px lightblue ridge; padding-right:20px; margin-right:20px; padding-top:10px; height:60px; margin-left:20px; width:1450px;">
             <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <select name="channel_id" id="myselect" multiple class="form-control" style="width:200px;">
                             @foreach($channels as $channel)
-                                <option value="{{$channel->id}}" style="width:200px;">{{$channel->channel_name}}</option>
+                                <option value="{{$channel->id}}">{{$channel->channel_name}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <select name="classes_id" id="myselect-2" multiple class="form-control">
+                        <select name="classes_id" id="myselect-2" multiple class="form-control" style="width:200px;">
                             @foreach($classes as $class)
                                 <option value="{{$class->id}}">{{$class->class_name}}</option>
                             @endforeach
@@ -40,35 +43,26 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <select name="box_type_id" id="myselect-3" multiple class="form-control">
-                            @foreach($box_types as $boxtype)
-                                <option value="{{$boxtype->id}}">{{$boxtype->box_type}}</option>
+                        <select name="box_type_id" id="myselect-3" multiple class="form-control" style="width:200px;">
+                            @foreach($box_types as $boxType)
+                                <option value="{{$boxType->id}}">{{$boxType->box_type}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <input name="from_date" autocomplete="off" data-jdp class="form-control" placeholder="از تاریخ">
+                        <input type="text" data-jdp name="from_date" class="form-control" placeholder="از تاریخ" style="width:200px;">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <input name="to_date" autocomplete="off" data-jdp class="form-control" placeholder="تا تاریخ">
+                        <input type="text" data-jdp name="to_date" class="form-control" placeholder="تا تاریخ" style="width:200px;">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <input type="number" name="price" placeholder="مبلغ تعرفه" class="form-control">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <select name="user_id" id="myselect-4" multiple class="form-control"> 
-                            @foreach($users as $user) 
-                                <option value="{{$user->id}}">{{$user->name}}</option>
-                            @endforeach
-                        </select>
+                        <input type="number" name="price" placeholder="مبلغ تعرفه" class="form-control" style="width:200px;">
                     </div>
                 </div>
                 <div class="col">
@@ -77,25 +71,24 @@
                     </div>
                 </div>
             </div>
-        
-        </div>
-        <div class="row">
-        
         </div>
     </form>
+    <!-- END DOC 1400-09-22  -->
 
-
-    <!-- END DOC 1400-09-15 -->
     <table class="table table-bordered" style="margin-top:10px;">
         <tr style="height:1px;">
             <th style="width:1px; background-color:darkgray; text-align:center;">ردیف</th>
             <th style="width:100px; background-color:darkgray; text-align:center;">شبکه</th>
             <th style="width:50px; background-color:darkgray; text-align:center;">طبقه</th>
             <th style="width:100px; background-color:darkgray; text-align:center;">نوع باکس</th>
-            <th style="width:100px; background-color:darkgray; text-align:center;">از تاریخ</th>
-            <th style="width:100px; background-color:darkgray; text-align:center;">تا تاریخ</th>
-            <th style="width:100px; background-color:darkgray; text-align:center;">مبلغ</th>
-            <th style="width:300px; background-color:darkgray; text-align:center;">کاربر</th>
+            <th style="width:50px; background-color:darkgray; text-align:center;">از تاریخ</th>
+            <th style="width:50px; background-color:darkgray; text-align:center;">تا تاریخ</th>
+            <th style="width:50px; background-color:darkgray; text-align:center;">مبلغ</th>
+
+            @can('Get_Permission_To_Other_User')
+                <th style="width:100px; background-color:darkgray; text-align:center;">کاربر</th>
+            @endcan
+            
             <th style="width:100px; background-color:darkgray; text-align:center;">Action</th>
         </tr>
 
@@ -122,11 +115,13 @@
                         <td style="height:10%;">{{$tariff->to_date}}</td>
                         <td style="height:10%;">{{$tariff->price}}</td>
 
-                        @foreach($users as $user)
-                            @if($user->id == $tariff->user_id)
-                                <td style="height:10%;">{{$user->name}}</td>
-                            @endif
-                        @endforeach
+                        @can('Get_Permission_To_Other_User')
+                            @foreach($users as $user)
+                                @if($user->id == $tariff->user_id)
+                                    <td style="height:10%;">{{$user->name}}</td>
+                                @endif
+                            @endforeach
+                        @endcan
 
                         <td class="btn-group" style="height:10%;">
                             @can('Edit_Tariff')
@@ -166,7 +161,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <select name="channel_id" id="channel-id" class="form-control show-channel">
+                                        <select name="channel_id" id="channel-id" class="form-control show-channel" >
                                         </select>
                                     </div>
                                 </div>
@@ -201,12 +196,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <select name="user_id" id="user-id" class="form-control show-user" style="width:210px;">
-                                        </select>
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <select name="user_id" id="user-id" class="form-control show-user" style="width:210px;">
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
                                 <div class="col">
                                     <div class="form-group">
                                         <input type="submit" value="ثبت" class="btn btn-primary">
@@ -284,12 +281,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <select name="user_id" id="users-id" class="form-control show-user" style="width:210px;">
-                                        </select>
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <select name="user_id" id="users-id" class="form-control show-user" style="width:210px;">
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
                                 <div class="col">
                                     <div class="form-group">
                                         <input type="submit" value="ثبت" class="btn btn-primary">
@@ -313,73 +312,7 @@
         </div>
     </div>
     <!-- END DOC 1400-09-13 Modla form For Edit Record -->
-
-    <!-- ST DOC 1400-09-15 -->
-    <!-- <form action="{{route('tariff_search')}}" method="get">
-        <label style="padding-right:20px; font-weight:bold; color:gray;">Search</label>
-
-        <div style="border:1px ridge lightblue; padding-right:10px; margin-right:20px; padding-top:10px; margin-left:20px; height:60px; width:1780px; " >
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <select name="channel_id" class="form-control" id="myselect" multiple style="width:200px;" >
-                            @foreach($channels as $channel)
-                                <option value="{{$channel->id}}" style="width:100px;">{{$channel->channel_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <select name="classes_id" id="myselect-2" class="form-control" multiple style="width:200px;">
-                            @foreach($classes as $class)
-                                <option value="{{$class->id}}">{{$class->class_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <input name="from_date" data-jdp class="form-control" placeholder="از تاریخ" style="width:200px;">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <input name="to_date" data-jdp class="form-control" placeholder="تا تاریخ" style="width:200px;">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <select name="box_type_id" id="myselect-3" class="form-control" multiple style="width:200px;">
-                            @foreach($box_types as $boxtype)
-                                <option value="{{$boxtype->id}}">{{$boxtype->box_type}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <input type="number" name="price" id="" class="form-control" style="width:200px;">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <select name="user_id" id="myselect-4" class="form-control" multiple style="width:300px;">
-                            @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <input type="submit" value="جستجو" class="btn btn-primary">
-                    </div>
-                </div>
-            </div>
-        
-        </div>
-    </form> -->
+    
 
     <script>
         $(document).ready(function(){ 

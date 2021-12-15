@@ -67,9 +67,13 @@ class ChannelController extends Controller
         // dd('method store');
         // dd($request->all());
 
+        // dd($request->all());
+        
+
         if($id !== null && Gate::allows('Edit_Channel')) //return abort (403,'عدم دسترسی');
         {
             $channel = Channel::findOrFail($id); 
+
             $request->validate ([
                 'channel_name' => [
                     'required', 
@@ -93,15 +97,16 @@ class ChannelController extends Controller
         else{
             return abort (403,'عدم دسترسی');
         }
-        // dd($request->all());
 
         $channel->channel_name = $request->channel_name;
         $channel->degree = $request->degree;
         $channel->kind = $request->kind;
 
         //$user_id = User::findOrFail($id);
-        dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
-        $channel->user_id = $request->user_id ;
+
+        // ST DOC 1400-09-21 با هرکاربر که لاگین کنیم با آیدی همان کاربر ثبت میشود
+        $channel->user_id = auth()->user()->id; //$request->user_id ;
+        //$channel->user_id = $request->user()->id; با هر دو دستور امکان پذیر است
 
         $channel->save();
         

@@ -1,17 +1,20 @@
 @extends('layouts.app')
 @section('content')
 
-    <!-- ST DOC 1400-09-17 پیغام دادن به کاربر  -->
+    <!-- ST DOC 1400-09-17 پیغام خطا به کاربر  -->
     @if($errors->any())
-        <div class="alert-box">
+        <div class="alert alert-danger">
             @foreach($errors->all() as $message)
                 <div class="alert">{{$message}}</div>
             @endforeach
         </div>
     @endif
-    <!-- ST DOC 1400-09-17 پیغام دادن به کاربر -->
+    <!-- ST DOC 1400-09-17 پیغام خطا به کاربر -->
 
-    <a href="{{route('box_type.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن محل پخش</a>
+    @can('Insert_Box_Type')
+        <a href="{{route('box_type.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن محل پخش</a>
+    @endcan
+
     <br>
     <br>
 
@@ -76,12 +79,14 @@
                                         <input type="text" name="box_type" placeholder="محل پخش" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <select name="user_id" class="form-control show-user">
-                                        </select>
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <select name="user_id" class="form-control show-user">
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -132,10 +137,12 @@
                                 <div class="col form-group">
                                     <input type="text" name="box_type" id="box-type" class="form-control" placeholder="عنوان محل پخش">
                                 </div>
-                                <div class="col form-group">
-                                    <select name="user_id" id="user-id" class="form-control show-user">
-                                    </select>
-                                </div>
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col form-group">
+                                        <select name="user_id" id="user-id" class="form-control show-user">
+                                        </select>
+                                    </div>
+                                @endcan
                             </div>
                             <div class="row">
                                 <div class="col form-group">

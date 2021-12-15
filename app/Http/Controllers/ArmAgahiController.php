@@ -69,8 +69,9 @@ class ArmAgahiController extends Controller
             $arm_agahi->from_date =  $request->from_date; // str_replace("/" , "-" , $request->from_date); // "1400/07/01";  //$request->from_date;
             $arm_agahi->to_date = $request->to_date; // str_replace("/" , "-" , $request->to_date); // "1400/07/30";  //$request->to_date;
 
-            // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
-            $arm_agahi->user_id = $request->user_id; 
+            // ST DOC 1400-09-21 با هرکاربری که لاگین کنیمف با آیدی همان کاربر ثبت میکند
+            $arm_agahi->user_id = auth()->user()->id; //$request->user_id; 
+            // $arm_agahi->user_id = $request->user()->id; با هردو دستور انجام میشود
 
             // if($this->checkunqueu($arm_agahi)) // زمان ویرایش هم باید چک شود
             // { 

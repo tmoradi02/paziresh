@@ -86,9 +86,9 @@ class CastController extends Controller
         }
         $cast->cast = trim($request->cast);
 
-
-        dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
-        $cast->user_id = $request->user_id;
+        // ST DOC 1400-09-21 با هر کاربر که لاگین کنیم با آیدی همان کاربر ثبت میکند
+        $cast->user_id = auth()->user()->id; //$request->user_id;
+        // $cast->user_id = $request->user()->id;  هر دو یکی هستند
         
         $cast->save();
 

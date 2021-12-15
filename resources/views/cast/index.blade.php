@@ -1,7 +1,20 @@
 @extends('layouts.app')
 @section('content')
 
-    <a href="{{route('cast.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن اصناف</a>
+    <!-- ST DOC 1400-09-21 پیغام خطا به کاربر -->
+    @if($errors->any())
+        <div class="alert alert-danger">
+            @foreach($errors->all() as $message)
+                <div class="alert">{{$message}}</div>
+            @endforeach
+        </div>
+    @endif
+    <!-- END DOC 1400-09-21 پیغام خطا به کاربر -->
+    
+    @can('Insert_Cast')
+        <a href="{{route('cast.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن اصناف</a>
+    @endcan
+
     <br>
     <br>
     
@@ -29,12 +42,14 @@
     
     <table class="table table-bordered">
         <tr style="height:1px;">
-            <th style="width:30px; background-color:darkgray; text-align:center;">ردیف</th>
-            <th style="width:300px; background-color:darkgray; text-align:center;">عنوان صنف</th>
+            <th style="width:10px; background-color:darkgray; text-align:center;">ردیف</th>
+            <th style="width:100px; background-color:darkgray; text-align:center;">عنوان صنف</th>
+
             @can('Get_Permission_To_Other_User')
-                <th style="width:200px; background-color:darkgray; text-align:center;">کاربر</th>
+                <th style="width:100px; background-color:darkgray; text-align:center;">کاربر</th>
             @endcan
-            <th style="width:200px; background-color:darkgray; ">Action</th>
+
+            <th style="width:100px; background-color:darkgray; ">Action</th>
         </tr>
         @foreach($casts as $cast)
             <tr class="rowt" style="height:1px;">

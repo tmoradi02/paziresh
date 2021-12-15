@@ -1,7 +1,19 @@
 @extends('layouts.app')
 @section('content')
 
-    <a href="{{route('title.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن عنوان باکس</a>
+    <!-- ST DOC 1400-09-20 پیغام خطا به کاربر -->
+    @if($errors->any())
+        <div class="alert alert-danger">
+            @foreach($errors->all() as $message)
+                <div class="alert">{{$message}}</div>
+            @endforeach
+        </div>
+    @endif
+    <!-- END DOC 1400-09-20 پیغام خطا به کاربر -->
+    @can('Insert_Title')
+        <a href="{{route('title.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن عنوان باکس</a>
+    @endcan
+
     <br>
     <br>
     
@@ -9,12 +21,23 @@
         <tr style="height:1px;">
             <th style="width:1px; background-color:darkgray; text-align:center;">ردیف</th>
             <th style="width:200px; background-color:darkgray; text-align:center;">عنوان باکس</th>
+            <th style="width:100px; background-color:darkgray; text-align:center;">کاربر</th>
             <th style="width:200px; background-color:darkgray; ">Action</th>
         </tr>
+
         @foreach($titles as $title)
             <tr class="rowt" style="height:1px;">
                 <td class="rowtt" style="height:1px; text-align:center;"></td>
                 <td style="height:1px;">{{$title->title}}</td>
+
+                @can('Get_Permission_To_Other_User')
+                    @foreach($users as $user)
+                        @if($user->id == $title->user_id)
+                            <td style="height:1px;">{{$user->name}}</td>
+                        @endif
+                    @endforeach
+                @endcan
+
                 <td class="btn-group">
                     @can('Edit_Title')
                         <a href="{{route('title.edit' , $title->id)}}" class="btn btn-warning btn-send-json" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
@@ -53,12 +76,16 @@
                                         <input type="text" name="title" placeholder="عنوان باکس" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <select name="user_id" class="form-control show-user" >
-                                        </select>
+
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <select name="user_id" class="form-control show-user" >
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
+
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -110,10 +137,13 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col form-group">
-                                    <select name="user_id" id="user-id" class="form-control show-user" style="width:270px;">
-                                    </select>
-                                </div>
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col form-group">
+                                        <select name="user_id" id="user-id" class="form-control show-user" style="width:270px;">
+                                        </select>
+                                    </div>
+                                @endcan
+                                
                                 <div class="col form-group">
                                     <input type="submit" value="ثبت" class="btn btn-primary">
                                 </div>

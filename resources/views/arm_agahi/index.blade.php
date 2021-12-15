@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section('content')
 
-    @if(session()->has('warning'))
+    <!-- @if(session()->has('warning'))
         <div class="alert alert-warning">{{session()->get('warning')}}</div>
-    @endif
+    @endif -->
 
     <!-- ST DOC 1400-09-17 پیغام دادن به کاربر -->
     @if($errors->any())
-        <div class="alert-box">
+        <div class="alert alert-danger">
             @foreach($errors->all() as $message)
                 <div class="alert">{{$message}}</div>
             @endforeach
@@ -15,8 +15,10 @@
     @endif
     <!-- END DOC 1400-09-17 پیغام دادن به کاربر -->
 
-    
-    <a href="{{route('arm_agahi.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن آرم آگهی</a>
+    @can('Insert_ArmAgahi')
+        <a href="{{route('arm_agahi.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن آرم آگهی</a>
+    @endcan
+
     <br>                                                 
     <br>
 
@@ -24,11 +26,17 @@
     <form action="{{route('arm_agahi_search')}}" method="get">
         <label style="font-weight:bold; color:gray; margin-right:20px;">جستجو</label>
         <div style="width:fit-content">
-            <div class="row" style="border:1px ridge lightblue; height:70px; margin-right:10px; padding:15px; width:1400px;">
+
+            @can('Get_Permission_To_Other_User')
+                <div class="row" style="border:1px ridge lightblue; height:70px; margin-right:10px; padding:15px; width:1300px;"> 
+            @else
+                <div class="row" style="border:1px ridge lightblue; height:70px; margin-right:10px; padding:15px; width:1100px;"> 
+            @endif
+
                 <div class="col">
-                    <div class="form-group" style="width:300px;">
-                        <select name="channel_id" id="myselect" multiple>
-                            @foreach($channels as $channel)
+                    <div class="form-group" style="width:300px;"> 
+                        <select name="channel_id" id="myselect" multiple> 
+                            @foreach($channels as $channel) 
                                 <option value="{{$channel->id}}">{{$channel->channel_name}}</option>
                             @endforeach
                         </select> 
@@ -47,15 +55,17 @@
                     <input data-jdp name="to_date" class="form-control" placeholder="تا تاریخ">
                 </div>
 
-                <div class="col">
-                    <div class="form-group" style="width:350px;">
-                        <select name="user_id" id="myselect-2" multiple class="form-control">
-                            @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->name}}</option>
-                            @endforeach
-                        </select>
+                @can('Get_Permission_To_Other_User')
+                    <div class="col">
+                        <div class="form-group" style="width:350px;">
+                            <select name="user_id" id="myselect-2" multiple class="form-control">
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                </div>
+                @endcan
 
                 <div class="col form-group">
                     <input type="submit" value="جستجو" class="btn btn-primary">
@@ -72,9 +82,11 @@
             <th style="width:100px; background-color:darkgray; text-align:center; height:1px;">ضریب آرم آگهی</th>
             <th style="width:100px; background-color:darkgray; text-align:center; height:1px;">از تاریخ</th>
             <th style="width:100px; background-color:darkgray; text-align:center; height:1px;">تا تاریخ</th>
+
             @can('Get_Permission_To_Other_User')
                 <th style="width:200px; background-color:darkgray; text-align:center; height:1px;">کاربر</th>
             @endcan
+
             <th style="width:200px; background-color:darkgray; height:1px;">Action</th>
         </tr>
         @foreach($channels as $channel)
@@ -86,24 +98,26 @@
                         <td style="height:1px;">{{$arm->coef}}</td>
                         <td style="height:1px;">{{$arm->from_date}}</td>
                         <td style="height:1px;">{{$arm->to_date}}</td>
+
                         @can('Get_Permission_To_Other_User')
                             @foreach($users as $user)
                                 @if($user->id == $arm->user_id)
-                                    <td>{{$user->name}}</td>
+                                    <td style="height:1px;">{{$user->name}}</td>
                                 @endif
                             @endforeach
                         @endcan
+
                         <td class="btn-group" >
                             @can('Edit_ArmAgahi')
                                 <a href="{{route('arm_agahi.edit', $arm->id)}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
                             @endcan
 
                             @can('Delete_ArmAgahi')
-                            <form action="{{route('arm_agahi.destroy' , $arm->id)}}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
-                            </form>
+                                <form action="{{route('arm_agahi.destroy' , $arm->id)}}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                                </form>
                             @endcan
                         </td>
                     </tr>
@@ -150,11 +164,14 @@
                             </div>
 
                             <div class="row">
-                                <div class="col form-group">
-                                    <select name = "user_id" class = "form-control show-user" style = "width:200px;">
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col form-group">
+                                        <select name = "user_id" class = "form-control show-user" style = "width:200px;">
 
-                                    </select>
-                                </div>
+                                        </select>
+                                    </div>
+                                @endcan
+                                
                                 <div class="col form-group">
                                     <input type="submit" value="ثبت" class="btn btn-primary">
                                 </div>
@@ -209,12 +226,16 @@
                                     <input data-jdp name="to_date" id="to-date" class="form-control" placeholder="تا تاریخ" style="width:150px;">
                                 </div>
                             </div>
+
                             <div class="row">
-                                <div class="col form-group">
-                                    <select name="user_id" id="user-id" class="form-control show-user" style="width:210px;">
-                                    
-                                    </select>
-                                </div>
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col form-group">
+                                        <select name="user_id" id="user-id" class="form-control show-user" style="width:210px;">
+                                        
+                                        </select>
+                                    </div>
+                                @endcan
+
                                 <div class="col">
                                     <input type="submit" value="ثبت" class="btn btn-primary">
                                 </div>

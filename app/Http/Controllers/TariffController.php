@@ -130,11 +130,9 @@ class TariffController extends Controller
         $tariff->to_date = $request->to_date;
         $tariff->price = $request->price;
 
-        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
+        // ST DOC 1400-09-21 با هر کاربر که لاگین کنیم با آیدی همان کاربر ثبت می شود
         $tariff->user_id = auth()->user()->id; //$request->user_id;
-        
-
-        // dd($request->all());
+        // $tariff->user_id = $request->user()->id;  با هرکدام درست انجام میشود
 
         $tariff->save();
         return redirect()->route('tariff.index');

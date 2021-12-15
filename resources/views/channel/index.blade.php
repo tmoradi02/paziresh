@@ -1,18 +1,19 @@
 @extends('layouts.app')
 @section('content')
 
-    <!-- ST DOC 1400-09-17 پیغام دادن به کاربر  -->
+    <!-- ST DOC 1400-09-17 پیغام خطا به کاربر  -->
     @if($errors->any())
-        <div class="alert-box">
+        <div class="alert alert-danger">
             @foreach($errors->all() as $message)
                 <div class="alert">{{$message}}</div>
             @endforeach
         </div>
     @endif
-    <!-- END DOC 1400-09-17 پیغام دادن به کاربر -->
+    <!-- END DOC 1400-09-17 پیغام خطا به کاربر -->
 
-    
-    <a href="{{route('channel.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن شبکه</a>
+    @can('Insert_Channel')
+        <a href="{{route('channel.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن شبکه</a>
+    @endcan
 
     <br>
     <br>
@@ -23,12 +24,13 @@
             <th style="width:100px; background-color:darkgray; text-align:center;">عنوان شبکه</th>     <!--height: 1px; -->
             <th style="width:50px; background-color:darkgray; text-align:center;">مشخصه شبکه</th>
             <th style="width:50px; background-color:darkgray; text-align:center;">نوع شبکه</th>
+
             @can('Get_Permission_To_Other_User')
                 <th style="width:50px; background-color:darkgray; text-align:center;">کاربر</th>
             @endcan
+
             <th style="width:300px; background-color:darkgray; ">action</th>     <!--height: 1px; -->
         </tr>
-        
         
         @foreach($channels as $channel)
             <tr class="rowt" style="height: 1px; ">
@@ -50,12 +52,12 @@
                 @endcan
                 
                 <td class="btn-group" style="height: 1px;">
-                    @can('Edit_Channel')
+                    @can('Edit_Channel') 
                         <a href="{{route('channel.edit', $channel->id)}}" class="btn btn-warning btn-send-json" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
                         <!-- <a href="{{route('channel.edit', $channel->id)}}" data-url = "{{route('channel.edit' , $channel->id)}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a> -->
                     @endcan
 
-                    @can('Delete_Channel')
+                    @can('Delete_Channel') 
                         <form action="{{route('channel.destroy' , $channel->id)}}" method="post">
                             
                             <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
@@ -181,22 +183,29 @@
                                     </div>
                                 </div>
 
-                                <div class="col">
-                                    <div class="form-group">
-                                        @can('Get_Permission_To_Other_User')
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col">
+                                        <div class="form-group">
                                             <select name="user_id" id="user-id" class="form-control show-user" style="width:300px;">
 
                                             </select>
-                                        @endcan
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
 
                                 <div class="col">
                                     <div class="form-group">
                                         <input type="submit" name="submit" value="ثبت" class="btn btn-primary">
                                     </div>
-                                </div>     
-
+                                </div>    
+                                <div class="col">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div> 
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
                             </div> 
 
                         </div>

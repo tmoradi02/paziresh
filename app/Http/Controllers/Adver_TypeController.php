@@ -66,7 +66,7 @@ class Adver_TypeController extends Controller
         if($id == null & Gate::allows('Insert_Adver_Type'))
         {
             $request->validate([
-                'adver_type' => 'required|min:3|unique:adver_types',
+                'adver_type' => 'required|min:3|unique:adver_types', 
             ]);
 
             $adver_type = new Adver_Type();
@@ -90,9 +90,9 @@ class Adver_TypeController extends Controller
 
         $adver_type->adver_type = trim($request->adver_type) ;
 
-        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
-        $adver_type->user_id = $request->user_id;
-
+        // ST DOC 1400-09-21 با هر کاربری که لاگین کنیم، با آیدی همان کاربر ثبت می کند
+        $adver_type->user_id = auth()->user()->id; //$request->user_id;
+        // $adver_type->user_id = $request->user()->id; با هر دو دستور اکی میشود
         
         $adver_type->save();
 

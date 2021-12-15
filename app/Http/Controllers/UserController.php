@@ -66,18 +66,16 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        
-        $request->validate([
-            'name' => 'required|min:3|string' ,
-            'email' => 'required|min:14|unique:users|email|string' ,  
-            'password' => 'required|min:8|string' ,
-            'tell'=> 'required|min:11|numeric|unique:users' ,
-        ]);
-        
-        // dd($request->all());
-        
+
         if(!Gate::allows('Insert_User')) return abort(403,'عدم دسترسی');
         {
+            $request->validate([
+                'name' => 'required|min:3|string' ,
+                'email' => 'required|min:14|unique:users|email|string' ,  
+                'password' => 'required|min:8|string' ,
+                'tell'=> 'required|min:11|numeric|unique:users' ,
+            ]);
+
             // dd($request->all());
             $user = new User();
             $user->name = trim($request->name);
@@ -134,6 +132,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user_Validate = User::findOrFail($id);
+
         $request->validate([
             'name' => 'required|min:3|string' ,
             'email' => [
@@ -150,7 +149,7 @@ class UserController extends Controller
                 Rule::unique('users')->ignore($user_Validate->id),
             ],
         ]);
-        
+
         if(!Gate::allows('Edit_User')) return abort(403,'عدم دسترسی');
         {
             $user = User::findOrFail($id);
@@ -277,6 +276,14 @@ class UserController extends Controller
                 $titl->save();
             }
             $user->title()->delete();
+
+            // Check for UserId In tariff Table
+            foreach($user->tariff as $tariff)
+            {
+                $tariff = Tariff::findOrFail($tariff->id);
+                $tariff->user_id = 11;
+                $tariff->save();
+            }
 
             // تمام این مراحل رو طی میکند بعد نام کاربر را حذف میکند
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Title;
 use App\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class TitleController extends Controller
 {
@@ -19,7 +20,8 @@ class TitleController extends Controller
         if(!Gate::allows('Visit_Title')) return abort(403,'عدم دسترسی');
         {
             $titles = Title::all();
-            return view('title.index',['titles' => $titles]);
+            $users = User::all();
+            return view('title.index',['titles' => $titles , 'users' => $users]);
         }
     }
 
@@ -58,17 +60,28 @@ class TitleController extends Controller
      */
     public function store(Request $request , $id = null)
     {
-        $request->validate([
-            'title' => 'required|min:3|max:30',
-        ]);
 
-        if($id == null && Gate::allows('Insert_Title'))
+        if($id == null && Gate::allows('Insert_Title')) // In Mode Insert 
         {
+            $request->validate([
+                'title' => 'required|min:3|max:30|unique:titles' ,
+            ]); 
+
             $title = new Title();
         }
-        elseif($id != null && Gate::allows('Edit_Title'))
-        {
+        elseif($id != null && Gate::allows('Edit_Title')) // In Mode Edit 
+        { 
             $title = Title::findOrFail($id);
+
+            $request->validate([ 
+                'title' => [ 
+                    'required' ,
+                    'min:30' ,
+                    'max:30' , 
+                    Rule::unique('titles')->ignore($title->id) ,
+                ], 
+            ]); 
+
         }
         else 
         {
@@ -76,8 +89,9 @@ class TitleController extends Controller
         }
         $title->title = trim($request->title);
 
-        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
-        $title->user_id = $request->user_id;
+        // ST DOC 1400-09-21 با هر کاربر لاگین کنیم، با آیدی همان ثبت میکند
+        $title->user_id = $request->user()->id; //$request->user_id;
+        // $title->user_id = auth()->user()->id;  هر دو دستور اکی هستن 
 
         $title->save();
         

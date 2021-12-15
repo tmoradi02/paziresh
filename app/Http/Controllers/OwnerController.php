@@ -66,11 +66,13 @@ class OwnerController extends Controller
             $request->validate([
                 'owner' => 'required|unique:owners|min:3',
             ]);
+            
             $owner = new Owner();
         }
         elseif($id != null && Gate::allows('Edit_Owner'))
         {
             $owner = Owner::findOrFail($id);
+
             $request->validate([
                 'owner' => [
                     'required',
@@ -83,6 +85,7 @@ class OwnerController extends Controller
         {
             return abort (403,'عدم دسترسی');
         }
+
         $owner->owner = $request->owner;
         $owner->manager_owner = $request->manager_owner;
         $owner->tell_owner = $request->tell_owner;
@@ -92,8 +95,9 @@ class OwnerController extends Controller
         $owner->kind_group = $request->kind_group;
         $owner->description_owner = $request->description_owner;
 
-        // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
-        $owner->user_id = $request->user_id;
+        // ST DOC 1400-09-21 با هر کاربر که لاگین کنیم با آیدی همان کاربر ثبت میشود
+        $owner->user_id = $request->user()->id; //$request->user_id;
+        // $owner->user_id = auth()->user()->id;
 
         $owner->save();
         return redirect()->route('owner.index');

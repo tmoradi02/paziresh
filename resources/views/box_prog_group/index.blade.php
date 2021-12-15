@@ -3,7 +3,7 @@
 
     <!-- ST DOC 1400-09-17 پیغام دادن به کاربر -->
     @if($errors->any())
-        <div class="alert-box">
+        <div class="alert alert-danger">
             @foreach($errors->all() as $message)
                 <div class="alert">{{$message}}</div>
             @endforeach
@@ -11,7 +11,10 @@
     @endif
     <!-- END DOC 1400-09-17 پیغام دادن به کاربر  -->
 
-    <a href="{{route('box_prog_group.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن گروه برنامه</a>
+    @can('Insert_Box_Prog_Group')
+        <a href="{{route('box_prog_group.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن گروه برنامه</a>
+    @endcan
+
     <br>
     <br>
 
@@ -19,7 +22,7 @@
         <label style="padding:15px; font-weight:bold; color:gray;margin-right:20px;">جستجو</label>
         <div style="margin-right:10px;">
             <div class="row" style="border:1px ridge lightblue; width:700px; margin-right:15px; padding:15px 0px; height:75px;">
-            
+
                 <div class="col">
                     <div class="form-group" style="width:570px;">
                         <input type="text" name="prog_group" placeholder="جستجو عنوان برنامه" class="form-control" >
@@ -40,13 +43,15 @@
 
     <table class="table table-bordered">
         <tr style="height:1px;">
-            <th style="width:30px; background-color:darkgray; text-align:center;">ردیف</th>
-            <th style="width:300px; background-color:darkgray; text-align:center;">عنوان برنامه</th>
+            <th style="width:0px; background-color:darkgray; text-align:center;">ردیف</th>
+            <th style="width:100px; background-color:darkgray; text-align:center;">عنوان برنامه</th>
+
             @can('Get_Permission_To_Other_User')
                 <th style="width:100px; background-color:darkgray; text-align:center;">کاربر</th>
             @endcan
-            <th style="width:300px; background-color:darkgray;"> Action</th>
+            <th style="width:100px; background-color:darkgray;"> Action</th>
         </tr>
+
         @foreach($box_prog_groups as $box_prog_group)
             <tr class="rowt" style="height:1px;">
                 <td class="rowtt" style="height:1px; text-align:center;"></td>
@@ -59,6 +64,7 @@
                         @endif
                     @endforeach
                 @endcan
+
                 <td class="btn-group" style="height:1px;">
                     @can('Edit_Box_Prog_Group')
                         <a href="{{route('box_prog_group.edit' , $box_prog_group->id)}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#exampleModal" ><i class="fa fa-pencil-alt"></i></a>
@@ -98,10 +104,12 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col form-group">
-                                    <select name="user_id" class="form-control show-user">
-                                    </select>
-                                </div>
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col form-group">
+                                        <select name="user_id" class="form-control show-user">
+                                        </select>
+                                    </div>
+                                @endcan
                             </div>
                             <div class="row">
                                 <div class="col form-group">
@@ -150,11 +158,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col form-group">
-                                    <select name="user_id" id="user-id" class="form-control show-user">
-                                    
-                                    </select>
-                                </div>
+                                @can('Get_Permission_To_Other_User')
+                                    <div class="col form-group">
+                                        <select name="user_id" id="user-id" class="form-control show-user">
+                                        
+                                        </select>
+                                    </div>
+                                @endcan
+
                             </div>
                             <div class="row">
                                 <div class="col form-group">

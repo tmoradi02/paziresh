@@ -71,8 +71,9 @@ class ClassController extends Controller
 
             $classe->class_name = trim($request->class_name); 
 
-            // dd('در صورتیکه کاربر غیر ادمین ثبت کند، باید با آیدی آن کاربر ثبت شود');
-            $classe->user_id = $request->user_id; 
+            // ST DOC 1400-09-21 با هر کاربر لاگین کنیم با آیدی همان کاربر ثبت می کند
+            $classe->user_id = $request->user()->id; // $request->user_id; 
+            // $classe->user_id = auth()->user()->id;
 
             $classe->save(); 
             

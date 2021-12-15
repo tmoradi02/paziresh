@@ -57,7 +57,11 @@ class Box_TypeController extends Controller
         {
             $box_type = new Box_Type();
             $box_type->box_type = trim($request->box_type);
-            $box_type->user_id = $request->user_id;
+
+            // ST DOC 1400-09-21 با هر کاربری که لاگین کنیم، با آیدی همان کاربر ثبت میکند
+            $box_type->user_id = auth()->user()->id; //$request->user_id;
+            //$box_type->user_id = $request()->user()->id; با هر دو دستور اکی میشود
+
             $box_type->save();
             return redirect()->route('box_type.index');
         }
