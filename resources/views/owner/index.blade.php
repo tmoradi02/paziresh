@@ -11,108 +11,106 @@
     @endif
     <!-- END DOC 1400-09-17 پیغام خطا به کاربر -->
 
-    
     <a href="{{route('owner.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن صاحب آگهی</a>
     
     <br>
     <br>
 
+    <!-- ST DOC 1400-10-08 Owner Search -->
     <form action="{{route('owner_search')}}" method="get">
-        <label style=" padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
-        <div style=" border:1px ridge lightblue; margin-right:10px; padding-top:15px; padding-right:15px; padding-left:10px; margin-left:10px;">
-
-            <div class="row" >
-
+        <label style="padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
+        <div style="border:1px ridge lightblue; margin-right:10px; padding-top:15px; padding-right:15px; padding-left:10px; margin-left:10px;">
+            <div class="row">
                 <div class="col">
-                    <div class="form-group" style="width:300px;">
-                        <input type="text" name="owner" placeholder="جستجو نام صاحب آگهی" class="form-control">
+                    <div class="form-group d-flex" style="width:350px;">
+                        <label for="owner" class="col-5" style="margin-right:-20px;">صاحب آگهی</label>
+                        
+                        <input type="text" name="owner" placeholder="جستجو نام صاحب آگهی" class="form-control" id="owner" style="margin-right:-40px; ">
                     </div>
                 </div>
 
-                <div class="col">
-                    <div class="form-group" >
-                        <input type="text" name="manager_owner" placeholder="نام مدیرعامل" class="form-control">
+                <div class="col" style="right:30px;">
+                    <div class="form-group d-flex">
+                        <label for="manager-owner" class="col-4">مدیر عامل</label>
+
+                        <input type="text" name="manager_owner" id="manager-owner" class="form-control" placeholder="جستجو مدیرعامل" style="margin-right:-30px;">
                     </div>
                 </div>
 
-                <div class="col">
-                    <div class="form-group" >
-                        <input type="text" name="email_owner" placeholder="ایمیل" class="form-control">
+                <div class="col" style="right:120px;">
+                    <div class="form-group d-flex">
+                        <label for="email-owner">ایمیل</label>
+                        <div>
+                            <input type="text" name="email_owner" id="email-owner" class="form-control" placeholder="ایمیل" >
+                        </div>
                     </div>
                 </div>
 
-                <div class="col">
-                    <div class="form-group" >
-                        <input type="text" name="tell_owner" placeholder="تلفن" class="form-control">
-                    </div>
-                </div>
-                
-                <div class="col">
-                    <div class="form-group" >
-                        <input type="text" name="fax_owner" placeholder="شماره فکس" class="form-control">
+                <div class="col" style="left:-130px;">
+                    <div class="form-group d-flex">
+                        <label for="tell-owner" >تلفن</label>
+                        <div>
+                            <input type="text" name="tell_owner" id="tell-owner" class="form-control" placeholder="تلفن">
+                        </div>
                     </div>
                 </div>
 
-
-                <div class="col">
-                    <div class="form-group" >
-                        <input type="text" name="address_owner" placeholder="آدرس" class="form-control">
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        <input type="text" name="description_owner" placeholder="توضیحات" class="form-control">
+                <div class="col" style="left:-115px;">
+                    <div class="form-group d-flex">
+                        <label for="fax-owner">فکس</label>
+                        <input type="text" name="fax_owner" id="fax-owner" class="form-control" placeholder="فکس" style="width:200px;" >
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
+                <div class="col">
+                    <div class="form-group d-flex">
+                        <label for="address-owner">آدرس</label>
+                        <input type="text" name="address_owner" id="address-owner" placeholder="آدرس" class="form-control">
+                    </div>
+                </div>
 
                 <div class="col">
-                    <div class="form-group" style="flex-direction:row-reverse; margin-top:5px; margin-right:10px;">
+                    <div class="form-group d-flex">
+                        <label for="description-owner">توضیحات</label>
+
+                        <input type="text" name="description_owner" id="description-owner" placeholder="توضیحات" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col" style="right:50px;">
+                    <div class="form-group">
                         <input type="radio" name="kind_group" id="1" value="1">
                         <label>گروه اول</label>
                     </div>
                 </div>
-
-                <div class="col" >
-                    <div class="form-group" style="flex-direction:row-reverse; margin-top:5px;">
+                <div class="col" style="right:-150px;">
+                    <div class="form-group">
                         <input type="radio" name="kind_group" id="2" value="2">
-                        <label>گروه دوم</label>                        
+                        <label>گروه دوم</label>
                     </div>
                 </div>
-                
-                <div class="col">
-                    <div class="form-group" style="flex-direction:row-reverse; margin-top:5px;">
+                <div class="col" style="right:-350px;">
+                    <div class="form-group">
                         <input type="radio" name="kind_group" id="3" value="3">
-                        <label>گروه سوم</label>                    
+                        <label>گروه سوم</label>
                     </div>
                 </div>
-
-                <div class="col">
+                <div class="col" style="right:-500px;">
                     <div class="form-group">
                         <input type="submit" value="جستجو" class="btn btn-primary">
                     </div>
                 </div>
-
-                <div class="col"></div>
-                <div class="col"></div>
-                <div class="col"></div>
-                <div class="col"></div>
-                <div class="col"></div>
-                <div class="col"></div>
-                <div class="col"></div>
-                <div class="col"></div>
-                
             </div>
         </div>
-    </form>
-    
+    </form>  
+    <!-- END DOC 1400-10-08 Owner Search -->
+
     <br>
 
     <table class="table table-bordered">
-        <tr style="height:1px;">
+        <tr style="height:1px; ">
             <th style="width:10px; background-color:darkgray; text-align:center;">ردیف</th>
             <th style="width:500px; background-color:darkgray; text-align:center;">نام صاحب آگهی</th>
             <th style="width:400px; background-color:darkgray; text-align:center;">نام مدیرعامل</th>
@@ -123,7 +121,7 @@
             <th style="width:200px; background-color:darkgray; text-align:center;">گروه</th>
             <th style="width:500px; background-color:darkgray; text-align:center;">توضیحات</th>
             @can('Get_Permission_To_Other_User')
-                <th style="width:300px; background-color:darkgray; text-align:center;">کاربر</th>
+                <th style="width:400px; background-color:darkgray; text-align:center;">کاربر</th>
             @endcan
             <!-- <th style="width:200px; background-color:darkgray; text-align:center;">نام کاربر</th> -->
             <th style="width:200px; background-color:darkgray; text-align:center;">Action</th>
@@ -155,16 +153,16 @@
                     @endforeach
                 @endcan
 
-                <td class="btn-group">
+                <td class="btn-group" style="height:10%;">
                     @can('Edit_Owner')
-                        <a href="{{route('owner.edit' , $owner->id)}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal"><i class="fa fa-pen"></i></a>
+                        <a href="{{route('owner.edit' , $owner->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
                     @endcan
 
                     @can('Delete_Owner')
-                        <form action="{{route('owner.destroy' , $owner->id)}}" method="post">
+                        <form class="delete" action="{{route('owner.destroy' , $owner->id)}}" method="post">
                             @csrf
                             @method('delete')
-                            <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>   
+                            <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>   
                         </form>
                     @endcan
                 </td>
@@ -283,6 +281,7 @@
     </div>
     <!-- END DOC 1400-08-30 Modal Form For New Record --> 
 
+
     <!-- ST DOC 1400-09-01 Modal For Edit Form -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -303,40 +302,40 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="text" name="owner" id="owner" class="form-control" placeholder="عنوان صاحب آگهی">
+                                        <input type="text" name="owner" id="owners" class="form-control" placeholder="عنوان صاحب آگهی">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="text" name="manager_owner" id="manager-owner" class="form-control" placeholder="نام مدیرعامل">
+                                        <input type="text" name="manager_owner" id="manager-owners" class="form-control" placeholder="نام مدیرعامل">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="email" name="email_owner" id="email-owner" class="form-control" placeholder="ایمیل">
+                                        <input type="email" name="email_owner" id="email-owners" class="form-control" placeholder="ایمیل">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="text" name="tell_owner" id="tell-owner" class="form-control" placeholder="تلفن">
+                                        <input type="text" name="tell_owner" id="tell-owners" class="form-control" placeholder="تلفن">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="text" name="fax_owner" id="fax-owner" class="form-control" placeholder="فکس">
+                                        <input type="text" name="fax_owner" id="fax-owners" class="form-control" placeholder="فکس">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="text" name="address_owner" id="address-owner" class="form-control" placeholder="آدرس">
+                                        <input type="text" name="address_owner" id="address-owners" class="form-control" placeholder="آدرس">
                                     </div>
                                 </div>
                             </div>
@@ -363,7 +362,7 @@
                             <div class="row">
                                 <div class="col" style="margin-top:15px;">
                                     <div class="form-group">
-                                        <input type="text" name="description_owner" id="description-owner" class="form-control" placeholder="توضیحات">
+                                        <input type="text" name="description_owner" id="description-owners" class="form-control" placeholder="توضیحات">
                                     </div>
                                 </div>
                             </div>
@@ -405,28 +404,28 @@
     <!-- END DOC 1400-09-01 Modal For Edit Form -->
 
     <script>
-        $(document).ready(function(){
-            $('.btn-send-ajax').click(function(){
-                var urlEdit = $(this).attr('href');
-                // alert(urlEdit);
-                $.ajax({
-                    url:urlEdit
-                }).done(function(data){
-                    // console.log(data);
-                    $('#owner').val(data.owner);
-                    $('#manager-owner').val(data.manager_owner);
-                    $('#email-owner').val(data.email_owner);
-                    $('#tell-owner').val(data.tell_owner);
-                    $('#fax-owner').val(data.fax_owner);
-                    $('#address-owner').val(data.address_owner);
+        $(document).ready(function(){ 
+            $('.btn-send-ajax').click(function(){ 
+                var urlEdit = $(this).attr('href'); 
+                // alert(urlEdit); 
+                $.ajax({ 
+                    url:urlEdit 
+                }).done(function(data){ 
+                    // console.log(data); 
+                    $('#owners').val(data.owner); 
+                    $('#manager-owners').val(data.manager_owner); 
+                    $('#email-owners').val(data.email_owner); 
+                    $('#tell-owners').val(data.tell_owner); 
+                    $('#fax-owners').val(data.fax_owner); 
+                    $('#address-owners').val(data.address_owner); 
 
                     // $('#groupo-1').val(data.kind_group);
 
-                    $('#description-owner').val(data.description_owner);
+                    $('#description-owners').val(data.description_owner);
                     $('#user-id').val(data.user_id);
 
                     if(data.kind_group == 1)
-                    {
+                    { 
                         // alert('1');
                         $('#group-1').prop("checked" , true)  // .checkboxradio("refresh")
                         // $('#kind-radio').prop('checked', true)
@@ -457,8 +456,18 @@
 
                 });
             });
+
+            // ST DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
+            $('.delete').on('submit' , (e)=>{
+                if(! confirm('آیا از حذف اطمینان دارید؟')){
+                    e.preventDefault();
+                }
+            })
+            // END DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
         });
+
+
     </script>
-    
+
 @endsection
 

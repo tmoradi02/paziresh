@@ -18,7 +18,7 @@
     <!-- ST DOC 1400-07-20 Form For Search -->
     <form action="{{route('product_search')}}" method="get">
         <label style="padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
-        <div style="border:1px ridge lightblue; padding-right:10px; margin-right:20px; padding-top:10px; margin-left:600px; height:60px;">
+        <div style="border:1px ridge lightblue; padding-right:10px; margin-right:20px; padding-top:10px; margin-left:600px; height:60px; width:1400px; " >
             <div class="row">
 
                 <!-- <div class="col">   Select Mamooli
@@ -33,28 +33,31 @@
                 </div> -->
 
                 <div class="col">
-                    <div class="form-group">
-                        <select name="cast_id" id="myselect" multiple>
-                            @foreach($casts as $cast)
-                                <option value="{{$cast->id}}">{{$cast->cast}}</option>
-                            @endforeach
-                        </select>
+                    <div class="form-group d-flex">
+                        <label class="col-1" for="myselect">صنف</label>
+                        <div style="margin-right: 25px;">
+                            <select name="cast_id" id="myselect" multiple style="right:10px; width:250px; ">
+                                @foreach($casts as $cast)
+                                    <option value="{{$cast->id}}">{{$cast->cast}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col">
-                    <div class="form-group" style="width:300px;">
-                        <input type="text" name="product" placeholder="جستجو عنوان محصول" class="form-control">
+                    <div class="form-group d-flex" >
+                        <label class="col-2" for="product" style="margin-right:-20px;">محصول</label>
+                        <input type="text" id="product" name="product" placeholder="محصول" class="form-control" style="margin-right:10px; width:300px;">
                     </div>
                 </div>
 
                 @can('Get_Permission_To_Other_User')
                     <div class="col">
-                        <div class="form-group" style="width:300px;">
-                            <select name="user_id" id="myselect-2" multiple>
-                                @foreach($users as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
-                                @endforeach
+                        <div class="form-group d-flex">
+                            <label class="col-3" for="myselect-2" style="margin-right:-10px;">نام کاربر</label>
+                            <select name="user_id"  id="myselect-2" multiple class="form-control show-user"  style="width:500px;" >
+
                             </select>
                         </div>
                     </div>
@@ -62,7 +65,7 @@
 
                 <div class="col">
                     <div class="form-group">
-                        <input type="submit" value="جستجو" class="btn btn-primary">
+                        <input type="submit" value="جستجو" class="btn btn-primary" style="margin-right:120px;">
                     </div>
                 </div>
 
@@ -75,16 +78,17 @@
 
     <table class="table table-bordered">
         <tr style="height:1px;">
-            <th style="width:30px; background-color:darkgray; text-align:center">ردیف</th>
-            <th style="width:400px; background-color:darkgray; text-align:center;">عنوان صنف</th>
-            <th style="width:500px; background-color:darkgray; text-align:cenetr;">عنوان محصول</th>
+            <th style="width:1% ; background-color:darkgray; text-align:center">ردیف</th>
+            <th style="width:20% ; background-color:darkgray; text-align:center;">عنوان صنف</th>
+            <th style="width:20% ; background-color:darkgray; text-align:cenetr;">عنوان محصول</th>
 
             @can('Get_Permission_To_Other_User') 
-                <th style="width:300px; background-color: darkgray; text-align: center;">کاربر</th>
+                <th style="width:20% ; background-color: darkgray; text-align: center;">کاربر</th>
             @endcan
 
-            <th style="width:300px; background-color:darkgray; ">Action</th>
+            <th style="width:50px ; background-color:darkgray; ">Action</th>
         </tr>
+
         @foreach($casts as $cast)
             @foreach($products as $product)
                 @if($cast->id == $product->cast_id)
@@ -101,16 +105,16 @@
                             @endforeach
                         @endcan
 
-                        <td class="btn-group" style="height:1px;">
+                        <td class="btn-group" style="height:10%;">
                             @can('Edit_Product')
-                                <a href="{{route('product.edit' , $product->id)}}" class="btn btn-warning btn-send-json" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
+                                <a href="{{route('product.edit' , $product->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
                             @endcan
 
                             @can('Delete_Product')
-                                <form action="{{route('product.destroy' , $product->id)}}" method="post">
+                                <form class="delete" action="{{route('product.destroy' , $product->id)}}" method="post">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                                    <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
                                 </form>
                             @endcan
                         </td>
@@ -181,11 +185,11 @@
     <!-- END DOC Modal For Form Add -->
 
     <!-- ST DOC Modal For From Edit -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ویرایش محصولات</h5>
+                    <h5 class="modal-title" id="editModalLabel">ویرایش محصولات</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -205,7 +209,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col form-group">
-                                        <input type="text" name="product" id="product" class="form-control" placeholder="عنوان محصول" >
+                                        <input type="text" name="product" id="products" class="form-control" placeholder="عنوان محصول" >
                                     </div>
                                 </div>
                                 @can('Get_Permission_To_Other_User')
@@ -221,6 +225,12 @@
                                     <div class="col form-group">
                                         <input type="submit" value="ثبت" class="btn btn-primary">
                                     </div>
+                                    <div class="col">
+                                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                                    </div>
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                    <div class="col"></div>
                                 </div>
                             </div>
                         </form>
@@ -232,14 +242,14 @@
 
     <script>
         $(document).ready(function(){
-            $('.btn-send-json').click(function(){
+            $('.btn-send-ajax').click(function(){
                 var urlEdit = $(this).attr('href');
                 $.ajax({
                     url:urlEdit
                 }).done(function(data){
                     // console.log(data);
-                    $('#product').val(data.product);
                     $('#cast-id').val(data.cast_id);
+                    $('#products').val(data.product);
                     $('#user-id').val(data.user_id);
 
                     var urlUpdate = '/product/' + data.id;
@@ -247,7 +257,17 @@
                 })
                 // alert(urlEdit);
             });
+
+            // ST DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
+            $('.delete').on('submit' , (e)=>{
+                if(!confirm('آیا از حذف اطمینان دارید؟')){
+                    e.preventDefault();
+                }
+            })
+            // END DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
+
         });
+
 
     </script>
 @endsection

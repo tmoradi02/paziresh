@@ -17,30 +17,36 @@
     <br>
     
     <form action="{{route('classes_search')}}" method="get">
-        <label style="margin-right:30px; font-weight:bold; color:gray;">جستجو</label>
-        <div style="margin-right:30px;">
-            <div class="row" style="border:1px ridge lightblue; width:540px; padding:15px 0px; height:70px;">
+        <label style="margin-right:30px ; font-weight:bold ; color:gray ;">جستجو</label>
+        <div style="margin-right:30px ;">
+            <div class="row" style="border:1px ridge lightblue ; width:740px ; padding:15px 0px ; height:70px ;">
                 
                 <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات -->
                 <div class="col" >  
-                    <div class="form-group">
-                        <select name="channel_id" id="myselect" multiple >
-                            @foreach($channels as $channel)
-                                <option value="{{$channel->id}}">{{$channel->channel_name}}</option>
-                            @endforeach
-                        </select>
+                    <div class="form-group d-flex">
+                    <label for="myselect">شبکه</label>
+                        <div>
+                            <select name="channel_id" id="myselect" multiple >
+                                @foreach($channels as $channel)
+                                    <option value="{{$channel->id}}">{{$channel->channel_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <!-- END DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات -->
 
                 <div class="col" >
-                    <div class="form-group" style="width:150px;">
-                        <input type="text" name="class_name" placeholder="جستجو عنوان طبقه" class="form-control">
+                    <div class="form-group d-flex" style="width:190px; margin-right:80px;">
+                        <label for="class-name">طبقه</label>
+                        <div>
+                            <input type="text" id="class-name" name="class_name" placeholder="جستجو عنوان طبقه" class="form-control">
+                        </div>
                     </div>
                 </div>
 
                 <div class="col">
-                    <div class="form-group" style="">
+                    <div class="form-group" style="margin-right:30px;">
                         <input type="submit" value="جستجو" class="btn btn-primary">
                     </div>
                 </div>
@@ -53,9 +59,9 @@
     
     <table class="table table-bordered" style="margin-right:20px; margin-left: 30px;">
         <tr style="height:1px;">
-            <th style="width:10px; background-color:darkgray; text-align:center;">ردیف</th>
-            <th style="width:100px; background-color:darkgray; text-align:center;">شبکه</th>
-            <th style="width:100px; background-color:darkgray; text-align:center;">عنوان طبقه</th>
+            <th style="width:1% ; background-color:darkgray; text-align:center;">ردیف</th>
+            <th style="width:15% ; background-color:darkgray; text-align:center;">شبکه</th>
+            <th style="width:7% ; background-color:darkgray; text-align:center;">عنوان طبقه</th>
             @can('Get_Permission_To_Other_User')
                 <th style="width:100px; background-color:darkgray; text-align:center;">کاربر</th>
             @endcan
@@ -64,29 +70,30 @@
         @foreach($channels as $channel) <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات  -->
             @foreach($classes as $classe)
                 @if($channel->id == $classe->channel_id) <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات  -->
-                    <tr class="rowt" style="height: 1px;">
-                        <td class="rowtt" style="height: 1px; text-align:center;"></td>
-                        <td class="height:1px;">{{$channel->channel_name}}</td> <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات  -->
-                        <td class="height:1px;">{{$classe->class_name}}</td>
+                    <tr class="rowt" style="height:1px ;">
+                        <td class="rowtt" style="height:1% ; text-align:center;"></td>
+                        <td class="height:1px ;">{{$channel->channel_name}}</td> <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات  -->
+                        <td class="height:1px ; width:5% ;">{{$classe->class_name}}</td>
 
                         @can('Get_Permission_To_Other_User')
                             @foreach($users as $user)
                                 @if($user->id == $classe->user_id)
-                                    <td>{{$user->name}}</td>
+                                    <td style="width:20% ;">{{$user->name}}</td>
                                 @endif
                             @endforeach
                         @endcan
 
-                        <td class="btn-group" style="height: 1px;">
+                        <td class="btn-group" style="height:10%;">
                             @can('Edit_Classes')
-                                <a href="{{route('classes.edit', $classe->id )}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
+                                <!-- <a href="{{route('classes.edit' , $classe->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a> -->
+                                <a href="{{route('classes.edit' , $classe->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
                             @endcan
 
                             @can('Delete_Classes')
-                                <form action="{{route('classes.destroy' , $classe->id)}}" method="post">
+                                <form class="delete" action="{{route('classes.destroy' , $classe->id)}}" method="post">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                                    <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
                                 </form>
                             @endcan
                         </td>
@@ -185,7 +192,7 @@
                                 <!-- END DOC 1400-09-08 اضافه نمودن ریلیشن شبکه به جدول طبقات -->
 
                                 <div class="col form-group">
-                                    <input type="text" name="class_name" id="class-name" placeholder="عنوان طبقه" class="form-control">
+                                    <input type="text" name="class_name" id="class-names" placeholder="عنوان طبقه" class="form-control">
                                 </div>
                             </div>
 
@@ -227,14 +234,24 @@
                 }).done(function(data){
                     // console.log(data);
                     $('#channel-id').val(data.channel_id);
-                    $('#class-name').val(data.class_name);
+                    $('#class-names').val(data.class_name);
                     $('#user-id').val(data.user_id);
 
                     var urlUpdate = '/classes/' + data.id;
                     $('.edit-Classes').attr('action' , urlUpdate);
                 });
             }); 
+
+            // ST DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
+            $('.delete').on('submit' , (e)=>{
+                if(!confirm('آیا از حذف اطمینان دارید؟')){
+                    e.preventDefault();
+                }
+            })
+            // ENd DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
         }); 
+
+
 
     </script> 
 @endsection

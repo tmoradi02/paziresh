@@ -169,13 +169,15 @@ class Adver_TypeController extends Controller
     public function search(Request $request)
     {
         $adver_types = Adver_Type::query();
-        
+        $users = User::all();
+
         if($request->has('adver_type') && $request->adver_type)
         {
             $adver_types->where('adver_type' , 'like' , "%$request->adver_type%");
         }
+
         $adver_types = $adver_types->get();
-        return view('adver_type.index' , ['adver_types' => $adver_types]);
+        return view('adver_type.index' , ['adver_types' => $adver_types , 'users' => $users]);
     }
 }
 

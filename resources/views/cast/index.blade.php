@@ -23,8 +23,9 @@
         <div style="margin-right:30px;">
             <div class="row" style="border:1px ridge lightblue; width:600px; padding:15px 0px; height:70px;" >
                 <div class="col">
-                    <div class="form-group" style="width:470px;">
-                        <input type="text" name="cast" placeholder="جستجو عنوان صنف" class="form-control">
+                    <div class="form-group d-flex" style="width:470px;">
+                        <label for="casts">صنف</label>
+                        <input type="text" id="casts" name="cast" placeholder="جستجو عنوان صنف" class="form-control">
                     </div>
                 </div>
 
@@ -42,15 +43,16 @@
     
     <table class="table table-bordered">
         <tr style="height:1px;">
-            <th style="width:10px; background-color:darkgray; text-align:center;">ردیف</th>
-            <th style="width:100px; background-color:darkgray; text-align:center;">عنوان صنف</th>
+            <th style="width:1% ; background-color:darkgray; text-align:center;">ردیف</th>
+            <th style="width:25% ; background-color:darkgray; text-align:center;">عنوان صنف</th>
 
             @can('Get_Permission_To_Other_User')
-                <th style="width:100px; background-color:darkgray; text-align:center;">کاربر</th>
+                <th style="width:20% ; background-color:darkgray; text-align:center;">کاربر</th>
             @endcan
 
-            <th style="width:100px; background-color:darkgray; ">Action</th>
+            <th style="width:50px ; background-color:darkgray; ">Action</th>
         </tr>
+        
         @foreach($casts as $cast)
             <tr class="rowt" style="height:1px;">
                 <td class="rowtt" style="height:1px; text-align:center;"></td>
@@ -64,16 +66,16 @@
                     @endforeach
                 @endcan
                 
-                <td class="btn-group" style="height:1px;">
+                <td class="btn-group" style="height:10%;">
                     @can('Edit_Cast')
-                    <a href="{{route('cast.edit' , $cast->id)}}" class="btn btn-warning btn-send-json" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
+                    <a href="{{route('cast.edit' , $cast->id)}}" class="btn btn-warning btn-send-json" id="btn-table" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
                     @endcan
 
                     @can('Delete_Cast')
-                        <form action="{{route('cast.destroy' , $cast->id)}}" method="post">
+                        <form class="delete" action="{{route('cast.destroy' , $cast->id)}}" method="post">
                             @csrf
                             @method('delete')
-                                <button class="btn btn-danger"><i class="fa fa-trash-alt" ></i></button>
+                                <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt" ></i></button>
                         </form>
                     @endcan
                 </td>
@@ -101,6 +103,7 @@
                                     <input type="text" name="cast" placeholder="عنوان صنف" class="form-control">
                                 </div>
                             </div>
+
                             @can('Get_Permission_To_Other_User')
                                 <div class="row">
                                     <div class="col form-group">
@@ -110,6 +113,7 @@
                                     </div>
                                 </div>
                             @endcan
+                            
                             <div class="row">
                                 <div class="col form-group">
                                     <input type="submit" value="ثبت" class="btn btn-primary">
@@ -206,7 +210,18 @@
                 });
                 // alert(urlEdit);
             });
+
+            // ST DOC 1400-10-06 Alaram Delete For User Before Delete Fiziki By User 
+            $('.delete').on('submit' , (e)=>{
+                if(! confirm('آیا از حذف اطمینان دارید')){
+                    e.preventDefault();
+                }
+            })
+            // END DOC 1400-10-06 Alaram Delete For User Before Delete Fiziki By User 
+
         });
+
+
     </script>
 @endsection
 

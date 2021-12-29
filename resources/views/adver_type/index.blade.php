@@ -26,8 +26,9 @@
                 <div class="row" style="border:1px ridge lightblue; margin-right:10px; padding-top:15px; width:550px; padding-right:10px;">
         
                     <div class="col">
-                        <div class="form-group" style="width:400px;">
-                            <input type="text" name="adver_type" placeholder="نوع کدآگهی" class="form-control">
+                        <div class="form-group d-flex" style="width:400px;" >
+                        <label class="col-3" for="adver-Type" style="padding-right:1px;">نوع کدآگهی</label>
+                            <input type="text" id="adver-Type" name="adver_type" placeholder="نوع کدآگهی" class="form-control">
                         </div>
                     </div>
 
@@ -36,9 +37,6 @@
                             <input type="submit" value="جستجو" class="btn btn-primary">
                         </div>
                     </div>
-                    <div class="col"></div>
-                    <div class="col"></div>
-                    <div class="col"></div>
                 </div>
             </div>
         <!-- </div> -->
@@ -48,14 +46,14 @@
 
     <table class="table table-bordered">
         <tr style="height:1px;">
-            <th style="width:30px; background-color:darkgray; text-align:center;">ردیف</th>
-            <th style="width:100px; background-color:darkgray; text-align:center;">نوع کدآگهی</th>
+            <th style="width:1%; background-color:darkgray; text-align:center;">ردیف</th>
+            <th style="width:10%; background-color:darkgray; text-align:center;">نوع کدآگهی</th>
 
             @can('Get_Permission_To_Other_User')
-                <th style="width:100px; background-color:darkgray; text-align:center;">کاربر</th>
+                <th style="width:20%; background-color:darkgray; text-align:center;">کاربر</th>
             @endcan
 
-            <th style="width:300px; background-color:darkgray; ">Action</th>
+            <th style="width:30px; background-color:darkgray; ">Action</th>
         </tr>
 
         @foreach($adver_types as $adver_type)
@@ -71,16 +69,18 @@
                     @endforeach
                 @endcan
 
-                <td class="btn-group" style="height:1px;">
+                <td class="btn-group" style="height:10%;">
                     @can('Edit_Adver_Type')
-                        <a href="{{route('adver_type.edit' , $adver_type->id)}}" class="btn btn-warning btn-send-json" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
+                        <a href="{{route('adver_type.edit' , $adver_type->id)}}" id="btn-table" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt" ></i></a>
+                        <!-- <a href="{{route('adver_type.edit' , $adver_type->id)}}" id="btn-table" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a> -->
+                        <!-- <a href="{{route('adver_type.edit' , $adver_type->id)}}" id="btn-table" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a> -->
                     @endcan
 
                     @can('Delete_Adver_Type')
-                        <form action="{{route('adver_type.destroy', $adver_type->id)}}" method="post">  
+                        <form class="delete" action="{{route('adver_type.destroy', $adver_type->id)}}" method="post">  
                             @csrf
                             @method('delete')
-                            <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                            <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
                         </form>
                     @endcan
                 </td>
@@ -93,7 +93,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createModalLabel">اضافه نمودن نوع کدآگهی</h5>
+                    <h5 class="modal-title" id="createModalLabel" style="font-size:13px; font-weight:bold;">اضافه نمودن نوع کدآگهی</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -104,29 +104,37 @@
                         @csrf
                         <div class="container">
                             <div class="row">
-                                <div class="col form-group">
-                                    <input type="text" name="adver_type" class="form-control" placeholder="عنوان نوع کدآگهی">
+                                <div class="col">
+                                    <div class="form-gruop d-flex">
+                                    <label class="col-3" for="adver-Type">نوع کدآگهی</label>
+                                        <input type="text" id="adver-Type" name="adver_type" class="form-control col-9" style="margin-top:1px;" placeholder="عنوان نوع کدآگهی">                                
+                                    </div>
                                 </div>
                             </div>
 
                             @can('Get_Permission_To_Other_User')
                                 <div class="row">
-                                    <div class="col form-group">
-                                        <select name="user_id" class="form-control show-user">
-                                        </select>
+                                    <div class="col">
+                                        <div class="form-group d-flex">
+                                            <label class="col-3" for="user-id">نام کاربر</label>
+                                                <select name="user_id" id="user-id" class="form-control show-user" style="margin-top:10px; ">
+                                                </select>
+                                        
+                                        </div>
                                     </div>
                                 </div>
                             @endcan
 
                             <div class="row">
+                                <div class="col"></div>
+                                <div class="col"></div>
+
                                 <div class="col form-group">
                                     <input type="submit" value="ثبت" class="btn btn-primary">
                                 </div>
                                 <div class="col form-group">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
-                                <div class="col"></div>
-                                <div class="col"></div>
                                 <div class="col"></div>
                                 <div class="col"></div>
                             </div>
@@ -145,11 +153,11 @@
     <!-- END DOC Modal For New Record Form -->
 
     <!-- ST DOC Modal For Form Edit -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ویرایش نوع کدآگهی</h5>
+                    <h5 class="modal-title" id="editModalLabel"  >ویرایش نوع کدآگهی</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -169,7 +177,7 @@
 
                                 @can('Get_Permission_To_Other_User')
                                     <div class="col form-group">
-                                        <select name="user_id" id="user-id" class="form-control show-user">
+                                        <select name="user_id" id="user-ids" class="form-control show-user">
                                         </select>
                                     </div>
                                 @endcan
@@ -201,21 +209,31 @@
 
     <script>
         $(document).ready(function(){
-            $('.btn-send-json').click(function(){
+            $('.btn-send-ajax').click(function(){
                 var urlEdit = $(this).attr('href');
                 $.ajax({
                     url:urlEdit
                 }).done(function(data){
                     // console.log(data);
                     $('#adver-type').val(data.adver_type);
-                    $('#user-id').val(data.user_id);
+                    $('#user-ids').val(data.user_id);
 
                     var urlUpdate = '/adver_type/' + data.id;
                     $('.edit-adver-type').attr('action' , urlUpdate);
                 })
                 // alert(urlEdit);
             });
+
+            // ST DOC 1400-10-05 Alarm Delete For User Before Delete Fiziki By User  
+            $('.delete').on('submit' , (e) =>{
+                if(!confirm('آیا از حذف اطمینان دارید؟')){
+                    e.preventDefault();
+                }
+            })
+            // END DOC 1400-10-05 Alarm Delete For User Before Delete Fiziki By User 
+
         });
 
     </script>
 @endsection
+

@@ -63,6 +63,8 @@ class ProductController extends Controller
      */
     public function store(Request $request , $id = null)
     {
+        // dd($request->all());
+        
         if($id == null && Gate::allows('Insert_Product')) // In Mode Insert  
         {
             $request->validate([

@@ -76,7 +76,7 @@ class TitleController extends Controller
             $request->validate([ 
                 'title' => [ 
                     'required' ,
-                    'min:30' ,
+                    'min:3' ,
                     'max:30' , 
                     Rule::unique('titles')->ignore($title->id) ,
                 ], 

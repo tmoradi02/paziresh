@@ -22,54 +22,67 @@
         <label style="padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
         
         @can('Get_Permission_To_Other_User')
-            <div class="row" style="border:1px ridge lightblue; padding-right:1px; padding-top:15px; margin-right:20px; width:1350px;">
+            <div class="row" style="border:1px ridge lightblue; padding-right:1px; padding-top:15px; margin-right:20px; width:1650px;">
         @else
-            <div class="row" style="border:1px ridge lightblue; padding-right:1px; padding-top:15px; margin-right:20px; width:1000px;">
+            <div class="row" style="border:1px ridge lightblue; padding-right:1px; padding-top:15px; margin-right:20px; width:1500px;">
         @endcan
 
-            <div class="col">
-                <div class="form-group">
-                    <select name="adver_type_id" id="myselect" multiple style="width:300px;">
-                        @foreach($adver_types as $adver_type)
-                            <option value="{{$adver_type->id}}">{{$adver_type->adver_type}}</option>
-                        @endforeach
-                    </select>
+            <div class="col"> 
+                <div class="form-group d-flex"> 
+                    <label for="myselect" class="col-5" style="margin-right:-20px;">نوع کدآگهی</label> 
+                    <div> 
+                        <select name="adver_type_id" id="myselect" multiple style="margin-right:-70px; width:270px;"> 
+                            @foreach($adver_types as $adver_type) 
+                                <option value="{{$adver_type->id}}">{{$adver_type->adver_type}}</option> 
+                            @endforeach 
+                        </select> 
+                    </div> 
+                </div> 
+            </div> 
+
+            <div class="col" style="left:-20px;">
+                <div class="form-group d-flex">
+                    <label for="coef" style="margin-right:40px;">ضریب</label>
+                    <div>
+                        <input type="text" id="coef" name="coef" placeholder="ضریب کدآگهی" class="form-control" style="width:130px; margin-right:10px;">                
+                    </div>
                 </div>
             </div>
 
-            <div class="col">
-                <div class="form-group">
-                    <input type="text" name="coef" placeholder="ضریب عنوان کدآگهی" class="form-control" style="width:180px;">
+            <div class="col" style="left:-40px;">
+                <div class="form-group d-flex">
+                <label for="from-date" style="margin-right:30px;">از تاریخ</label>
+                    <div>
+                        <input data-jdp name="from_date" id="from-date" placeholder="از تاریخ" class="form-control" style="width:130px; margin-right:10px;">
+                    </div>
                 </div>
             </div>
 
-            <div class="col">
-                <div class="form-group">
-                    <input data-jdp name="from_date"  placeholder="از تاریخ" class="form-control" style="width:150px;">
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="form-group">
-                    <input data-jdp name="to_date" placeholder="تا تاریخ" class="form-control" style="width:150px;">
+            <div class="col" style="left:-70px;">
+                <div class="form-group d-flex">
+                <label for="to-date">تا تاریخ</label>
+                    <input data-jdp name="to_date" id="to-date" placeholder="تا تاریخ" class="form-control" style="width:130px; margin-right:10px;">
                 </div>            
             </div>
 
             @can('Get_Permission_To_Other_User')
-                <div class="col">
-                    <div class="form-group">
-                        <select name="user_id" id="myselect-2" multiple style="width:320px;">
-                            @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->name}}</option>
-                            @endforeach
-                        </select>
+                <div class="col" style="left:-90px;">
+                    <div class="form-group d-flex">
+                        <label for="myselect-2">کاربر</label>
+                        <div style="margin-right:10px;"> 
+                            <select name="user_id" id="myselect-2" multiple style="margin-right:30px; width:250px;">
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
             @endcan
 
-            <div class="col">
-                <div class="form-group">
-                    <input type="submit" value="جستجو" class="btn btn-primary">
+            <div class="col" style="left:-150px;">
+                <div class="form-group" >
+                    <input type="submit" value="جستجو" class="btn btn-primary" >
                 </div>
             </div>
 
@@ -79,14 +92,14 @@
 
     <table class="table table-bordered">
         <tr style="height:1px;">
-            <th style="width:1px;  background-color:darkgray; text-align:center;" >ردیف</th>
-            <th style="width:50px; background-color:darkgray; text-align:center;" >نوع کدآگهی</th>
-            <th style="width:10px; background-color:darkgray; text-align:center;">ضریب نوع کداگهی</th>
-            <th style="width:10px; background-color:darkgray; text-align:center;">از تاریخ</th>
-            <th style="width:10px; background-color:darkgray; text-align:center;">تا تاریخ</th>
+            <th style="width:1%;  background-color:darkgray; text-align:center;" >ردیف</th>
+            <th style="width:10%; background-color:darkgray; text-align:center;" >نوع کدآگهی</th>
+            <th style="width:10%; background-color:darkgray; text-align:center;">ضریب نوع کداگهی</th>
+            <th style="width:10%; background-color:darkgray; text-align:center;">از تاریخ</th>
+            <th style="width:10%; background-color:darkgray; text-align:center;">تا تاریخ</th>
 
             @can('Get_Permission_To_Other_User')
-                <th style="width:10px; background-color:darkgray; text-align:center;">کاربر</th>
+                <th style="width:20%; background-color:darkgray; text-align:center;">کاربر</th>
             @endcan
 
             <th style="width:50px; background-color:darkgray; ">Action</th>
@@ -97,10 +110,10 @@
                 @if( $adver_type->id == $adver_type_coef->adver_type_id )
                     <tr class="rowt" style="height:1px;">
                         <td class="rowtt" style="height:1px; text-align:center;"></td>
-                        <td style="height:1px;">{{$adver_type->adver_type}}</td>
-                        <td style="height:1px; width:10px;">{{$adver_type_coef->coef}}</td>
-                        <td style="height:1px; width:10px;">{{$adver_type_coef->from_date}}</td>
-                        <td style="height:1px; width:10px;">{{$adver_type_coef->to_date}}</td>
+                        <td style="height:1px; ">{{$adver_type->adver_type}}</td>
+                        <td style="height:1px; ">{{$adver_type_coef->coef}}</td>
+                        <td style="height:1px; ">{{$adver_type_coef->from_date}}</td>
+                        <td style="height:1px; ">{{$adver_type_coef->to_date}}</td>
 
                         @can('Get_Permission_To_Other_User')
                             @foreach($users as $user)
@@ -112,14 +125,14 @@
 
                         <td class="btn-group">
                             @can('Edit_Adver_Type_Coef')
-                                <a href="{{route('adver_type_coef.edit' , $adver_type_coef->id)}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
+                                <a href="{{route('adver_type_coef.edit' , $adver_type_coef->id)}}" id="btn-table" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
                             @endcan
 
                             @can('Delete_Adver_Type_Coef')
-                                <form action="{{route('adver_type_coef.destroy' , $adver_type_coef->id)}}" method="post">
+                                <form class="delete" action="{{route('adver_type_coef.destroy' , $adver_type_coef->id)}}" method="post">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                                    <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
                                 </form>
                             @endcan
                         </td>
@@ -152,15 +165,15 @@
                                     </select>
                                 </div>
                                 <div class="col form-group">
-                                    <input type="text" name="coef" class="form-control" placeholder="ضریب">
+                                    <input type="text" name="coef" class="form-control" placeholder="ضریب" style="width:150px;">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col form-group">
-                                    <input data-jdp name="from_date" placeholder="از تاریخ" class="form-control">
+                                    <input data-jdp name="from_date" placeholder="از تاریخ" class="form-control" style="width:150px;">
                                 </div>
                                 <div class="col form-group">
-                                    <input data-jdp name="to_date" placeholder="تا تاریخ" class="form-control">
+                                    <input data-jdp name="to_date" placeholder="تا تاریخ" class="form-control" style="width:150px;">
                                 </div>
                             </div>
                             <div class="row">
@@ -213,15 +226,15 @@
                                     </select>
                                 </div>
                                 <div class="col form-group">
-                                    <input type="text" name="coef" id="coef" class="form-control" placeholder="ضریب نوع">
+                                    <input type="text" name="coef" id="coefs" class="form-control" placeholder="ضریب نوع">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col form-group">
-                                    <input data-jdp name="from_date" id="from-date" class="form-control" placeholder="از تاریخ">
+                                    <input data-jdp name="from_date" id="from-dates" class="form-control" placeholder="از تاریخ">
                                 </div>
                                 <div class="col form-group">
-                                    <input data-jdp name="to_date" id="to-date" class="form-control" placeholder="تا تاریخ">
+                                    <input data-jdp name="to_date" id="to-dates" class="form-control" placeholder="تا تاریخ">
                                 </div>
                             </div>
                             <div class="row">
@@ -260,15 +273,23 @@
                 }).done(function(data){
                     // console.log(data);
                     $('#adverType-id').val(data.adver_type_id);
-                    $('#coef').val(data.coef);
-                    $('#from-date').val(data.from_date);
-                    $('#to-date').val(data.to_date);
+                    $('#coefs').val(data.coef);
+                    $('#from-dates').val(data.from_date);
+                    $('#to-dates').val(data.to_date);
                     $('#user-id').val(data.user_id);
 
                     var urlUpdate = '/adver_type_coef/' + data.id;
                     $('.edit-AdverTypeCoef').attr('action' , urlUpdate);
                 });
             });
+
+            // ST DOC 1400-10-05 Alarm Delete For User Before Delete Fiziki By User 
+            $('.delete').on('submit' , (e) => {
+                if(!confirm('آیا از حذف اطمینان دارید؟')){
+                    e.preventDefault();
+                }
+            })
+            // END DOC 1400-10-05 Alarm Delete For User Before Delete Fiziki By User 
         });
 
     </script>

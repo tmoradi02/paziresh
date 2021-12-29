@@ -22,6 +22,30 @@
         }
         /* END DOC 1400-09-17 اولویت دادن به قرارگرفتن تاریخ روی صفحات */
 
+        #btn-table{
+            padding:3px !important; 
+            font-size:9px !important;
+        }
+
+        td{
+            font-size:13px;
+        }
+
+        th{
+            font-size:14px; 
+            height:1px; 
+        }
+
+        #createModalLabel {
+            font-size:13px;
+            font-weight:bold;
+        }
+
+        #editModalLabel {
+            font-size:13px;
+            font-weight:bold;
+        }
+
     </style>
 <!-- END DOC 1400-07-14  اضافه نمودن رنگ به ضمینه گرید برای یک در میان کردن رنگ رکوردها  --> 
 
@@ -62,6 +86,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- END DOC 1400-06-27 Add For Icon For Design  -->
     
+    <!-- ST DOC 1400-10-05 Add For Format Number For Price -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js" integrity="sha512-KaIyHb30iXTXfGyI9cyKFUIRSSuekJt6/vqXtyQKhQP6ozZEGY8nOtRS6fExqE4+RbYHus2yGyYg1BrqxzV6YA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- END DOC 1400-10-05 Add For Format Number For Price --> 
+
     <!-- ST DOC 1400-08-08 Script For data of User Table in all Project -->
     <script> 
     // get Users 
@@ -116,7 +144,6 @@
             })
         });
 
-
         $(document).ready(function(){
             $.ajax({
                 url:'/get-classes-json'
@@ -152,27 +179,8 @@
 
                     opts.push(opt);
                 }
-                $('.show-BoxTypees').append(opts);
-            });
-        });
-
-        $(document).ready(function(){
-            $.ajax({
-                url: '/get-boxType-json'
-            }).done(function(data){
-                var opts=[];
-
-                for (var boxType of data)
-                {
-                    var opt = document.createElement('option');
-
-                    opt.innerHTML = boxType.box_type;
-                    opt.value = boxType.id;
-
-                    opts.push(opt);
-                }
                 $('.show-boxType').append(opts);
-            })
+            });
         });
 
         $(document).ready(function(){
@@ -192,6 +200,7 @@
             });
         });
 
+        
     </script>
     <!-- END DOC 1400-08-08 Script For data of User Table in all Project -->
 
@@ -360,102 +369,6 @@
 
 
 
-                            <!-- ST DOC 1400-06-15 اضافه نمودن منوبار  -->
-                            <!-- <ul id="nav">
-                                <li><a href="#">اطلاعات پایه</a>
-                                <ul>
-                                    <li><a href="#">Sub Item</a></li>
-                                    <li><a href="#">Sub Item</a></li>
-
-                                    <li><a href="#">شبکه »</a>
-                                    <ul>
-                                        <li><a href="{{route('channel.index')}}">لیست شبکه</a>
-                                        <li><a href="{{route('channel.create')}}">اضافه نمودن شبکه</a>
-                                    </ul>
-                                    </li>
-
-                                    <li><a href="#">طبقه »</a>
-                                    <ul>
-                                        <li><a href="{{route('classes.index')}}">لیست طبقه</a>
-                                        <li><a href="{{route('classes.create')}}">اضافه نمودن طبقه</a>
-                                    </ul>
-                                    </li>
-
-                                    <li><a href="#">صنف »</a>
-                                    <ul>
-                                        <li><a href="{{route('cast.index')}}">لیست اصناف</a>
-                                        <li><a href="{{route('cast.create')}}">اضافه نمودن اصناف</a>
-                                    </ul>
-                                    </li>
-
-                                    <li><a href="#">محصول »</a>
-                                    <ul>
-                                        <li><a href="{{route('product.index')}}">لیست محصول</a>
-                                        <li><a href="{{route('product.create')}}">اضافه نمودن محصول</a>
-                                    </ul>
-                                    </li>
-
-                                    <li><a href="#">آرم آگهی »</a>
-                                    <ul>
-                                        <li><a href="{{route('arm_agahi.index')}}">لیست آرم آگهی</a>
-                                        <li><a href="{{route('arm_agahi.create')}}">اضافه نمودن آرم آگهی</a>
-                                    </ul>
-                                    </li>
-
-                                </ul>
-                                </li>
-
-                                <li><a href="#">Admin</a>
-                                <ul>
-                                    <li><a href="#">Sub Item</a></li>
-                                    <li><a href="#">Sub Item</a></li>
-
-                                    <li><a href="#">کاربران »</a>
-                                    <ul>
-                                        <li><a href="{{route('user.index')}}">لیست کاربران</a>
-                                        <li><a href="{{route('user.create')}}">اضافه نمودن کاربران</a>
-                                    </ul>
-                                    </li>
-
-                                    <li><a href="#">محل پخش »</a>
-                                    <ul>
-                                        <li><a href="{{route('box_type.index')}}">لیست محل پخش</a>
-                                        <li><a href="{{route('box_type.create')}}">اضافه نمودن محل پخش</a>
-                                    </ul>
-                                    </li>
-
-                                    <li><a href="#">عنوان باکس »</a>
-                                    <ul>
-                                        <li><a href="{{route('title.index')}}">لیست عنوان باکس</a>
-                                        <li><a href="{{route('title.create')}}">اضافه نمودن عنوان باکس</a>
-                                    </ul>
-                                    </li>
-
-                                    <li><a href="#">نوع کدآگهی »</a>
-                                    <ul>
-                                        <li><a href="{{route('adver_type.index')}}">لیست نوع کدآگهی</a>
-                                        <li><a href="{{route('adver_type.create')}}">اضافه نمودن نوع کدآگهی</a>
-                                    </ul>
-                                    </li>
-
-                                    <li><a href="#">ضریب نوع کدآگهی »</a>
-                                    <ul>
-                                        <li><a href="{{route('adver_type_coef.index')}}">لیست ضریب نوع کدآگهی</a>
-                                        <li><a href="{{route('adver_type_coef.create')}}">اضافه نمودن ضریب نوع کدآگهی</a>
-                                    </ul>
-                                    </li>
-
-                                </ul>
-                                </li>
-
-                                <li><a href="#">خروج</a></li>
-                            </ul> -->
-                        <!-- END DOC 1400-06-15 اضافه نمودن منوبار  -->
-
-
-
-
-
                             <!--  END DOC 1400-06-14 اضافه نمودن استایل به منوبار یا همان نوبار -- The navigation menu  -->
 
                             <!-- ST LOCK 1400-06-14  -->
@@ -580,7 +493,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4">   <!-- main class = "py-4 container" -->
             @yield('content')
         </main>
     </div>
@@ -598,7 +511,6 @@
         // END DOC 1400-09-17 تکست های وارد شده قبلی را پاک میکند
 
         
-
     //  ST DOC 1400-06-21 Add Select 2
         $('#myselect').select2({
         width: '100%',

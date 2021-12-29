@@ -128,7 +128,7 @@ class TariffController extends Controller
         $tariff->box_type_id = $request->box_type_id;
         $tariff->from_date = $request->from_date;
         $tariff->to_date = $request->to_date;
-        $tariff->price = $request->price;
+        $tariff->price = str_replace(',' ,'' , $request->price);
 
         // ST DOC 1400-09-21 با هر کاربر که لاگین کنیم با آیدی همان کاربر ثبت می شود
         $tariff->user_id = auth()->user()->id; //$request->user_id;

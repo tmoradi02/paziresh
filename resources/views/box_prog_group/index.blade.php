@@ -24,8 +24,9 @@
             <div class="row" style="border:1px ridge lightblue; width:700px; margin-right:15px; padding:15px 0px; height:75px;">
 
                 <div class="col">
-                    <div class="form-group" style="width:570px;">
-                        <input type="text" name="prog_group" placeholder="جستجو عنوان برنامه" class="form-control" >
+                    <div class="form-group d-flex" style="width:570px;">
+                        <label for="prog-group" class="col-3" style="right:-10px;">عنوان برنامه</label>
+                        <input type="text" id="prog-group" name="prog_group" placeholder="جستجو عنوان برنامه" class="form-control" style="margin-right:-48px;">
                     </div>
                 </div>
 
@@ -53,28 +54,28 @@
         </tr>
 
         @foreach($box_prog_groups as $box_prog_group)
-            <tr class="rowt" style="height:1px;">
-                <td class="rowtt" style="height:1px; text-align:center;"></td>
-                <td style="height:1px;">{{$box_prog_group->prog_group}}</td>
+            <tr class="rowt">
+                <td class="rowtt" style="height:1%; width:1%; text-align:center;"></td>
+                <td style="height:1%; width:20%; ">{{$box_prog_group->prog_group}}</td>
 
                 @can('Get_Permission_To_Other_User')
                     @foreach($users as $user)
                         @if($user->id == $box_prog_group->user_id)
-                            <td>{{$user->name}}</td>
+                            <td style="width:20%;">{{$user->name}}</td>
                         @endif
                     @endforeach
                 @endcan
 
-                <td class="btn-group" style="height:1px;">
+                <td class="btn-group" style="height:10%; width:1%; ">
                     @can('Edit_Box_Prog_Group')
-                        <a href="{{route('box_prog_group.edit' , $box_prog_group->id)}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#exampleModal" ><i class="fa fa-pencil-alt"></i></a>
+                        <a href="{{route('box_prog_group.edit' , $box_prog_group->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#exampleModal" ><i class="fa fa-pencil-alt"></i></a>
                     @endcan
 
                     @can('Delete_Box_Prog_Group')
-                        <form action="{{route('box_prog_group.destroy' , $box_prog_group->id)}}" method="post">
+                        <form class="delete" action="{{route('box_prog_group.destroy' , $box_prog_group->id)}}" method="post">
                             @csrf
                             @method('delete')
-                            <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                            <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
                         </form>
                     @endcan
                 </td>
@@ -154,7 +155,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col form-group">
-                                    <input type="text" name="prog_group" id="prog-group" class="form-control" placeholder="عنوان گروه برنامه">
+                                    <input type="text" name="prog_group" id="prog-groups" class="form-control" placeholder="عنوان گروه برنامه">
                                 </div>
                             </div>
                             <div class="row">
@@ -197,7 +198,7 @@
                     url:urlEdit
                     }).done(function(data){
                         // console.log(data);
-                        $('#prog-group').val(data.prog_group);
+                        $('#prog-groups').val(data.prog_group);
                         $('#user-id').val(data.user_id);
 
                         var urlUpdate = '/box_prog_group/' + data.id;
@@ -206,6 +207,16 @@
                 // alert(urlEdit);
             });
         });
+
+        // ST DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
+        $(document).ready(function(){
+            $('.delete').on('submit',(e)=>{
+                if(! confirm('آیا از حذف اطمینان دارید؟')){
+                    e.preventDefault();
+                }
+            })
+        });
+        // END DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
 
     </script>
 @endsection 

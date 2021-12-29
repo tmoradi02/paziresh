@@ -19,7 +19,7 @@ use App\Product;
 use App\Title;
 use App\ArmAgahi;
 use App\Box_Type;
-
+use App\Tariff; 
 
 class UserController extends Controller
 {
@@ -81,6 +81,9 @@ class UserController extends Controller
             $user->name = trim($request->name);
             $user->email = trim($request->email);
             $user->status = trim($request->status); 
+            
+            // dd($request->status);
+
             $user->tell = trim($request->tell);
             if($request->password !== null) $user->password = Hash::Make($request->password);
 
@@ -115,7 +118,8 @@ class UserController extends Controller
     { 
         if(!Gate::allows('Edit_User')) return abort(403,'عدم دسترسی'); 
         { 
-            $user = User::findOrFail($id); 
+            // $user = User::findOrFail($id); 
+            $user = User::with('roles')->where('id' , $id)->firstOrFail();
             $permissions = Permission::all(); 
             // return view('user.edit',['user'=>$user , 'permissions'=> $permissions]); 
             return response()->json(['user' => $user , 'permissions' => $permissions]); 
@@ -130,37 +134,48 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        $user_Validate = User::findOrFail($id);
+    {       
+        // dd('hi'); 
 
-        $request->validate([
-            'name' => 'required|min:3|string' ,
-            'email' => [
-                'required',
-                'min:14',
-                'email',
-                Rule::unique('users')->ignore($user_Validate->id),
-            ],
-            // 'password' => 'required|min:8' ,
-            'tell' => [
-                'required',
-                'min:11',
-                'numeric',
-                Rule::unique('users')->ignore($user_Validate->id),
-            ],
-        ]);
-
-        if(!Gate::allows('Edit_User')) return abort(403,'عدم دسترسی');
+        if($id == null && Gate::allows('Insert_User')) // In Mode Insert  
         {
+            $request->validate([
+                'name' => 'required|min:3|string' ,
+                'email' => [
+                    'required',
+                    'min:14',
+                    'email',
+                    Rule::unique('users')->ignore($user_Validate->id),
+                ],
+                // 'password' => 'required|min:8' ,
+                'tell' => [
+                    'required',
+                    'min:11',
+                    'numeric',
+                    Rule::unique('users')->ignore($user_Validate->id),
+                ],
+            ]);
+        }
+        elseif($id != null && Gate::allows('Edit_User')) // In Mode Edit 
+        { 
+            $user_Validate = User::findOrFail($id);
+
             $user = User::findOrFail($id);
             $user->name = trim($request->name);
             $user->email = trim($request->email);
             $user->tell = trim($request->tell) ;
             $user->status = $request->status ;
             if($request->password !==null) $user->password = Hash::Make($request->password);
+
+            // dd($request->status);
+
             $user->save();
             $user->roles()->sync($request->prm);
             return redirect()->route('user.index');
+        }
+        else
+        {
+            return abort(403,'عدم دسترسی');
         }
     }
 
@@ -177,6 +192,9 @@ class UserController extends Controller
         {
             $user = User::findOrFail($id);
 
+            // dd($id);
+
+
             // Check for UserId In Channel Table
             foreach($user->channels as $channel)
             {
@@ -184,7 +202,8 @@ class UserController extends Controller
                 $c->user_id = 11;  // User Admin
                 $c->save();
             }
-            $user->channels()->delete();
+            // $user->channels()->delete();
+
 
             // Check for UserId In classes Table
             foreach($user->class as $classes)
@@ -193,7 +212,8 @@ class UserController extends Controller
                 $cl->user_id = 11;
                 $cl->save();
             }
-            $user->class()->delete();
+            // $user->class()->delete();
+
 
             // Check for UserId In adver_types Table 
             foreach($user->adver_type as $adver_types)
@@ -202,7 +222,8 @@ class UserController extends Controller
                 $ad_type->user_id = 11;
                 $ad_type->save();
             }
-            $user->adver_type()->delete();
+            // $user->adver_type()->delete();
+
 
             // Check for UserId In adver_type_coef Table
             foreach($user->adver_type_coef as $adver_type_coefs)
@@ -211,7 +232,8 @@ class UserController extends Controller
                 $ad_type_coef->user_id = 11;
                 $ad_type_coef->save();
             }
-            $user->adver_type_coef()->delete();
+            // $user->adver_type_coef()->delete();
+
 
             // Check for UserId In arm_agahi Table
             foreach($user->arm_Agahi as $arm_Agahis)
@@ -220,7 +242,8 @@ class UserController extends Controller
                 $arm->user_id = 11 ;
                 $arm->save();
             }
-            $user->arm_Agahi()->delete();
+            // $user->arm_Agahi()->delete();
+
 
             // Check for User_id In box_prog_group Table 
             foreach($user->box_prog_group as $box_prog_groups)
@@ -229,7 +252,8 @@ class UserController extends Controller
                 $box_prog->user_id = 11;
                 $box_prog->save();
             }
-            $user->box_prog_group()->delete();
+            // $user->box_prog_group()->delete();
+
 
             // Check for UserId In box_type Table
             foreach($user->box_types as $box_type)
@@ -238,7 +262,7 @@ class UserController extends Controller
                 $boxtype->user_id = 11;
                 $boxtype->save();
             }
-            $user->box_types()->delete();
+            // $user->box_types()->delete();
 
 
             // Check for UserId In casts Table
@@ -248,7 +272,8 @@ class UserController extends Controller
                 $castt->user_id = 11;
                 $castt->save();
             }
-            $user->cast()->delete();
+            // $user->cast()->delete();
+
 
             // check for UserId In owners Table
             foreach($user->owner as $owners)
@@ -257,7 +282,8 @@ class UserController extends Controller
                 $own->user_id = 11;
                 $own->save();
             }
-            $user->owner()->delete();
+            // $user->owner()->delete();
+
 
             // Check for UserId In products Table
             foreach($user->product as $products)            
@@ -266,7 +292,8 @@ class UserController extends Controller
                 $pro->user_id = 11;
                 $pro->save();
             }
-            $user->product()->delete();
+            // $user->product()->delete();
+
 
             // Check for UserId In titles Table
             foreach($user->title as $titles)
@@ -275,16 +302,17 @@ class UserController extends Controller
                 $titl->user_id = 11;
                 $titl->save();
             }
-            $user->title()->delete();
+            // $user->title()->delete();
 
+            
             // Check for UserId In tariff Table
             foreach($user->tariff as $tariff)
             {
                 $tariff = Tariff::findOrFail($tariff->id);
                 $tariff->user_id = 11;
                 $tariff->save();
-            }
-
+                // dd($tariff->all());
+            } 
             // تمام این مراحل رو طی میکند بعد نام کاربر را حذف میکند
 
             $user->roles()->sync([]);

@@ -18,39 +18,39 @@
     <br>
     <br>
 
-    <table class="table table-bordered">
-        <tr style="height:1px;">
-            <th style="width:1px; background-color:darkgray; text-align:center;">ردیف</th>
-            <th style="width:50px; background-color:darkgray; text-align:center;">نوع باکس</th>
-            @can('Get_Permission_To_Other_User')
-                <th style="width:70px; background-color:darkgray; text-align:center;">کاربر</th>
-            @endcan
-            <th style="width:200px; background-color:darkgray; ">Action</th>
-        </tr>
+    <table class="table table-bordered"> 
+        <tr style="height:1px;"> 
+            <th style="width:1px; background-color:darkgray; text-align:center;">ردیف</th> 
+            <th style="width:50px; background-color:darkgray; text-align:center;">نوع باکس</th> 
+            @can('Get_Permission_To_Other_User') 
+                <th style="width:70px; background-color:darkgray; text-align:center;">کاربر</th> 
+            @endcan 
+            <th style="width:200px; background-color:darkgray; ">Action</th> 
+        </tr> 
 
         @foreach($box_types as $box_type)
-            <tr class="rowt" style="height:1px;">
-                <td class="rowtt" style="height:1px; text-align:center;"></td>
-                <td style="height:1px;">{{$box_type->box_type}}</td>
+            <tr class="rowt" style="height:1px; ">
+                <td class="rowtt" style="height:1px; width:1%; text-align:center;"></td>
+                <td style="height:1px; width:10%; ">{{$box_type->box_type}}</td>
                 
                 @can('Get_Permission_To_Other_User')
                     @foreach($users as $user)
                         @if($user->id == $box_type->user_id)
-                            <td>{{$user->name}}</td>
+                            <td style="width:20%; ">{{$user->name}}</td>
                         @endif
                     @endforeach
                 @endcan
 
                 <td class="btn-group">
                     @can('Edit_Box_Type')
-                        <a href="{{route('box_type.edit' , $box_type->id)}}" class="btn btn-warning btn-send-json" data-toggle="modal" data-target = "#exampleModal"><i class="fa fa-pencil-alt"></i></a>
+                        <a href="{{route('box_type.edit' , $box_type->id)}}" class="btn btn-warning btn-send-json" id="btn-table" data-toggle="modal" data-target = "#exampleModal"><i class="fa fa-pencil-alt"></i></a>
                     @endcan
 
                     @can('Delete_Box_Type')
-                        <form action="{{route('box_type.destroy' , $box_type->id)}}" method="post">
+                        <form class="delete" action="{{route('box_type.destroy' , $box_type->id)}}" method="post">
                             @csrf
                             @method('delete')
-                            <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                            <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
                         </form>
                     @endcan
                 </td>
@@ -184,7 +184,17 @@
                 });
                 // alert(urlEdit);
             });
+
+            // ST DOC 1400-10-06 Alaram Delete For User Before Delete Fiziki By User 
+            $('.delete').on('submit' , (e)=>{
+                if(!confirm('آیا از حذف اطمینان دارید؟')){
+                    e.preventDefault();
+                }
+            })
+            // END DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
         });
+
+
     </script>
 @endsection
 

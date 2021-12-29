@@ -20,10 +20,10 @@
     
     <table class="table table-bordered">
         <tr Style="height: 1px;">
-            <th style="width:10px; background-color:darkgray; text-align:center;">ردیف</th>     <!--height: 1px; -->
-            <th style="width:100px; background-color:darkgray; text-align:center;">عنوان شبکه</th>     <!--height: 1px; -->
-            <th style="width:50px; background-color:darkgray; text-align:center;">مشخصه شبکه</th>
-            <th style="width:50px; background-color:darkgray; text-align:center;">نوع شبکه</th>
+            <th style="width:1% ; background-color:darkgray; text-align:center;">ردیف</th>     <!--height: 1px; -->
+            <th style="width:15% ; background-color:darkgray; text-align:center;">عنوان شبکه</th>     <!--height: 1px; -->
+            <th style="width:6% ; background-color:darkgray; text-align:center;">مشخصه شبکه</th>
+            <th style="width:8% ; background-color:darkgray; text-align:center;">نوع شبکه</th>
 
             @can('Get_Permission_To_Other_User')
                 <th style="width:50px; background-color:darkgray; text-align:center;">کاربر</th>
@@ -35,7 +35,7 @@
         @foreach($channels as $channel)
             <tr class="rowt" style="height: 1px; ">
                 <td class="rowtt" style="height: 1px; text-align:center;"></td>
-                <td style="height: 1px;">{{$channel->channel_name}} </td>
+                <td style="height:1px;">{{$channel->channel_name}} </td>
                 <td style="height:1px;">{{$channel->degree}}</td>
                 @if($channel->kind == 1)
                     <td>تلویزیونی</td>
@@ -51,16 +51,16 @@
                     @endforeach
                 @endcan
                 
-                <td class="btn-group" style="height: 1px;">
+                <td class="btn-group" style="height:1%;">
                     @can('Edit_Channel') 
-                        <a href="{{route('channel.edit', $channel->id)}}" class="btn btn-warning btn-send-json" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
-                        <!-- <a href="{{route('channel.edit', $channel->id)}}" data-url = "{{route('channel.edit' , $channel->id)}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a> -->
+                        <!-- <a href="{{route('channel.edit', $channel->id)}}" class="btn btn-warning btn-send-json" id="btn-table" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a> -->
+                        <a href="{{route('channel.edit' , $channel->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
                     @endcan
 
                     @can('Delete_Channel') 
-                        <form action="{{route('channel.destroy' , $channel->id)}}" method="post">
+                        <form class="delete" action="{{route('channel.destroy' , $channel->id)}}" method="post">
                             
-                            <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                            <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
                             @csrf
                             @method('delete')
                         </form>
@@ -139,11 +139,11 @@
     <!-- END DOC 1400-08-22 New Record Form -->
 
     <!-- Modal Edit Form -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document"> 
             <div class="modal-content"> 
                 <div class="modal-header"> 
-                    <h5 class="modal-title" id="exampleModalLabel">ویرایش شبکه</h5> 
+                    <h5 class="modal-title" id="editModalLabel">ویرایش شبکه</h5> 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
                     <span aria-hidden="true">&times;</span> 
                     </button> 
@@ -220,12 +220,12 @@
 
     <script>
         $(document).ready(function(){ 
-            $('.btn-send-json').click(function(){ 
+            $('.btn-send-ajax').click(function(){ 
                 var urlEdit = $(this).attr('href');  // href To CurrentUrl 
 
                 $.ajax({ url:urlEdit })
                 .done(function(data){ 
-                                        
+                    
                     $('#channel-name').val(data.channel_name); 
                     $('#degree').val(data.degree); 
                     $('#user-id').val(data.user_id); 
@@ -240,6 +240,15 @@
                     $('.edit-channel').attr('action' , urlUpdate); 
                 });
             });
+
+            // ST DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
+            $('.delete').on('submit' , (e)=>{
+                if(! confirm('آیا از حذف اطمینان دارید؟')){
+                    e.preventDefault();
+                }
+            })
+            // END DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
+            
         });
 
     </script>

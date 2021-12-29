@@ -18,42 +18,47 @@
     <!-- ST DOC 1400-07 Form For Search -->
     <form action="{{route('user_search')}}" method="get">
         <label style="padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
-        <div style="border:1px ridge lightblue; padding:10px; height:65px; margin-left:150px;" >
+        <div style="border:1px ridge lightblue; padding:10px; height:65px; margin-left:150px; width:1600px;" >
             <div class="row">
 
                 <div class="col">
-                    <div class="form-group" style="width:400px;">
-                        <input type="text" name="name" placeholder="نام کاربر" class="form-control">
+                    <div class="form-group d-flex" style="width:400px;">
+                    <label for="user-name" class="col-3">نام کاربر</label>
+                        <input type="text" name="name" id="user-name" placeholder="نام کاربر" class="form-control col-8" style="margin-right:-25px;">
                     </div>
                 </div>
 
                 <div class="col">
-                    <div class="form-group" style="width:300px;">
-                        <input type="text" name="email" placeholder="ایمیل" class="form-control">
+                    <div class="form-group d-flex" style="width:300px;">
+                        <label for="email" style="margin-right:20px;">ایمیل</label>
+                        <input type="text" name="email" id=email placeholder="ایمیل" class="form-control">
                     </div>
                 </div>
 
                 <div class="col">
-                    <div class="form-group" style="width:300px;">
-                        <input type="text" name="tell" placeholder="تلفن" class="form-control">
+                    <div class="form-group d-flex" style="width:300px;">
+                        <label for="tell" style="margin-right:60px;">تلفن</label>
+                        <div>
+                            <input type="text" name="tell" placeholder="تلفن" class="form-control">
+                        </div>
                     </div>
                 </div>
 
                 <div class="col">
-                    <div class="form-group" style="padding-top:10px;">
+                    <div class="form-group" style="padding-top:10px; margin-right:100px;">
                         <input type="radio" name="status" id="1" value="1">
                         <label>فعال</label>
                     </div>
                 </div>
-                
+
                 <div class="col">
-                    <div class="form-group" style="padding-top:10px;">
+                    <div class="form-group" style="padding-top:10px; ">
                         <input type="radio" name="status" id="0" value="0">
                         <label>غیر فعال</label>
                     </div>
                 </div>
 
-                <div class="col" style="background-color:darkgray;">
+                <!-- <div class="col" style="background-color:darkgray;">
                     <div class="form-group" style="width:300px;">
                         <select name="permission_id" id="myselect" multiple>
                             @foreach($permissions as $permission)
@@ -61,11 +66,11 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col">
                     <div class="form-group">
-                        <input type="submit" value="جستجو" class="btn btn-primary">
+                        <input type="submit" value="جستجو" class="btn btn-primary" style="margin-right:70px;">
                     </div>
                 </div>
 
@@ -78,12 +83,12 @@
 
     <table class="table table-bordered">
         <tr style="height:1px;">
-            <th style="width:10px; background-color:darkgray; text-align:center;">ردیف</th>
-            <th style="width:200px; background-color:darkgray; text-align:center;">نام کاربر</th>
-            <th style="width:250px; background-color:darkgray; text-align:center;">ایمیل</th>
-            <th style="width:150px; background-color:darkgray; text-align:center;">تلفن</th>
-            <th style="width:150px; background-color:darkgray; text-align:center;">وضعیت</th>
-            <th style="width:150px; background-color:darkgray; text-align:center;">Action</th>
+            <th style="width:1%; background-color:darkgray; text-align:center;">ردیف</th>
+            <th style="width:15%; background-color:darkgray; text-align:center;">نام کاربر</th>
+            <th style="width:20%; background-color:darkgray; text-align:center;">ایمیل</th>
+            <th style="width:20%; background-color:darkgray; text-align:center;">تلفن</th>
+            <!-- <th style="width:150px; background-color:darkgray; text-align:center;">وضعیت</th> -->
+            <th style="width:50px; background-color:darkgray; text-align:center;">Action</th>
             <!-- <th style="width:150px; background-color:lightgray; text-align:center;">کلمه عبور</th> -->
         </tr>
 
@@ -93,22 +98,27 @@
                 <td style="height:1px;">{{$user->name}}</td>
                 <td style="height:1px;">{{$user->email}}</td>
                 <td style="height:1px;">{{$user->tell}}</td>
+
+                <!-- ST LOCK 1400-09-28 این قسمت به ستون دکمه ها منتقل شد
                 @if($user->status == 1)
                     <td style="height:1px;">فعال</td>
                 @elseif($user->status == 0)
                     <td style="height:1px;">غیر فعال</td>
-                @endif
+                @endif  ENd DOC 1400-09-28 این قسمت به ستون دکمه ها منتقل شد -->
+
                 <!-- <td style="height:1px;">{{$user->password}}</td> -->
                 <td class="btn-group">
+                    {{$user->status ? '😃' : '☹'}}
+
                     @can('Edit_User')
-                        <a href="{{route('user.edit' , $user->id)}}" data-toggle="modal" data-target="#editModal" class="btn btn-warning btn-send-ajax"><i class="fa fa-pencil-alt"></i></a>
+                        <a href="{{route('user.edit' , $user->id)}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal" id="btn-table"><i class="fa fa-pencil-alt"></i></a>
                     @endcan
                     
                     @can('Delete_User')
-                        <form action="{{route('user.destroy' , $user->id)}}" method="post">
+                        <form class="delete" action="{{route('user.destroy' , $user->id)}}" method="post">
                             @csrf
                             @method('delete')
-                            <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                            <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
                         </form>
                     @endcan
                 </td>
@@ -177,7 +187,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="radio" name="status" id="Inactive" value="2">
+                                        <input type="radio" name="status" id="Inactive" value="0">
                                         <label>غیرفعال</label>
                                     </div>
                                 </div>
@@ -232,7 +242,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="email" name="email" id="email" class="form-control" placeholder="ایمیل کاربر">
+                                        <input type="email" name="email" id="emails" class="form-control" placeholder="ایمیل کاربر">
                                     </div>
                                 </div>
                             </div>
@@ -245,34 +255,12 @@
                             </div>
 
                             <div class="height" style="height:220px; overflow-y:scroll; padding:30px;">
-                                <!-- @foreach($permissions as $per) -->
+                                @foreach($permissions as $permission)
                                     <div class="row">
-                                        <!-- @foreach($user->roles() as $role) -->
-                                            <input type="checkbox" name="prm[]" id="perm[]" class="record">
-                                            <label></label>
-
-                                            <!-- $(selector).prop(parameter) -->
-
-                                            <!-- <input type="checkbox" name="prm[]" value="{{$permission->id}}" @if($user->roles->pluck('id')->contains($permission->id)) checked @endif>
-                                            <label>{{$permission->permission_name}}</label> -->
-                                        <!-- @endforeach -->
+                                        <input type="checkbox" class="roles" name="prm[]" value="{{$permission->id}}">
+                                        <label>{{$permission->permission_name}}</label>
                                     </div>
-                                <!-- @endforeach -->
-                            </div>
-
-                            <!-- Checked checkbox -->
-                            <!-- <div class="height" style="height:220px; overflow-y:scroll; padding:30px;">
-                                <div class="row">
-                                    <input type="checkbox" name="prm[]" id="perm[]" >
-                                    <label></label>
-                                </div>
-                            </div> -->
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked />
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    Checked checkbox
-                                </label>
+                                @endforeach
                             </div>
 
 
@@ -285,32 +273,33 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="radio" name="status" id="inActive" value="2" >
+                                        <input type="radio" name="status" id="inActive" value="0" >
                                         <label>غیر فعال</label>
                                     </div>
                                 </div>
                                 <div class="col"></div>
                                 <div class="col"></div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <input type="submit" value="ثبت" class="btn btn-primary">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="from-group">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                                <div class="col"></div>
-                                <div class="col"></div>
-                                <div class="col"></div>
-                            </div>
-                        </div>
-                    </form>
+                            <div class="row"> 
+
+                                <div class="col"> 
+                                    <div class="form-group"> 
+                                        <input type="submit" value="ثبت" class="btn btn-primary"> 
+                                    </div> 
+                                </div> 
+                                <div class="col"> 
+                                    <div class="from-group"> 
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+                                    </div> 
+                                </div> 
+                                <div class="col"></div> 
+                                <div class="col"></div> 
+                                <div class="col"></div> 
+                            </div> 
+                        </div> 
+                    </form> 
                     <!-- Edit Form -->
-                </div>
+                </div> 
                 <!-- <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
@@ -324,42 +313,65 @@
 
         $(document).ready(function(){
             $('.btn-send-ajax').click(function(){
+                
                 var urlEdit = $(this).attr('href');
                 $.ajax({ 
                     url:urlEdit
                 }).done(function(data){
-                    console.log(data);
+                    // console.log(data);
                     $('#name').val(data.user.name);
-                    $('#email').val(data.user.email);
+                    $('#emails').val(data.user.email);
                     $('#tell').val(data.user.tell);
 
-                    for (var i=0; i<data.permissions.id; i++)
-                    {
-                        console.log(data.permissions[i].permission_name);
-                        var label = document.getElementsByName('permission_name')[0];
+                    for (var i=0; i<data.permissions.id; i++) 
+                    { 
+                        console.log(data.permissions[i].permission_name); 
+                        var label = document.getElementsByName('permission_name')[0]; 
                         label.value = data[i].permission_name;
                         // label.checked = true;
                         data[i].checked = true;
                         // $(perm).prop(parameter);
                     };
 
-                    if (data.user.status == 1)
-                    {
-                        $('#active').prop('checked' , true )
-                    }else if(data.user.status == 0)
-                    {
-                        $('#inActive').prop('checked' , true )
-                    }
+                    if (data.user.status == 1) 
+                    { 
+                        $('#active').prop('checked' , true ) 
+                    }else if(data.user.status == 0) 
+                    { 
+                        $('#inActive').prop('checked' , true ) 
+                    } 
 
-                    var urlUpdate = '/user/' + data.id;
+                    $('.roles').prop('checked' , false) 
+                    $('.roles').each((index , item) => { 
+                        $.each(data.user.roles , function(index , val){ 
+                            if(val.id == $(item).val()){ 
+                                $(item).prop('checked' , true) 
+                                // console.log($(item).prop('checked' , true)) 
+                            }
+                        })
+                    })
+
+                    var urlUpdate = '/user/' + data.user.id;
                     $('.edit-user').attr('action' , urlUpdate);
                 });
-
                 // alert(urlEdit);
             });
+
         });
+
+        // ST DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki by User 
+        $(document).ready(function(){ 
+            $('.delete').on('submit' , (e)=>{ 
+                if(! confirm('آیا از حذف اطمینان دارید؟')){ 
+                    e.preventDefault(); 
+                } 
+            }) 
+        }) 
+        // END DOC 1400-10-06 Alarm Delete 
+
 
     </script>
 
 @endsection
+
 
