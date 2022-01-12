@@ -11,98 +11,107 @@
     @endif
     <!-- END DOC 1400-09-17 پیغام خطا به کاربر -->
 
+    @can('Insert_Classes') <!-- Check Access For Permission User --> 
+        <a href="{{route('classes.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن طبقه</a>
+    @endcan
 
-    <a href="{{route('classes.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن طبقه</a>
     <br>
     <br>
     
     <form action="{{route('classes_search')}}" method="get">
-        <label style="margin-right:30px ; font-weight:bold ; color:gray ;">جستجو</label>
-        <div style="margin-right:30px ;">
-            <div class="row" style="border:1px ridge lightblue ; width:740px ; padding:15px 0px ; height:70px ;">
                 
-                <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات -->
-                <div class="col" >  
-                    <div class="form-group d-flex">
-                    <label for="myselect">شبکه</label>
-                        <div>
-                            <select name="channel_id" id="myselect" multiple >
-                                @foreach($channels as $channel)
-                                    <option value="{{$channel->id}}">{{$channel->channel_name}}</option>
-                                @endforeach
-                            </select>
+        <div class="card" style=" margin-right:20px; margin-left:20px;">
+            <div class="card-header" style="font-weight:bold; color:gray; ">جستجو</div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form-group d-flex">
+                            <label for="myselect">شبکه</label>
+                            <div>
+                                <select name="channel_id" id="myselect" multiple>
+                                    @foreach($channels as $channel)
+                                        <option value="{{$channel->id}}">{{$channel->channel_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- END DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات -->
 
-                <div class="col" >
-                    <div class="form-group d-flex" style="width:190px; margin-right:80px;">
-                        <label for="class-name">طبقه</label>
-                        <div>
-                            <input type="text" id="class-name" name="class_name" placeholder="جستجو عنوان طبقه" class="form-control">
+                    <div class="col-md">
+                        <div class="form-group d-flex" style="width:200px; margin-right:50px; ">
+                            <label for="class-name">طبقه</label>
+                            <input type="text" name="class_name" id="class-name" placeholder="جستجوی عنوان طبقه" class="form-control">
                         </div>
                     </div>
-                </div>
 
-                <div class="col">
-                    <div class="form-group" style="margin-right:30px;">
-                        <input type="submit" value="جستجو" class="btn btn-primary">
+                    <div class="col-md">
+                        <div class="form-group" style="margin-right:60px; ">
+                            <input type="submit" value="جستجو" class="btn btn-primary">
+                        </div>
                     </div>
+                    
                 </div>
-
             </div>
         </div>
+
     </form>
 
     <br>
+
+    <div class="card">
+        <div class="card-body">
+        
+            <table class="table table-bordered" style="max-width:100%; ">
+                <tr style="height:1px;">
+                    <th style="width:1% ; background-color:darkgray; text-align:center;">ردیف</th>
+                    <th style="width:15% ; background-color:darkgray; text-align:center;">شبکه</th>
+                    <th style="width:7% ; background-color:darkgray; text-align:center;">عنوان طبقه</th>
+                    @can('Get_Permission_To_Other_User')
+                        <th style="width:100px; background-color:darkgray; text-align:center;">کاربر</th>
+                    @endcan
+                    <th style="width:300px; background-color:darkgray; ">action</th>
+                </tr>
+                @foreach($channels as $channel) <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات  -->
+                    @foreach($classes as $classe) 
+                        @if($channel->id == $classe->channel_id) <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات  -->
+                            <tr class="rowt" style="height:1px ;"> 
+                                <td class="rowtt" style="height:1% ; text-align:center;"></td> 
+                                <td class="height:1px ;">{{$channel->channel_name}}</td> <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات  -->
+                                <td class="height:1px ; width:5% ;">{{$classe->class_name}}</td> 
+
+                                @can('Get_Permission_To_Other_User')  <!-- Check Access For Permission User --> 
+                                    @foreach($users as $user)
+                                        @if($user->id == $classe->user_id)
+                                            <td style="width:20% ;">{{$user->name}}</td>
+                                        @endif
+                                    @endforeach
+                                @endcan
+
+                                <td class="btn-group" style="height:10%;">
+                                    @can('Edit_Classes')  <!-- Check Access For Permission User --> 
+                                        <!-- <a href="{{route('classes.edit' , $classe->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a> -->
+                                        <a href="{{route('classes.edit' , $classe->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
+                                    @endcan
+        
+                                    @can('Delete_Classes')  <!-- Check Access For Permission User --> 
+                                        <form class="delete" action="{{route('classes.destroy' , $classe->id)}}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
+                                        </form>
+                                    @endcan
+                                </td>
+
+                            </tr>
+                        @endif
+                    @endforeach
+                @endforeach
+            </table>
+        </div>
+    </div>
     
-    <table class="table table-bordered" style="margin-right:20px; margin-left: 30px;">
-        <tr style="height:1px;">
-            <th style="width:1% ; background-color:darkgray; text-align:center;">ردیف</th>
-            <th style="width:15% ; background-color:darkgray; text-align:center;">شبکه</th>
-            <th style="width:7% ; background-color:darkgray; text-align:center;">عنوان طبقه</th>
-            @can('Get_Permission_To_Other_User')
-                <th style="width:100px; background-color:darkgray; text-align:center;">کاربر</th>
-            @endcan
-            <th style="width:300px; background-color:darkgray; ">action</th>
-        </tr>
-        @foreach($channels as $channel) <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات  -->
-            @foreach($classes as $classe)
-                @if($channel->id == $classe->channel_id) <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات  -->
-                    <tr class="rowt" style="height:1px ;">
-                        <td class="rowtt" style="height:1% ; text-align:center;"></td>
-                        <td class="height:1px ;">{{$channel->channel_name}}</td> <!-- ST DOC 1400-09-07 اضافه نمودن ریلیشن شبکه به جدول طبقات  -->
-                        <td class="height:1px ; width:5% ;">{{$classe->class_name}}</td>
 
-                        @can('Get_Permission_To_Other_User')
-                            @foreach($users as $user)
-                                @if($user->id == $classe->user_id)
-                                    <td style="width:20% ;">{{$user->name}}</td>
-                                @endif
-                            @endforeach
-                        @endcan
-
-                        <td class="btn-group" style="height:10%;">
-                            @can('Edit_Classes')
-                                <!-- <a href="{{route('classes.edit' , $classe->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a> -->
-                                <a href="{{route('classes.edit' , $classe->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
-                            @endcan
-
-                            @can('Delete_Classes')
-                                <form class="delete" action="{{route('classes.destroy' , $classe->id)}}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
-                                </form>
-                            @endcan
-                        </td>
-
-                    </tr>
-                @endif
-            @endforeach
-        @endforeach
-    </table>
 
 <!-- ST DOC Modal Add Form -->
     <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -153,13 +162,8 @@
                             </div>
                         </div>
                     </form>
-
                     <!-- END DOC Add Form -->
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
             </div>
         </div>
     </div>
@@ -198,7 +202,7 @@
 
                             <div class="row">
                             
-                                @can('Get_Permission_To_Other_User')
+                                @can('Get_Permission_To_Other_User')  <!-- Check Access For Permission User --> 
                                     <div class="col">
                                         <div class="form-group" style="width:200px;">
                                             <select name="user_id" id="user-id" class="form-control show-user">

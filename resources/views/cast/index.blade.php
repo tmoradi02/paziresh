@@ -11,42 +11,45 @@
     @endif
     <!-- END DOC 1400-09-21 پیغام خطا به کاربر -->
     
-    @can('Insert_Cast')
+    @can('Insert_Cast') <!-- Check Access For Permission User --> 
         <a href="{{route('cast.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن اصناف</a>
-    @endcan
-
+    @endcan 
+    
     <br>
     <br>
     
     <form action="{{route('cast_search')}}" method="get">
-        <label style="margin-right:30px; font-weight:bold; color:gray;">جستجو</label>
-        <div style="margin-right:30px;">
-            <div class="row" style="border:1px ridge lightblue; width:600px; padding:15px 0px; height:70px;" >
-                <div class="col">
-                    <div class="form-group d-flex" style="width:470px;">
-                        <label for="casts">صنف</label>
-                        <input type="text" id="casts" name="cast" placeholder="جستجو عنوان صنف" class="form-control">
+        <div class="card" style="margin-right:10px; margin-left:10px;">
+            <div class="card-header" style="font-weight:bold; color:gray;">جستجو</div>
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col">
+                        <div class="form-group d-flex" style="width:350px;">
+                            <label for="casts">صنف</label>
+                            <input type="text" name="cast" id="casts" placeholder="جستجو عنوان صنف" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group" style="margin-left:10px;">
+                            <input type="submit" value="جستجو" class="btn btn-primary">
+                        </div>
                     </div>
                 </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        <input type="submit" value="جستجو" class="btn btn-primary">
-                    </div>
-                </div>
-
-            </div>
+            </div> 
         </div>
+
     </form>
 
     <br>
     
-    <table class="table table-bordered">
+    <table class="table table-bordered" style="max-width:100%; max-height:100%; margin-top:-10px; mx-auto;">
         <tr style="height:1px;">
             <th style="width:1% ; background-color:darkgray; text-align:center;">ردیف</th>
             <th style="width:25% ; background-color:darkgray; text-align:center;">عنوان صنف</th>
 
-            @can('Get_Permission_To_Other_User')
+            @can('Get_Permission_To_Other_User') <!-- Check Access For Permission User --> 
                 <th style="width:20% ; background-color:darkgray; text-align:center;">کاربر</th>
             @endcan
 
@@ -58,7 +61,7 @@
                 <td class="rowtt" style="height:1px; text-align:center;"></td>
                 <td style="height:1px;">{{$cast->cast}}</td>
 
-                @can('Get_Permission_To_Other_User')
+                @can('Get_Permission_To_Other_User')  <!-- Check Access For Permission User --> 
                     @foreach($users as $user)
                         @if($user->id == $cast->user_id)
                             <td>{{$user->name}}</td>
@@ -67,11 +70,11 @@
                 @endcan
                 
                 <td class="btn-group" style="height:10%;">
-                    @can('Edit_Cast')
+                    @can('Edit_Cast') <!-- Check Access For Permission User --> 
                     <a href="{{route('cast.edit' , $cast->id)}}" class="btn btn-warning btn-send-json" id="btn-table" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-alt"></i></a>
                     @endcan
 
-                    @can('Delete_Cast')
+                    @can('Delete_Cast')  <!-- Check Access For Permission User --> 
                         <form class="delete" action="{{route('cast.destroy' , $cast->id)}}" method="post">
                             @csrf
                             @method('delete')
@@ -130,10 +133,6 @@
                     </form>
                     <!-- Add From For Edit -->
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
             </div>
         </div>
     </div>
@@ -162,7 +161,7 @@
                             </div>
                             
                             <div class="row">
-                                @can('Get_Permission_To_Other_User')
+                                @can('Get_Permission_To_Other_User')  <!-- Check Access For Permission User --> 
                                     <div class="col form-group">
                                         <select name="user_id" id="user-id" class="form-control show-user">
 
@@ -220,7 +219,6 @@
             // END DOC 1400-10-06 Alaram Delete For User Before Delete Fiziki By User 
 
         });
-
 
     </script>
 @endsection

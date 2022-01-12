@@ -11,14 +11,14 @@
     @endif
     <!-- ST DOC 1400-09-17 پیغام خطا به کاربر -->
 
-    @can('Insert_Box_Type')
+    @can('Insert_Box_Type')  <!-- check Access For Permission User --> 
         <a href="{{route('box_type.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن محل پخش</a>
     @endcan
 
     <br>
     <br>
 
-    <table class="table table-bordered"> 
+    <table class="table table-bordered" style="max-width:100%;"> 
         <tr style="height:1px;"> 
             <th style="width:1px; background-color:darkgray; text-align:center;">ردیف</th> 
             <th style="width:50px; background-color:darkgray; text-align:center;">نوع باکس</th> 
@@ -33,7 +33,7 @@
                 <td class="rowtt" style="height:1px; width:1%; text-align:center;"></td>
                 <td style="height:1px; width:10%; ">{{$box_type->box_type}}</td>
                 
-                @can('Get_Permission_To_Other_User')
+                @can('Get_Permission_To_Other_User') <!-- Check Access For Permission User --> 
                     @foreach($users as $user)
                         @if($user->id == $box_type->user_id)
                             <td style="width:20%; ">{{$user->name}}</td>
@@ -42,11 +42,11 @@
                 @endcan
 
                 <td class="btn-group">
-                    @can('Edit_Box_Type')
+                    @can('Edit_Box_Type')  <!-- Check Access For Permission User --> 
                         <a href="{{route('box_type.edit' , $box_type->id)}}" class="btn btn-warning btn-send-json" id="btn-table" data-toggle="modal" data-target = "#exampleModal"><i class="fa fa-pencil-alt"></i></a>
                     @endcan
 
-                    @can('Delete_Box_Type')
+                    @can('Delete_Box_Type')  <!-- Check Access For Permission User --> 
                         <form class="delete" action="{{route('box_type.destroy' , $box_type->id)}}" method="post">
                             @csrf
                             @method('delete')
@@ -108,10 +108,6 @@
                     </form>
                     <!-- Create Form -->
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
             </div>
         </div>
     </div>
@@ -160,10 +156,6 @@
                     </form>
                     <!-- END Add Form For Edit -->
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
             </div>
         </div>
     </div>

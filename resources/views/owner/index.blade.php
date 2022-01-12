@@ -11,33 +11,38 @@
     @endif
     <!-- END DOC 1400-09-17 پیغام خطا به کاربر -->
 
-    <a href="{{route('owner.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن صاحب آگهی</a>
-    
+    @can('Insert_Owner')  <!-- Check Access For Permission User --> 
+        <a href="{{route('owner.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن صاحب آگهی</a>
+    @endcan
+
     <br>
     <br>
 
     <!-- ST DOC 1400-10-08 Owner Search -->
     <form action="{{route('owner_search')}}" method="get">
-        <label style="padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
-        <div style="border:1px ridge lightblue; margin-right:10px; padding-top:15px; padding-right:15px; padding-left:10px; margin-left:10px;">
+
+        <!-- <div class="card" style="max-width:98%; ">
+            <div class="card-header" style="font-weight:bold; color:gray;">جستجو</div>
+            <div class="card-body"> -->
+                
             <div class="row">
-                <div class="col">
-                    <div class="form-group d-flex" style="width:350px;">
+                <div class="col-md">
+                    <div class="form-group d-flex" >
                         <label for="owner" class="col-5" style="margin-right:-20px;">صاحب آگهی</label>
                         
                         <input type="text" name="owner" placeholder="جستجو نام صاحب آگهی" class="form-control" id="owner" style="margin-right:-40px; ">
                     </div>
                 </div>
 
-                <div class="col" style="right:30px;">
+                <div class="col-md" >
                     <div class="form-group d-flex">
                         <label for="manager-owner" class="col-4">مدیر عامل</label>
 
-                        <input type="text" name="manager_owner" id="manager-owner" class="form-control" placeholder="جستجو مدیرعامل" style="margin-right:-30px;">
+                        <input type="text" name="manager_owner" id="manager-owner" class="form-control" placeholder="جستجو مدیرعامل" style="margin-right:-20px;">
                     </div>
                 </div>
 
-                <div class="col" style="right:120px;">
+                <div class="col-md" >
                     <div class="form-group d-flex">
                         <label for="email-owner">ایمیل</label>
                         <div>
@@ -46,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="col" style="left:-130px;">
+                <div class="col-md" >
                     <div class="form-group d-flex">
                         <label for="tell-owner" >تلفن</label>
                         <div>
@@ -55,7 +60,7 @@
                     </div>
                 </div>
 
-                <div class="col" style="left:-115px;">
+                <div class="col-md" >
                     <div class="form-group d-flex">
                         <label for="fax-owner">فکس</label>
                         <input type="text" name="fax_owner" id="fax-owner" class="form-control" placeholder="فکس" style="width:200px;" >
@@ -64,14 +69,14 @@
             </div>
 
             <div class="row">
-                <div class="col">
+                <div class="col-md">
                     <div class="form-group d-flex">
                         <label for="address-owner">آدرس</label>
                         <input type="text" name="address_owner" id="address-owner" placeholder="آدرس" class="form-control">
                     </div>
                 </div>
 
-                <div class="col">
+                <div class="col-md">
                     <div class="form-group d-flex">
                         <label for="description-owner">توضیحات</label>
 
@@ -79,37 +84,43 @@
                     </div>
                 </div>
 
-                <div class="col" style="right:50px;">
+                <div class="col-md" >
                     <div class="form-group">
                         <input type="radio" name="kind_group" id="1" value="1">
                         <label>گروه اول</label>
                     </div>
                 </div>
-                <div class="col" style="right:-150px;">
+                <div class="col-md" >
                     <div class="form-group">
                         <input type="radio" name="kind_group" id="2" value="2">
                         <label>گروه دوم</label>
                     </div>
                 </div>
-                <div class="col" style="right:-350px;">
+                <div class="col-md" >
                     <div class="form-group">
                         <input type="radio" name="kind_group" id="3" value="3">
                         <label>گروه سوم</label>
                     </div>
                 </div>
-                <div class="col" style="right:-500px;">
+                
+                <div class="col-md" >
                     <div class="form-group">
                         <input type="submit" value="جستجو" class="btn btn-primary">
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- </div>
+        </div> -->
+
     </form>  
     <!-- END DOC 1400-10-08 Owner Search -->
 
     <br>
 
-    <table class="table table-bordered">
+
+    <table class="table table-bordered" style="max-width:100%;">
         <tr style="height:1px; ">
             <th style="width:10px; background-color:darkgray; text-align:center;">ردیف</th>
             <th style="width:500px; background-color:darkgray; text-align:center;">نام صاحب آگهی</th>
@@ -120,7 +131,7 @@
             <th style="width:1100px; background-color:darkgray; text-align:center;">آدرس</th>
             <th style="width:200px; background-color:darkgray; text-align:center;">گروه</th>
             <th style="width:500px; background-color:darkgray; text-align:center;">توضیحات</th>
-            @can('Get_Permission_To_Other_User')
+            @can('Get_Permission_To_Other_User')  <!-- Check Access For Permission User --> 
                 <th style="width:400px; background-color:darkgray; text-align:center;">کاربر</th>
             @endcan
             <!-- <th style="width:200px; background-color:darkgray; text-align:center;">نام کاربر</th> -->
@@ -145,7 +156,7 @@
                 @endif
                 <td style="height:1px;">{{$owner->description_owner}}</td>
                 
-                @can('Get_Permission_To_Other_User')
+                @can('Get_Permission_To_Other_User')  <!-- Check Access For Permission User --> 
                     @foreach($users as $user)
                         @if($user->id == $owner->user_id)
                             <td>{{$user->name}}</td>
@@ -154,11 +165,11 @@
                 @endcan
 
                 <td class="btn-group" style="height:10%;">
-                    @can('Edit_Owner')
+                    @can('Edit_Owner')  <!-- Check Access For Permission User --> 
                         <a href="{{route('owner.edit' , $owner->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
                     @endcan
 
-                    @can('Delete_Owner')
+                    @can('Delete_Owner')  <!-- Check Access For Permission User --> 
                         <form class="delete" action="{{route('owner.destroy' , $owner->id)}}" method="post">
                             @csrf
                             @method('delete')
@@ -394,10 +405,6 @@
                     </form>
                     <!-- END Modal Edit -->
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
             </div>
         </div>
     </div>
@@ -465,7 +472,6 @@
             })
             // END DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki By User 
         });
-
 
     </script>
 

@@ -11,69 +11,74 @@
     @endif
     <!-- END DOc 1400-09-20 پیغام خطا به کاربر -->
 
-    <a href="{{route('user.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن کاربر</a>
+    @can('Insert_User')
+        <a href="{{route('user.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن کاربر</a>
+    @endcan
+
     <br>
     <br>
 
-    <!-- ST DOC 1400-07 Form For Search -->
-    <form action="{{route('user_search')}}" method="get">
-        <label style="padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
-        <div style="border:1px ridge lightblue; padding:10px; height:65px; margin-left:150px; width:1600px;" >
-            <div class="row">
+    <!-- ST DOC 1400-07 Form For Search --> 
+    <form action="{{route('user_search')}}" method="get"> 
 
-                <div class="col">
-                    <div class="form-group d-flex" style="width:400px;">
-                    <label for="user-name" class="col-3">نام کاربر</label>
-                        <input type="text" name="name" id="user-name" placeholder="نام کاربر" class="form-control col-8" style="margin-right:-25px;">
+        <div class="card" style="margin-right:15px; margin-left:15px;"> 
+            <div class="card-header" style="font-weight:bold ; color:gray; ">جستجو</div> 
+            <div class="card-body"> 
+                <div class="row"> 
+
+                    <div class="col-md">
+                        <div class="form-group d-flex" style="width:400px;">
+                        <label for="user-name" class="col-3">نام کاربر</label>
+                            <input type="text" name="name" id="user-name" placeholder="نام کاربر" class="form-control col-8" style="margin-right:-25px;">
+                        </div>
                     </div>
-                </div>
 
-                <div class="col">
-                    <div class="form-group d-flex" style="width:300px;">
-                        <label for="email" style="margin-right:20px;">ایمیل</label>
-                        <input type="text" name="email" id=email placeholder="ایمیل" class="form-control">
+                    <div class="col-md">
+                        <div class="form-group d-flex" style="width:300px;">
+                            <label for="email" style="margin-right:20px;">ایمیل</label>
+                            <input type="text" name="email" id=email placeholder="ایمیل" class="form-control">
+                        </div>
                     </div>
-                </div>
 
-                <div class="col">
-                    <div class="form-group d-flex" style="width:300px;">
-                        <label for="tell" style="margin-right:60px;">تلفن</label>
-                        <div>
-                            <input type="text" name="tell" placeholder="تلفن" class="form-control">
+                    <div class="col-md">
+                        <div class="form-group d-flex" style="width:300px;">
+                            <label for="tell" style="margin-right:60px;">تلفن</label>
+                            <div>
+                                <input type="text" name="tell" placeholder="تلفن" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="form-group" style="padding-top:10px; margin-right:50px;">
+                            <input type="radio" name="status" id="1" value="1">
+                            <label>فعال</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="form-group" style="padding-top:10px; margin-right:50px; ">
+                            <input type="radio" name="status" id="0" value="0">
+                            <label>غیر فعال</label>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col" style="background-color:darkgray;">
+                        <div class="form-group" style="width:300px;">
+                            <select name="permission_id" id="myselect" multiple>
+                                @foreach($permissions as $permission)
+                                    <option value="{{$permission->id}}">{{$permission->permission_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div> -->
+
+                    <div class="col-md">
+                        <div class="form-group">
+                            <input type="submit" value="جستجو" class="btn btn-primary" style="margin-right:70px;">
                         </div>
                     </div>
                 </div>
-
-                <div class="col">
-                    <div class="form-group" style="padding-top:10px; margin-right:100px;">
-                        <input type="radio" name="status" id="1" value="1">
-                        <label>فعال</label>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group" style="padding-top:10px; ">
-                        <input type="radio" name="status" id="0" value="0">
-                        <label>غیر فعال</label>
-                    </div>
-                </div>
-
-                <!-- <div class="col" style="background-color:darkgray;">
-                    <div class="form-group" style="width:300px;">
-                        <select name="permission_id" id="myselect" multiple>
-                            @foreach($permissions as $permission)
-                                <option value="{{$permission->id}}">{{$permission->permission_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div> -->
-
-                <div class="col">
-                    <div class="form-group">
-                        <input type="submit" value="جستجو" class="btn btn-primary" style="margin-right:70px;">
-                    </div>
-                </div>
-
             </div>
         </div>
     </form>
@@ -86,8 +91,11 @@
             <th style="width:1%; background-color:darkgray; text-align:center;">ردیف</th>
             <th style="width:15%; background-color:darkgray; text-align:center;">نام کاربر</th>
             <th style="width:20%; background-color:darkgray; text-align:center;">ایمیل</th>
-            <th style="width:20%; background-color:darkgray; text-align:center;">تلفن</th>
+            <th style="width:15%; background-color:darkgray; text-align:center;">تلفن</th>
             <!-- <th style="width:150px; background-color:darkgray; text-align:center;">وضعیت</th> -->
+            @can('Visit_User')
+                <th style="width:5%; background-color:darkgray; text-align:center;">دسترسی ها</th>
+            @endcan
             <th style="width:50px; background-color:darkgray; text-align:center;">Action</th>
             <!-- <th style="width:150px; background-color:lightgray; text-align:center;">کلمه عبور</th> -->
         </tr>
@@ -95,10 +103,24 @@
         @foreach($users as $user)
             <tr class="rowt" style="height:1px;">
                 <td class="rowtt" style="height:1px; text-align:center;"></td>
-                <td style="height:1px;">{{$user->name}}</td>
-                <td style="height:1px;">{{$user->email}}</td>
-                <td style="height:1px;">{{$user->tell}}</td>
+                <td>{{$user->name}}</td>
+                <td>{{$user->email}}</td>
+                <td>{{$user->tell}}</td>
 
+                @can('Visit_User')
+                    <td>
+                        <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample{{$user->id}}" aria-expanded="false" aria-controls="collapseExample{{$user->id}}">
+                            مشاهده
+                        </button>
+                        
+                        <div class="collapse" style="position:absolute; z-index:200;" id="collapseExample{{$user->id}}">
+                            <div class="card card-body">
+                            {!! implode('<span style = "color:red;"> و </span> ' , $user->roles->pluck('permission_name')->toArray()) !!}
+                            </div>
+                        </div>
+                    </td>
+                @endcan
+                
                 <!-- ST LOCK 1400-09-28 این قسمت به ستون دکمه ها منتقل شد
                 @if($user->status == 1)
                     <td style="height:1px;">فعال</td>
@@ -107,13 +129,19 @@
                 @endif  ENd DOC 1400-09-28 این قسمت به ستون دکمه ها منتقل شد -->
 
                 <!-- <td style="height:1px;">{{$user->password}}</td> -->
+
                 <td class="btn-group">
                     {{$user->status ? '😃' : '☹'}}
 
+                </td>
+
+                <td class="btn-group">
                     @can('Edit_User')
                         <a href="{{route('user.edit' , $user->id)}}" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal" id="btn-table"><i class="fa fa-pencil-alt"></i></a>
                     @endcan
-                    
+                </td>
+
+                <td class="btn-group">
                     @can('Delete_User')
                         <form class="delete" action="{{route('user.destroy' , $user->id)}}" method="post">
                             @csrf
@@ -300,10 +328,6 @@
                     </form> 
                     <!-- Edit Form -->
                 </div> 
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
             </div>
         </div>
     </div>
@@ -356,7 +380,6 @@
                 });
                 // alert(urlEdit);
             });
-
         });
 
         // ST DOC 1400-10-06 Alarm Delete For User Before Delete Fiziki by User 

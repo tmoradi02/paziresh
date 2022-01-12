@@ -169,7 +169,7 @@ class ClassController extends Controller
         }
         // END DOC 1400-09-08 اضافه نمودن ریلیشن شبکه به جدول طبقات
 
-        if($request->has('class_name') && $request->class_name)        
+        if($request->has('class_name') && $request->class_name)
         {
             $classes->where('class_name' , 'like' , "%$request->class_name%");
         }

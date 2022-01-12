@@ -11,136 +11,153 @@
     @endif
     <!-- END DOC 1400-09-17 پیغام دادن به کاربر -->
 
-    @can('Insert_Adver_Type_Coef')
+    @can('Insert_Adver_Type_Coef')  <!-- Check For Access Permission User --> 
         <a href="{{route('adver_type_coef.create')}}" class="next" style="margin-right:20px;" data-toggle="modal" data-target="#createModal" >اضافه نمودن ضریب نوع کدآگهی</a>
     @endcan
 
     <br>                                                                                
     <br>
 
-    <form action="{{route('adver_type_coef_search')}}" mthod="get">
-        <label style="padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
-        
-        @can('Get_Permission_To_Other_User')
-            <div class="row" style="border:1px ridge lightblue; padding-right:1px; padding-top:15px; margin-right:20px; width:1650px;">
-        @else
-            <div class="row" style="border:1px ridge lightblue; padding-right:1px; padding-top:15px; margin-right:20px; width:1500px;">
-        @endcan
+    <form action="{{route('adver_type_coef_search')}}" mthod="get"> 
+        <div class="card" style="margin-right:20px; margin-left:10px; width:1800px; max-width:90%;">
+            <div class="card-header" style="font-weight:bold; color:gray;">جستجو</div>
+            <div class="card-body">
+                <div class="row mx-auto"> 
 
-            <div class="col"> 
-                <div class="form-group d-flex"> 
-                    <label for="myselect" class="col-5" style="margin-right:-20px;">نوع کدآگهی</label> 
-                    <div> 
-                        <select name="adver_type_id" id="myselect" multiple style="margin-right:-70px; width:270px;"> 
-                            @foreach($adver_types as $adver_type) 
-                                <option value="{{$adver_type->id}}">{{$adver_type->adver_type}}</option> 
-                            @endforeach 
-                        </select> 
+                    <div class="col-md"> 
+                        <div class="form-group d-flex"> 
+                            <label for="myselect" class="col-5" style="margin-right:-30px;">نوع کدآگهی</label> 
+                            <div style="margin-right:-25px; width:270px;"> 
+                                <select name="adver_type_id" id="myselect" multiple > 
+                                    @foreach($adver_types as $adver_type) 
+                                        <option value="{{$adver_type->id}}">{{$adver_type->adver_type}}</option> 
+                                    @endforeach 
+                                </select> 
+                            </div> 
+                        </div> 
                     </div> 
-                </div> 
-            </div> 
 
-            <div class="col" style="left:-20px;">
-                <div class="form-group d-flex">
-                    <label for="coef" style="margin-right:40px;">ضریب</label>
-                    <div>
-                        <input type="text" id="coef" name="coef" placeholder="ضریب کدآگهی" class="form-control" style="width:130px; margin-right:10px;">                
-                    </div>
-                </div>
-            </div>
-
-            <div class="col" style="left:-40px;">
-                <div class="form-group d-flex">
-                <label for="from-date" style="margin-right:30px;">از تاریخ</label>
-                    <div>
-                        <input data-jdp name="from_date" id="from-date" placeholder="از تاریخ" class="form-control" style="width:130px; margin-right:10px;">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col" style="left:-70px;">
-                <div class="form-group d-flex">
-                <label for="to-date">تا تاریخ</label>
-                    <input data-jdp name="to_date" id="to-date" placeholder="تا تاریخ" class="form-control" style="width:130px; margin-right:10px;">
-                </div>            
-            </div>
-
-            @can('Get_Permission_To_Other_User')
-                <div class="col" style="left:-90px;">
-                    <div class="form-group d-flex">
-                        <label for="myselect-2">کاربر</label>
-                        <div style="margin-right:10px;"> 
-                            <select name="user_id" id="myselect-2" multiple style="margin-right:30px; width:250px;">
-                                @foreach($users as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
-                                @endforeach
-                            </select>
+                    <div class="col-md" style="left:-50px;"> 
+                        <div class="form-group d-flex"> 
+                            <label for="coef" style="margin-right:1px;">ضریب</label> 
+                            <div> 
+                                <input type="text" id="coef" name="coef" placeholder="ضریب کدآگهی" class="form-control" style="width:130px; margin-right:10px;">                
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endcan
 
-            <div class="col" style="left:-150px;">
-                <div class="form-group" >
-                    <input type="submit" value="جستجو" class="btn btn-primary" >
+                    <div class="col-md" style="left:-40px;">
+                        <div class="form-group d-flex">
+                        <label for="from-date" style="margin-right:10px;">از تاریخ</label>
+                            <div>
+                                <input data-jdp name="from_date" id="from-date" placeholder="از تاریخ" class="form-control" style="width:130px; margin-right:10px;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md" style="left:-50px;">
+                        <div class="form-group d-flex">
+                        <label for="to-date">تا تاریخ</label>
+                            <input data-jdp name="to_date" id="to-date" placeholder="تا تاریخ" class="form-control" style="width:130px; margin-right:10px;">
+                        </div>            
+                    </div>
+
+                    @can('Get_Permission_To_Other_User')  <!-- Check For Access Permission User --> 
+                        <div class="col-md" style="left:-40px;">
+                            <div class="form-group d-flex">
+                                <label for="myselect-2">کاربر</label>
+                                <div style="margin-right:10px;"> 
+                                    <select name="user_id" id="myselect-2" multiple style="margin-right:30px; width:150px; max-width:90%;">
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    @endcan
+
+                    <div class="col-md" style="left:-100px;">
+                        <div class="form-group" >
+                            <input type="submit" value="جستجو" class="btn btn-primary" >
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
         </div>
+        <!-- @can('Get_Permission_To_Other_User') 
+            <div style="border:1px ridge lightblue; padding-right:-30px; padding-top:15px; margin-right:10px; width:1700px; max-width:100%; "> 
+        @else 
+            <div style="border:1px ridge lightblue; padding-right:1px; padding-top:15px; margin-right:20px; width:1500px; max-width:100%; "> 
+        @endcan  -->
+
+
     </form>
     <br>
 
-    <table class="table table-bordered">
-        <tr style="height:1px;">
-            <th style="width:1%;  background-color:darkgray; text-align:center;" >ردیف</th>
-            <th style="width:10%; background-color:darkgray; text-align:center;" >نوع کدآگهی</th>
-            <th style="width:10%; background-color:darkgray; text-align:center;">ضریب نوع کداگهی</th>
-            <th style="width:10%; background-color:darkgray; text-align:center;">از تاریخ</th>
-            <th style="width:10%; background-color:darkgray; text-align:center;">تا تاریخ</th>
+    <!-- <div class="card">
+        <div class="card-body"> -->
+        <div class="card mx-auto" style="max-width:98%; margin-right:20px;">
+            <div class="card-body">
+            
+            <table class="table table-bordered mx-auto" style="max-width:99%; max-height:100%;"> 
+                <tr style="height:1px;"> 
+                    <th style="width:1%;  background-color:darkgray; text-align:center;" >ردیف</th> 
+                    <th style="width:10%; background-color:darkgray; text-align:center;" >نوع کدآگهی</th> 
+                    <th style="width:10%; background-color:darkgray; text-align:center;">ضریب نوع کداگهی</th> 
+                    <th style="width:10%; background-color:darkgray; text-align:center;">از تاریخ</th> 
+                    <th style="width:10%; background-color:darkgray; text-align:center;">تا تاریخ</th> 
 
-            @can('Get_Permission_To_Other_User')
-                <th style="width:20%; background-color:darkgray; text-align:center;">کاربر</th>
-            @endcan
+                    @can('Get_Permission_To_Other_User')
+                        <th style="width:20%; background-color:darkgray; text-align:center;">کاربر</th>
+                    @endcan
 
-            <th style="width:50px; background-color:darkgray; ">Action</th>
-        </tr>
+                    <th style="width:50px; background-color:darkgray; ">Action</th>
+                </tr>
 
-        @foreach($adver_types as $adver_type)
-            @foreach($adver_type_coefs as $adver_type_coef)
-                @if( $adver_type->id == $adver_type_coef->adver_type_id )
-                    <tr class="rowt" style="height:1px;">
-                        <td class="rowtt" style="height:1px; text-align:center;"></td>
-                        <td style="height:1px; ">{{$adver_type->adver_type}}</td>
-                        <td style="height:1px; ">{{$adver_type_coef->coef}}</td>
-                        <td style="height:1px; ">{{$adver_type_coef->from_date}}</td>
-                        <td style="height:1px; ">{{$adver_type_coef->to_date}}</td>
+                @foreach($adver_types as $adver_type)
+                    @foreach($adver_type_coefs as $adver_type_coef)
+                        @if( $adver_type->id == $adver_type_coef->adver_type_id )
+                            <tr class="rowt" style="height:1px;">
+                                <td class="rowtt" style="height:1px; text-align:center;"></td>
+                                <td style="height:1px; ">{{$adver_type->adver_type}}</td>
+                                <td style="height:1px; ">{{$adver_type_coef->coef}}</td>
+                                <td style="height:1px; ">{{$adver_type_coef->from_date}}</td>
+                                <td style="height:1px; ">{{$adver_type_coef->to_date}}</td>
 
-                        @can('Get_Permission_To_Other_User')
-                            @foreach($users as $user)
-                                @if($user->id == $adver_type_coef->user_id)
-                                    <td style="height:1px; width:10px;">{{$user->name}}</td>
-                                @endif
-                            @endforeach
-                        @endcan
+                                @can('Get_Permission_To_Other_User')  <!-- Check For Access Permission User --> 
+                                    @foreach($users as $user)
+                                        @if($user->id == $adver_type_coef->user_id)
+                                            <td style="height:1px; width:10px;">{{$user->name}}</td>
+                                        @endif
+                                    @endforeach
+                                @endcan
 
-                        <td class="btn-group">
-                            @can('Edit_Adver_Type_Coef')
-                                <a href="{{route('adver_type_coef.edit' , $adver_type_coef->id)}}" id="btn-table" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
-                            @endcan
+                                <td class="btn-group">
+                                    @can('Edit_Adver_Type_Coef')  <!-- Check For Access Permission User --> 
+                                        <a href="{{route('adver_type_coef.edit' , $adver_type_coef->id)}}" id="btn-table" class="btn btn-warning btn-send-ajax" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
+                                    @endcan
 
-                            @can('Delete_Adver_Type_Coef')
-                                <form class="delete" action="{{route('adver_type_coef.destroy' , $adver_type_coef->id)}}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
-                                </form>
-                            @endcan
-                        </td>
-                    </tr>
-                @endif
-            @endforeach
-        @endforeach
-    </table>
+                                    @can('Delete_Adver_Type_Coef') <!-- Check For Access Permission User --> 
+                                        <form class="delete" action="{{route('adver_type_coef.destroy' , $adver_type_coef->id)}}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
+                                        </form>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                @endforeach
+            </table>
+
+            </div>
+        </div>
+
+        <!-- </div>
+    </div> -->
 
 
     <!-- ST DOC 1400-08-26 Modal For Create New Record -->

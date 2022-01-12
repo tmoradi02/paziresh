@@ -11,7 +11,7 @@
     @endif
     <!-- END DOC 1400-09-17 پیغام دادن به کاربر  -->
 
-    @can('Insert_Box_Prog_Group')
+    @can('Insert_Box_Prog_Group')  <!-- Check Access For Permission User -->
         <a href="{{route('box_prog_group.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن گروه برنامه</a>
     @endcan
 
@@ -19,14 +19,35 @@
     <br>
 
     <form action="{{route('box_prog_group_search')}}" method="get">
-        <label style="padding:15px; font-weight:bold; color:gray;margin-right:20px;">جستجو</label>
-        <div style="margin-right:10px;">
-            <div class="row" style="border:1px ridge lightblue; width:700px; margin-right:15px; padding:15px 0px; height:75px;">
 
+        <div class="card" style="margin-right:20px; margin-left:10px; width:550px; max-width:90%;">
+            <div class="card-header" style="font-weight:bold; color:gray;">جستجو</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form-group d-flex" style="width:400px; max-width:100%;">
+                            <label for="prog-group" class="col-4" style="padding-right:1px; margin-right:-10px;">عنوان برنامه</label>
+                            <input type="text" name="prog_group" id="prog-group" placeholder="جستجو عنوان برنامه" class="form-control" style="margin-right:-20px;">
+                        </div>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="form-group">
+                            <input type="submit" value="جستجو" class="btn btn-primary">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div style="margin-right:10px;"> -->
+            <!-- <div class="row" style="border:1px ridge lightblue; margin-right:15px; padding:15px 0px; height:75px; width:700px; max-width:100%;"> -->
+            <!-- <div class="row" style="border:1px ridge lightblue; padding-right:1px; padding-top:15px; margin-right:5px; width:550px; max-width:100%;">
+                
                 <div class="col">
-                    <div class="form-group d-flex" style="width:570px;">
-                        <label for="prog-group" class="col-3" style="right:-10px;">عنوان برنامه</label>
-                        <input type="text" id="prog-group" name="prog_group" placeholder="جستجو عنوان برنامه" class="form-control" style="margin-right:-48px;">
+                    <div class="form-group d-flex" style="width:400px; max-width:100%;">
+                        <label for="prog-group" class="col-3" style="padding-right:1px; max-pr:100%;">عنوان برنامه</label>
+                        <input type="text" id="prog-group" name="prog_group" placeholder="جستجو عنوان برنامه" class="form-control" >
                     </div>
                 </div>
 
@@ -35,14 +56,14 @@
                         <input type="submit" value="جستجو" class="btn btn-primary">
                     </div>
                 </div>
-
             </div>
-        </div>
+        </div> -->
+
     </form>
     
     <br>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" style="max-width:100%; max-height:100%; ">
         <tr style="height:1px;">
             <th style="width:0px; background-color:darkgray; text-align:center;">ردیف</th>
             <th style="width:100px; background-color:darkgray; text-align:center;">عنوان برنامه</th>
@@ -58,7 +79,7 @@
                 <td class="rowtt" style="height:1%; width:1%; text-align:center;"></td>
                 <td style="height:1%; width:20%; ">{{$box_prog_group->prog_group}}</td>
 
-                @can('Get_Permission_To_Other_User')
+                @can('Get_Permission_To_Other_User')  <!-- Check Access For Permission User --> 
                     @foreach($users as $user)
                         @if($user->id == $box_prog_group->user_id)
                             <td style="width:20%;">{{$user->name}}</td>
@@ -67,11 +88,11 @@
                 @endcan
 
                 <td class="btn-group" style="height:10%; width:1%; ">
-                    @can('Edit_Box_Prog_Group')
+                    @can('Edit_Box_Prog_Group')  <!-- Check Access For Permission User --> 
                         <a href="{{route('box_prog_group.edit' , $box_prog_group->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#exampleModal" ><i class="fa fa-pencil-alt"></i></a>
                     @endcan
 
-                    @can('Delete_Box_Prog_Group')
+                    @can('Delete_Box_Prog_Group')  <!-- Check Access For Permission User --> 
                         <form class="delete" action="{{route('box_prog_group.destroy' , $box_prog_group->id)}}" method="post">
                             @csrf
                             @method('delete')
@@ -128,10 +149,6 @@
                     </form>
                     <!-- ENd DOC Modal 1400-08-29 -->
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
             </div>
         </div>
     </div>
@@ -166,8 +183,8 @@
                                         </select>
                                     </div>
                                 @endcan
-
                             </div>
+                            
                             <div class="row">
                                 <div class="col form-group">
                                     <input type="submit" value="ثبت" class="btn btn-primary">

@@ -79,28 +79,27 @@ class TariffController extends Controller
 
         // dd(auth()->user()->id);
 
-        $request->validate([
-            
+        $request->validate([ 
             'channel_id' => 'required' , 
             'classes_id' => 'required' , 
             'box_type_id' => 'required' , 
             'from_date' => 'required' , 
             'to_date' => 'required' , 
             'price' => 'required|min:6' 
-        ]);
+        ]); 
 
-        if($id == null && Gate::allows('Insert_Tariff'))
+        if($id == null && Gate::allows('Insert_Tariff')) 
         {
-            $tariff = new Tariff();
+            $tariff = new Tariff(); 
         }
-        elseif($id != null && Gate::allows('Edit_Tariff'))
-        {
-            $tariff = Tariff::findOrFail($id);
-        }
-        else
-        {
-            return abort(403 , 'عدم دسترسی');
-        }
+        elseif($id != null && Gate::allows('Edit_Tariff')) 
+        { 
+            $tariff = Tariff::findOrFail($id); 
+        } 
+        else 
+        { 
+            return abort(403 , 'عدم دسترسی'); 
+        } 
         
         // dd($request->all());
 
@@ -126,16 +125,27 @@ class TariffController extends Controller
         $tariff->channel_id = $request->channel_id;
         $tariff->classes_id = $request->classes_id;
         $tariff->box_type_id = $request->box_type_id;
+
         $tariff->from_date = $request->from_date;
         $tariff->to_date = $request->to_date;
         $tariff->price = str_replace(',' ,'' , $request->price);
 
         // ST DOC 1400-09-21 با هر کاربر که لاگین کنیم با آیدی همان کاربر ثبت می شود
         $tariff->user_id = auth()->user()->id; //$request->user_id;
-        // $tariff->user_id = $request->user()->id;  با هرکدام درست انجام میشود
+        // $tariff->user_id = $request->user()->id;  با هر کدام درست انجام میشود
 
         $tariff->save();
         return redirect()->route('tariff.index');
+
+        // if($request->from_date <= $request->to_date )
+        // {
+        //     $tariff->save();
+        //     return redirect()->route('tariff.index');
+        // }else
+        // {
+        //     return abort('تاریخ اشتباه وارد شده است');
+        // }
+
     }
 
     public function checkunqueu($handler)
@@ -157,7 +167,6 @@ class TariffController extends Controller
             return true;
     }
 
-    
     /**
      * Display the specified resource.
      *
@@ -250,7 +259,8 @@ class TariffController extends Controller
 
         if($request->has('price') && $request->price)
         {
-            $tariffs->where('price' , $request->price);
+            $price_tariff = str_replace( ',' , '' , $request->price);
+            $tariffs->where('price' , 'like' , "%$price_tariff%");
         }
 
         if($request->has('user_id') && $request->user_id)

@@ -167,3 +167,7 @@ a.previous a.next:hover, a.previous a.next:visited, a.previous a.next:link, a.pr
     text-decoration: none; 
 }
 
+th , td{
+  padding:2px !important;
+}
+

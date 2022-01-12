@@ -11,118 +11,117 @@
     @endif
     <!-- ENd DOC 1400-09-17 پیغام خطا به کاربر -->
 
-    <a href="{{route('product.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن محصولات</a>
+    @can('Insert_Product')  <!-- Cehck Access For Permission User --> 
+        <a href="{{route('product.create')}}" class="next" data-toggle="modal" data-target="#createModal">اضافه نمودن محصولات</a>
+    @endcan
+
     <br>
     <br>
 
     <!-- ST DOC 1400-07-20 Form For Search -->
     <form action="{{route('product_search')}}" method="get">
-        <label style="padding-right:20px; font-weight:bold; color:gray;">جستجو</label>
-        <div style="border:1px ridge lightblue; padding-right:10px; margin-right:20px; padding-top:10px; margin-left:600px; height:60px; width:1400px; " >
-            <div class="row">
+        <div class="card" style="margin-right:15px; margin-left:15px;">
+            <div class="card-header" style="font-weight:bold; color:gray;">جستجو</div>
+                <div class="card-body">
+                    <div class="row">
 
-                <!-- <div class="col">   Select Mamooli
-                    <div class="form-group">
-                        <select name="cast_id" class="form-control js-example-basic-single">
-                        <option value="">انتخاب صنف</option>
-                            @foreach($casts as $cast)
-                                <option value="{{$cast->id}}">{{$cast->cast}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div> -->
-
-                <div class="col">
-                    <div class="form-group d-flex">
-                        <label class="col-1" for="myselect">صنف</label>
-                        <div style="margin-right: 25px;">
-                            <select name="cast_id" id="myselect" multiple style="right:10px; width:250px; ">
-                                @foreach($casts as $cast)
-                                    <option value="{{$cast->id}}">{{$cast->cast}}</option>
-                                @endforeach
-                            </select>
+                        <div class="col-md">
+                            <div class="form-group d-flex">
+                                <label for="myselect">صنف</label>
+                                <div style="width:300px;">
+                                    <select name="cast_id" id="myselect" multiple>
+                                        @foreach($casts as $cast)
+                                            <option value="{{$cast->id}}">{{$cast->cast}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="col">
-                    <div class="form-group d-flex" >
-                        <label class="col-2" for="product" style="margin-right:-20px;">محصول</label>
-                        <input type="text" id="product" name="product" placeholder="محصول" class="form-control" style="margin-right:10px; width:300px;">
-                    </div>
-                </div>
-
-                @can('Get_Permission_To_Other_User')
-                    <div class="col">
-                        <div class="form-group d-flex">
-                            <label class="col-3" for="myselect-2" style="margin-right:-10px;">نام کاربر</label>
-                            <select name="user_id"  id="myselect-2" multiple class="form-control show-user"  style="width:500px;" >
-
-                            </select>
+                        <div class="col-md">
+                            <div class="form-group d-flex">
+                                <label for="product">محصول</label>
+                                <input type="text" name="product" id="product" placeholder="محصول" class="form-control">
+                            </div>
                         </div>
-                    </div>
-                @endcan
 
-                <div class="col">
-                    <div class="form-group">
-                        <input type="submit" value="جستجو" class="btn btn-primary" style="margin-right:120px;">
+                        @can('Get_Permission_To_Other_User')
+                        <div class="col-md">
+                            <div class="form-group d-flex">
+                                <label class="col-3" for="myselect-2" style="margin-right:-20px;">نام کاربر</label>
+                                <div style="margin-right:-10px;">
+                                    <select name="user_id" id="myselect-2" multiple class="form-control show-user" style="width:300px;">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        @endcan
+
+                        <div class="col-md">
+                            <div class="form-group d-flex">
+                                <input type="submit" value="جستجو" class="btn btn-primary">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
-            </div>
-        </div>
+        </div>            
     </form>
     <!-- END DOC 1400-07-20 Form For Search -->
 
     <br>
 
-    <table class="table table-bordered">
-        <tr style="height:1px;">
-            <th style="width:1% ; background-color:darkgray; text-align:center">ردیف</th>
-            <th style="width:20% ; background-color:darkgray; text-align:center;">عنوان صنف</th>
-            <th style="width:20% ; background-color:darkgray; text-align:cenetr;">عنوان محصول</th>
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-bordered" style="max-width:100%; ">
+                <tr style="height:1px;">
+                    <th style="width:1% ; background-color:darkgray; text-align:center">ردیف</th>
+                    <th style="width:20% ; background-color:darkgray; text-align:center;">عنوان صنف</th>
+                    <th style="width:20% ; background-color:darkgray; text-align:cenetr;">عنوان محصول</th>
 
-            @can('Get_Permission_To_Other_User') 
-                <th style="width:20% ; background-color: darkgray; text-align: center;">کاربر</th>
-            @endcan
+                    @can('Get_Permission_To_Other_User')  <!-- Check Access For Permission User --> 
+                        <th style="width:20% ; background-color: darkgray; text-align: center;">کاربر</th>
+                    @endcan
 
-            <th style="width:50px ; background-color:darkgray; ">Action</th>
-        </tr>
+                    <th style="width:50px ; background-color:darkgray; ">Action</th>
+                </tr>
 
-        @foreach($casts as $cast)
-            @foreach($products as $product)
-                @if($cast->id == $product->cast_id)
-                    <tr class="rowt" style="height:1px;">
-                        <td class="rowtt" style="height:1px; text-align:center;"></td>
-                        <td style="height:1px;">{{$cast->cast}}</td>
-                        <td style="height:1px;">{{$product->product}}</td>
+                @foreach($casts as $cast)
+                    @foreach($products as $product)
+                        @if($cast->id == $product->cast_id)
+                            <tr class="rowt" style="height:1px;">
+                                <td class="rowtt" style="height:1px; text-align:center;"></td>
+                                <td style="height:1px;">{{$cast->cast}}</td>
+                                <td style="height:1px;">{{$product->product}}</td>
 
-                        @can('Get_Permission_To_Other_User')
-                            @foreach($users as $user)
-                                @if($user->id == $product->user_id)
-                                    <td>{{$user->name}}</td>
-                                @endif
-                            @endforeach
-                        @endcan
+                                @can('Get_Permission_To_Other_User')
+                                    @foreach($users as $user)
+                                        @if($user->id == $product->user_id)
+                                            <td>{{$user->name}}</td>
+                                        @endif
+                                    @endforeach
+                                @endcan
 
-                        <td class="btn-group" style="height:10%;">
-                            @can('Edit_Product')
-                                <a href="{{route('product.edit' , $product->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
-                            @endcan
+                                <td class="btn-group" style="height:10%;">
+                                    @can('Edit_Product')  <!-- Check Access For Permission User --> 
+                                        <a href="{{route('product.edit' , $product->id)}}" class="btn btn-warning btn-send-ajax" id="btn-table" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt"></i></a>
+                                    @endcan
 
-                            @can('Delete_Product')
-                                <form class="delete" action="{{route('product.destroy' , $product->id)}}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
-                                </form>
-                            @endcan
-                        </td>
-                    </tr>
-                @endif
-            @endforeach
-        @endforeach
-    </table>
+                                    @can('Delete_Product')  <!-- Check Access For Permission User --> 
+                                        <form class="delete" action="{{route('product.destroy' , $product->id)}}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-danger" id="btn-table"><i class="fa fa-trash-alt"></i></button>
+                                        </form>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                @endforeach
+            </table>
+        </div>
+    </div>
 
     <!-- ST DOC Modal For From Add -->
     <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
@@ -150,7 +149,7 @@
                                     <input type="text" name="product" placeholder="عنوان محصول" class="form-control">
                                 </div>
                             </div>
-                            @can('Get_Permission_To_Other_User')
+                            @can('Get_Permission_To_Other_User')  <!-- Check Access For Permission User --> 
                                 <div class="row">
                                     <div class="col form-group">
                                         <select name="user_id" class="form-control show-user">
@@ -165,23 +164,19 @@
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                                <div class="col"></div>
-                                <div class="col"></div>
-                                <div class="col"></div>
-                                <div class="col"></div>
-                            </div>
-                        </div>
-                    </form>
+                                </div> 
+                                <div class="col"></div> 
+                                <div class="col"></div> 
+                                <div class="col"></div> 
+                                <div class="col"></div> 
+                            </div> 
+                        </div> 
+                    </form> 
                     <!-- Form New Record --> 
-                </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
-            </div>
-        </div>
-    </div>
+                </div> 
+            </div> 
+        </div> 
+    </div> 
     <!-- END DOC Modal For Form Add -->
 
     <!-- ST DOC Modal For From Edit -->

@@ -168,12 +168,14 @@ class CastController extends Controller
     public function search(Request $request)
     {
         $casts = Cast::query();
+        $users = User::all();
         if($request->has('cast') && $request->cast)
         {
             $casts->where('cast' , 'like' , "%$request->cast%");
         }
+
         $casts = $casts->get();
-        return view('cast.index',['casts' => $casts]);
+        return view('cast.index',['casts' => $casts , 'users' => $users]);
     }
 
 }

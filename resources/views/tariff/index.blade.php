@@ -20,79 +20,106 @@
 
     <!-- ST DOC 1400-09-22 جستجوی تعرفه -->
     <form action="{{route('tariff_search')}}" method="get">
-        <label style="padding-right:20px; font-weight:bold; color:gray; padding-right:25px;">جستجو</label>
-        <div style="border:1px lightblue ridge; padding-right:20px; margin-right:20px; padding-top:10px; height:60px; margin-left:20px; width:1850px;">
-            <div class="row">
-                <div class="col">
-                    <div class="form-group d-flex">
-                        <label for="myselect">شبکه</label>
-                        <div>
-                            <select name="channel_id" id="myselect" multiple class="form-control" style="width:200px;">
-                                @foreach($channels as $channel)
-                                    <option value="{{$channel->id}}">{{$channel->channel_name}}</option>
-                                @endforeach
-                            </select>
+        <!-- <label style="padding-right:20px; font-weight:bold; color:gray; padding-right:25px;">جستجو</label>  -->
+
+        <!-- <div class="row" style="border:1px ridge lightblue; padding-right:20px; padding-top:15px; margin-right:20px; width:1850px; max-width:100%;"> -->
+        <div class="card" style="max-width:98%; margin-right:10px; ">
+            <div class="card-header" style="font-weight:bold; color:gray;">جستجو</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form-group d-flex">
+                            <label for="myselect">شبکه</label>
+                            <div>
+                                <select name="channel_id" id="myselect" multiple class="form-control" style="width:200px;">
+                                    @foreach($channels as $channel)
+                                        <option value="{{$channel->id}}">{{$channel->channel_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div class="col-md"> 
+                        <div class="form-group d-flex"> 
+                            <label for="myselect-2">طبقه</label> 
+                            <div>
+                                <select name="classes_id" id="myselect-2" multiple class="form-control" style="width:200px;"> 
+                                    @foreach($classes as $class) 
+                                        <option value="{{$class->id}}">{{$class->class_name}}</option> 
+                                    @endforeach 
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="form-group d-flex">
-                        <label for="myselect-2">طبقه</label>
-                        <div>
-                            <select name="classes_id" id="myselect-2" multiple class="form-control" style="width:200px;">
-                                @foreach($classes as $class)
-                                    <option value="{{$class->id}}">{{$class->class_name}}</option>
-                                @endforeach
-                            </select>
+
+                    <div class="col-md">
+                        <div class="form-group d-flex">
+                            <label for="myselect-3" class="col-5">نوع باکس</label>
+                            <div style="margin-right:-22px;">
+                                <select name="box_type_id" id="myselect-3" multiple class="form-control" style="width:200px;">
+                                    @foreach($box_types as $boxType)
+                                        <option value="{{$boxType->id}}">{{$boxType->box_type}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-md">
+                        <div class="form-group d-flex">
+                            <label for="from-date" class="col-4" style="margin-right:50px;">از تاریخ</label>
+                            <div >
+                                <input type="text" data-jdp id="from-date" name="from_date" class="form-control" placeholder="از تاریخ" style="width:140px; margin-right:-15px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group d-flex">
+                            <label for="to-date" class="col-4" style="margin-right:50px;">تا تاریخ</label>
+                            <div>
+                                <input type="text" data-jdp id="to-date" name="to_date" class="form-control" placeholder="تا تاریخ" style="width:140px; margin-right:-18px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group d-flex">
+                        <label for="prices"  class="col-5">مبلغ تعرفه</label>
+                            <input type="text" name="price" id="prices" placeholder="مبلغ تعرفه" class="form-control" style="width:170px; margin-right:-20px;">
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="col">
-                    <div class="form-group d-flex">
-                        <label for="myselect-3" class="col-5">نوع باکس</label>
-                        <div style="margin-right:-22px;">
-                            <select name="box_type_id" id="myselect-3" multiple class="form-control" style="width:200px;">
-                                @foreach($box_types as $boxType)
-                                    <option value="{{$boxType->id}}">{{$boxType->box_type}}</option>
-                                @endforeach
-                            </select>
+                <div class="row">
+                    @can('Get_Permission_To_Other_User')
+                        <div class="col-md">
+                            <div class="form-group d-flex" >
+                                <label for="myselect-4">کاربر</label>
+                                <div>
+                                    <select name="user_id" id="myselect-4" multiple>
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    @endcan
+
+                    <div class="col-md">
+                        <div class="form-group" >
+                            <input type="submit" value="Search" class="btn btn-primary" style="margin-right:120px;">
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="form-group d-flex">
-                        <label for="from-date" class="col-4" style="margin-right:50px;">از تاریخ</label>
-                        <div >
-                            <input type="text" data-jdp id="from-date" name="from_date" class="form-control" placeholder="از تاریخ" style="width:150px; margin-right:-15px;">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group d-flex">
-                        <label for="to-date" class="col-4" style="margin-right:50px;">تا تاریخ</label>
-                        <div>
-                            <input type="text" data-jdp id="to-date" name="to_date" class="form-control" placeholder="تا تاریخ" style="width:150px; margin-right:-18px;">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group d-flex">
-                    <label for="prices" style="margin-right:60px;" class="col-5">مبلغ تعرفه</label>
-                        <input type="number" name="price" id="prices" placeholder="مبلغ تعرفه" class="form-control" style="width:170px; margin-right:-19px;">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <input type="submit" value="Search" class="btn btn-primary" style="margin-right:120px;">
-                    </div>
+
                 </div>
             </div>
         </div>
+
     </form>
     <!-- END DOC 1400-09-22  -->
 
-    <table class="table table-bordered" style="margin-top:10px;">
+    <table class="table table-bordered" style="margin-top:10px; max-width:98%; margin-right:10px; ">
         <tr style="height:1px;">
             <th style="width:1% ; background-color:darkgray ; text-align:center ; ">ردیف</th>
             <th style="width:15% ; background-color:darkgray ; text-align:center ; ">شبکه</th>
@@ -308,29 +335,24 @@
                                 @endcan
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="submit" value="ثبت" class="btn btn-primary">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                                        <input type="submit" value="ثبت" class="btn btn-primary"> 
+                                    </div> 
+                                </div> 
+                                <div class="col"> 
+                                    <div class="form-group"> 
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                        </div> 
+                    </form> 
                     <!-- Edit Form -->
-                </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
-            </div>
-        </div>
-    </div>
+                </div> 
+            </div> 
+        </div> 
+    </div> 
     <!-- END DOC 1400-09-13 Modla form For Edit Record -->
     
-
     <script>
         $(document).ready(function(){ 
             $('.btn-send-ajax').click(function(){ 
@@ -353,10 +375,10 @@
                     $('#users-id').val(data.user_id);
 
                     var urlUpdate = '/tariff/' + data.id; 
-                    $('.edit-tariff').attr('action',urlUpdate); 
+                    $('.edit-tariff').attr('action' , urlUpdate); 
                 }); 
             }); 
-            
+
             // ST DOC 1400-10-06 For Edit Price 
             new Cleave(document.getElementById('pricess'), { 
                 numeral: true,
@@ -366,6 +388,12 @@
             // ST DOC 1400-10-06 For New Record Price 
             new Cleave(document.getElementById('price-new'),{
                 numeral: true,
+                numeralThousandsGroupStyle: 'thousand'
+            })
+
+            // ST DOC 1400-10-20 For Seach Price With Seprator
+            new Cleave(document.getElementById('prices'),{
+                numeral:true ,
                 numeralThousandsGroupStyle: 'thousand'
             })
 
@@ -387,7 +415,6 @@
             }
         }
         // END DOC 1400-10-05 For Convert Number Price
-        
         
     </script>
 
